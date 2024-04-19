@@ -122,6 +122,7 @@ def main():
     # prepare pythia card
     to_change = {
         ("Main:numberOfEvents", "dummy_value"): n_events,
+        ("Random:seed", "dummy_value"): random.randint(0, 1000000),
         
         ("4900023:m0", "dummy_value"): m_z_prime,
         ("4900023:mMin", "dummy_value"): m_z_prime-1,

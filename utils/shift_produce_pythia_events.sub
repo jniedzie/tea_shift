@@ -1,7 +1,7 @@
 Universe              = vanilla
 executable            = shift_produce_pythia_events.sh
 # part n_events m_z_prime epsilon
-arguments             = $(ProcId) 10 100 2 1 1e-7
+arguments             = $(ProcId) 100 100 2 1 1e-7
 GetEnv                = True
 +Remote_Schedd = "bird-htc-sched11.desy.de"
 output                = output/$(ClusterId).$(ProcId).out
@@ -11,4 +11,4 @@ requirements 	      = (OpSysAndVer =?= "CentOS7")
 environment           = "LD_LIBRARY_PATH=/cvmfs/sft.cern.ch/lcg/releases/gcc/8.3.0-cebb0/x86_64-centos7/lib64:$LD_LIBRARY_PATH"
 +JobFlavour           = "espresso"
 
-queue 5
+queue 100
