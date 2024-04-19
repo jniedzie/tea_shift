@@ -21,6 +21,7 @@ class ShiftHistogramsFiller {
   float GetWeight(const std::shared_ptr<Event> event);
 
   void FillZprimeHistograms(const std::shared_ptr<Event> event);
+  void FillDarkHadronsHistograms(const std::shared_ptr<Event> event);
 };
 
 #endif /* ShiftHistogramsFiller_hpp */

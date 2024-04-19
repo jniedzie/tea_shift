@@ -41,6 +41,7 @@ int main(int argc, char **argv) {
     auto event = eventReader->GetEvent(iEvent);
 
     shiftObjectsManager->InsertGoodZprimesCollection(event);
+    shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
     
     histogramsFiller->FillDefaultVariables(event);
     shiftHistogramsFiller->Fill(event);

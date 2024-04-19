@@ -36,6 +36,8 @@ void ShiftHistogramsFiller::FillZprimeHistograms(const std::shared_ptr<Event> ev
   // Get the good Z' collection
   auto goodZprimes = event->GetCollection("goodZprimes");
 
+  histogramsHandler->Fill("Event_nZprimes", goodZprimes->size(), GetWeight(event));
+
   // Loop over the good Z' particles
   for (auto physicsObject : *goodZprimes) {
     auto hepMCParticle = asHepMCParticle(physicsObject);
@@ -50,6 +52,27 @@ void ShiftHistogramsFiller::FillZprimeHistograms(const std::shared_ptr<Event> ev
   }
 }
 
+void ShiftHistogramsFiller::FillDarkHadronsHistograms(const std::shared_ptr<Event> event) {
+  // Get the good dark hadrons collection
+  auto goodDarkHadrons = event->GetCollection("goodDarkHadrons");
+
+  histogramsHandler->Fill("Event_nDarkHadrons", goodDarkHadrons->size(), GetWeight(event));
+
+  // Loop over the good dark hadrons
+  for (auto physicsObject : *goodDarkHadrons) {
+    auto hepMCParticle = asHepMCParticle(physicsObject);
+    auto fourVector = hepMCParticle->GetLorentzVector();
+
+    histogramsHandler->Fill("DarkHadron_mass", hepMCParticle->GetMass(), GetWeight(event));
+    histogramsHandler->Fill("DarkHadron_pt", fourVector.Pt(), GetWeight(event));
+    histogramsHandler->Fill("DarkHadron_eta", fourVector.Eta(), GetWeight(event));
+    histogramsHandler->Fill("DarkHadron_phi", fourVector.Phi(), GetWeight(event));
+    histogramsHandler->Fill("DarkHadron_pid", hepMCParticle->GetPid(), GetWeight(event));
+    histogramsHandler->Fill("DarkHadron_status", hepMCParticle->GetStatus(), GetWeight(event));
+  }
+}
+
 void ShiftHistogramsFiller::Fill(const std::shared_ptr<Event> event) {
   FillZprimeHistograms(event);
+  FillDarkHadronsHistograms(event);
 }

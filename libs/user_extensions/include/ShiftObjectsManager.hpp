@@ -10,9 +10,11 @@ class ShiftObjectsManager {
   ~ShiftObjectsManager() = default;
 
   void InsertGoodZprimesCollection(std::shared_ptr<Event> event);
+  void InsertGoodDarkHadronsCollection(std::shared_ptr<Event> event);
 
  private:
   bool IsGoodZprime(const std::shared_ptr<HepMCParticle> particle, int particleIndex, const std::shared_ptr<PhysicsObjects> &allParticles);
+  bool IsGoodDarkHadron(const std::shared_ptr<HepMCParticle> particle, int particleIndex, const std::shared_ptr<PhysicsObjects> &allParticles);
 
   std::unique_ptr<HepMCProcessor> hepMCProcessor;
   

@@ -23,6 +23,15 @@ histParams = (
   ("Zprime", "pid"  ,     100,  0,      10000000,     ""),
   ("Zprime", "status",    100,  0,      100,     ""),
   
+  ("DarkHadron", "pt"  ,      100,  0,      1000,     ""),
+  ("DarkHadron", "eta" ,      100,  -10,    20,     ""),
+  ("DarkHadron", "phi" ,      100,  -4,     4,     ""),
+  ("DarkHadron", "mass",      100,  0,      10,     ""),
+  ("DarkHadron", "pid"  ,     100,  0,      10000000,     ""),
+  ("DarkHadron", "status",    100,  0,      100,     ""),
+  
+  ("Event", "nZprimes"    ,    10,  0,      10,     ""),
+  ("Event", "nDarkHadrons",    100,  0,      100,     ""),
 )
 
 # define custom 2D histograms (you will have to fill them in your HistogramsFiller)
