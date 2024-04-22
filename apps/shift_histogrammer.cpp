@@ -7,6 +7,7 @@
 #include "ShiftHistogramsFiller.hpp"
 #include "ShiftObjectsManager.hpp"
 #include "HepMCProcessor.hpp"
+#include "ShiftDetector.hpp"
 
 using namespace std;
 
@@ -18,72 +19,6 @@ void CheckArgs(int argc, char **argv) {
     exit(1);
   }
 }
-
-class ShiftDetector {
-  // Class to describe a spherical detector located at (x,y,z) coordinates with a given radius
- public:
-  ShiftDetector(float _x, float _y, float _z, float _radius) : x(_x), y(_y), z(_z), radius(_radius) {}
-  ~ShiftDetector() {}
-
-  bool DoesParticleGoThrough(const shared_ptr<HepMCParticle> &particle){
-    // check if the particle, given it's eta and phi, as well as production vertex x,y,z, passes through this sphere (ignore the magnetic field)
-    auto fourVector = particle->GetLorentzVector();
-    float eta = fourVector.Eta();
-    float theta = 2 * atan(exp(-eta));
-    float phi = fourVector.Phi();
-    float xProd = particle->GetX() / 1e3; // convert mm to m
-    float yProd = particle->GetY() / 1e3; // convert mm to m
-    float zProd = particle->GetZ() / 1e3; // convert mm to m
-
-    // Direction vector components
-    double dx = cos(phi) * sin(theta);
-    double dy = sin(phi) * sin(theta);
-    double dz = cos(theta);
-
-    // Calculate coefficients of the quadratic equation
-    double a = dx * dx + dy * dy + dz * dz;
-    double b = 2 * (dx * (xProd - x) + dy * (yProd - y) + dz * (zProd - z));
-    double c = (xProd - x) * (xProd - x)
-             + (yProd - y) * (yProd - y)
-             + (zProd - z) * (zProd - z)
-             - radius * radius;
-
-    // Calculate the discriminant
-    double discriminant = b * b - 4 * a * c;
-
-    // Check if the discriminant is non-negative
-    return discriminant >= 0;
-  }
-
-  bool IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticle> &particle, float maxDistanceInsideDetector=0.0){
-    // check if the production vertex of the particle is before the detector, or at most 1m past the detector's center
-    float xProd = particle->GetX() / 1e3; // convert mm to m
-    float yProd = particle->GetY() / 1e3; // convert mm to m
-    float zProd = particle->GetZ() / 1e3; // convert mm to m
-
-    float particleDistance = sqrt(pow(xProd, 2)+pow(yProd, 2)+pow(zProd, 2));
-    float detectorDistance = sqrt(pow(x, 2)+pow(y, 2)+pow(z, 2));
-    return particleDistance < detectorDistance + maxDistanceInsideDetector;
-  }
-
-  bool DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &particle){
-    // calculate the distance the particle has to travel from production vertex to the edge of the detector
-    float xProd = particle->GetX() / 1e3; // convert mm to m
-    float yProd = particle->GetY() / 1e3; // convert mm to m
-    float zProd = particle->GetZ() / 1e3; // convert mm to m
-
-    float particleDistance = sqrt(pow(xProd, 2)+pow(yProd, 2)+pow(zProd, 2));
-    float detectorDistance = sqrt(pow(x, 2)+pow(y, 2)+pow(z, 2));
-    float distanceToDetector = detectorDistance - particleDistance - radius;
-
-    float particleEnergy = particle->GetLorentzVector().E();
-
-    return particleEnergy > distanceToDetector;
-  }
-
- private:
-  float x, y, z, radius; // Coordinates of the detector and its radius (m)
-};
 
 int main(int argc, char **argv) {
   CheckArgs(argc, argv);
@@ -117,7 +52,8 @@ int main(int argc, char **argv) {
   cutFlowManager->RegisterCut("triggerAndReco");
   cutFlowManager->RegisterCut("goodDimuons");
 
-  auto cmsDetector = make_shared<ShiftDetector>(detectorParams["x"], detectorParams["y"], detectorParams["z"], detectorParams["radius"]);
+  auto detector = make_shared<ShiftDetector>(detectorParams);
+  detector->Print();
 
   for (int iEvent = 0; iEvent < eventReader->GetNevents(); iEvent++) {
     auto event = eventReader->GetEvent(iEvent);
@@ -146,15 +82,15 @@ int main(int argc, char **argv) {
       nMuonsFromDarkHadrons++;
 
       // Check that they intersect with the detector
-      if(!cmsDetector->DoesParticleGoThrough(hepMCParticle)) continue;
+      if(!detector->DoesParticleGoThrough(hepMCParticle)) continue;
       nMuonsIntersectingDetector++;
 
       // Check that the production vertex is before the detector
-      if(!cmsDetector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
+      if(!detector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
       nMuonsBeforeDetector++;
 
       // Check that the muon goes through the rock
-      if(!cmsDetector->DoesParticleGoThroughRock(hepMCParticle)) continue;
+      if(!detector->DoesParticleGoThroughRock(hepMCParticle)) continue;
       nMuonsThroughRock++;
 
       // Check that the muon has at least 30 GeV of energy, so that it can trigger and be reconstructed at CMS
