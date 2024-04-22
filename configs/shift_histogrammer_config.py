@@ -1,10 +1,20 @@
 ## specify how many events to run on (and how often to print current event number)
-nEvents = 1000
+nEvents = 100
 printEveryNevents = 100
 
+base_path = "/nfs/dust/cms/user/jniedzie/shift"
+
+mZprime = 100
+mDarkHadron = 20
+mDarkQuark = 1
+
+# skim = "pythia_test_events"
+skim = f"pythia_mZprime-{mZprime}_mDH-{mDarkHadron}_mDQ-{mDarkQuark}_tau-1em7"
+
 # specify input/output paths 
-# inputFilePath = "/nfs/dust/cms/user/jniedzie/shift/merged_pythia_test_events.root"
-inputFilePath = "/nfs/dust/cms/user/jniedzie/shift/pythia_test_events/mZprime-100GeV_mDarkHadron-2GeV_mDarkQuark-1GeV_lifetime-1p00em07m_nEvents-100_part-0.root"
+inputFilePath = f"{base_path}/merged_{skim}.root"
+# inputFilePath = f"{base_path}/{skim}/mZprime-{mZprime}GeV_mDarkHadron-{mDarkHadron}GeV_mDarkQuark-{mDarkQuark}GeV_lifetime-1p00em07m_nEvents-100_part-0.root"
+
 histogramsOutputFilePath = "../output_histograms.root"
 
 # define default histograms (can be filled automatically with HistogramsFiller, based on collection and variable names)
@@ -30,12 +40,16 @@ histParams = (
   ("DarkHadron", "pid"  ,     100,  0,      10000000,     ""),
   ("DarkHadron", "status",    100,  0,      100,     ""),
   
-  ("MuonFromDarkHadron", "pt"  ,      100,  0,      1000,     ""),
-  ("MuonFromDarkHadron", "eta" ,      100,  -10,    20,     ""),
-  ("MuonFromDarkHadron", "phi" ,      100,  -4,     4,     ""),
-  ("MuonFromDarkHadron", "mass",      100,  0,      10,     ""),
-  ("MuonFromDarkHadron", "pid"  ,     100,  0,      10000000,     ""),
-  ("MuonFromDarkHadron", "status",    100,  0,      100,     ""),
+  ("MuonFromDarkHadron", "pt"      ,    100,  0,      1000,     ""),
+  ("MuonFromDarkHadron", "energy"  ,    100,  0,      10000,     ""),
+  ("MuonFromDarkHadron", "eta"     ,    100,  -10,    20,     ""),
+  ("MuonFromDarkHadron", "phi"     ,    100,  -4,     4,     ""),
+  ("MuonFromDarkHadron", "mass"    ,    100,  0,      10,     ""),
+  ("MuonFromDarkHadron", "pid"     ,    100,  0,      10000000,     ""),
+  ("MuonFromDarkHadron", "status"  ,    100,  0,      100,     ""),
+  ("MuonFromDarkHadron", "x"  ,    100,  -10000000,      10000000,     ""),
+  ("MuonFromDarkHadron", "y"  ,    100,  -10000000,      10000000,     ""),
+  ("MuonFromDarkHadron", "z"  ,    100,  -1000000000,      1000000000,     ""),
    
   ("Event", "nZprimes"    ,    10,  0,      10,     ""),
   ("Event", "nDarkHadrons",    100,  0,      100,     ""),
@@ -54,4 +68,11 @@ weightsBranchName = "genWeight"
 eventsTreeNames = ["Events",]
 specialBranchSizes = {
   "Particle": "Event_numberP",
+}
+
+detectorParams = {
+  "x": 5,
+  "y": 0,
+  "z": 100,
+  "radius": 10, 
 }

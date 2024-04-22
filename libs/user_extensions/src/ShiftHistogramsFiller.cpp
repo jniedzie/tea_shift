@@ -85,10 +85,15 @@ void ShiftHistogramsFiller::FillMuonsFromDarkHadronsHistograms(const std::shared
 
     histogramsHandler->Fill("MuonFromDarkHadron_mass", hepMCParticle->GetMass(), GetWeight(event));
     histogramsHandler->Fill("MuonFromDarkHadron_pt", fourVector.Pt(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_energy", fourVector.E(), GetWeight(event));
     histogramsHandler->Fill("MuonFromDarkHadron_eta", fourVector.Eta(), GetWeight(event));
     histogramsHandler->Fill("MuonFromDarkHadron_phi", fourVector.Phi(), GetWeight(event));
     histogramsHandler->Fill("MuonFromDarkHadron_pid", hepMCParticle->GetPid(), GetWeight(event));
     histogramsHandler->Fill("MuonFromDarkHadron_status", hepMCParticle->GetStatus(), GetWeight(event));
+
+    histogramsHandler->Fill("MuonFromDarkHadron_x", hepMCParticle->GetX(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_y", hepMCParticle->GetY(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_z", hepMCParticle->GetZ(), GetWeight(event));
   }
 }
 
