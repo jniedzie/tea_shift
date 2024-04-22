@@ -30,8 +30,16 @@ histParams = (
   ("DarkHadron", "pid"  ,     100,  0,      10000000,     ""),
   ("DarkHadron", "status",    100,  0,      100,     ""),
   
+  ("MuonFromDarkHadron", "pt"  ,      100,  0,      1000,     ""),
+  ("MuonFromDarkHadron", "eta" ,      100,  -10,    20,     ""),
+  ("MuonFromDarkHadron", "phi" ,      100,  -4,     4,     ""),
+  ("MuonFromDarkHadron", "mass",      100,  0,      10,     ""),
+  ("MuonFromDarkHadron", "pid"  ,     100,  0,      10000000,     ""),
+  ("MuonFromDarkHadron", "status",    100,  0,      100,     ""),
+   
   ("Event", "nZprimes"    ,    10,  0,      10,     ""),
   ("Event", "nDarkHadrons",    100,  0,      100,     ""),
+  ("Event", "nMuonsFromDarkHadrons",    100,  0,      100,     ""),
 )
 
 # define custom 2D histograms (you will have to fill them in your HistogramsFiller)

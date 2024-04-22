@@ -42,6 +42,7 @@ int main(int argc, char **argv) {
 
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
+    shiftObjectsManager->InsertGoodMuonsFromDarkHadronsCollection(event);
     
     histogramsFiller->FillDefaultVariables(event);
     shiftHistogramsFiller->Fill(event);

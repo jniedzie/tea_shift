@@ -72,7 +72,28 @@ void ShiftHistogramsFiller::FillDarkHadronsHistograms(const std::shared_ptr<Even
   }
 }
 
+void ShiftHistogramsFiller::FillMuonsFromDarkHadronsHistograms(const std::shared_ptr<Event> event) {
+  // Get the good muons from dark hadrons collection
+  auto goodMuonsFromDarkHadrons = event->GetCollection("goodMuonsFromDarkHadrons");
+
+  histogramsHandler->Fill("Event_nMuonsFromDarkHadrons", goodMuonsFromDarkHadrons->size(), GetWeight(event));
+
+  // Loop over the good muons from dark hadrons
+  for (auto physicsObject : *goodMuonsFromDarkHadrons) {
+    auto hepMCParticle = asHepMCParticle(physicsObject);
+    auto fourVector = hepMCParticle->GetLorentzVector();
+
+    histogramsHandler->Fill("MuonFromDarkHadron_mass", hepMCParticle->GetMass(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_pt", fourVector.Pt(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_eta", fourVector.Eta(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_phi", fourVector.Phi(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_pid", hepMCParticle->GetPid(), GetWeight(event));
+    histogramsHandler->Fill("MuonFromDarkHadron_status", hepMCParticle->GetStatus(), GetWeight(event));
+  }
+}
+
 void ShiftHistogramsFiller::Fill(const std::shared_ptr<Event> event) {
   FillZprimeHistograms(event);
   FillDarkHadronsHistograms(event);
+  FillMuonsFromDarkHadronsHistograms(event);
 }
