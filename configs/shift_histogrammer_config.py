@@ -70,9 +70,18 @@ specialBranchSizes = {
   "Particle": "Event_numberP",
 }
 
+def get_z_along_LHC(x):
+  radius = 4300 # [m]
+  z = (radius**2 - (x-radius)**2)**0.5
+  print(f"z({x}) = {z}")
+  print(f"target-detector distnace = {(z**2 + x**2)**0.5}")
+  return z
+  
+detectorXshift = 0
+
 detectorParams = {
-  "x": 5,
+  "x": detectorXshift,
   "y": 0,
-  "z": 100,
-  "radius": 10, 
+  "z": get_z_along_LHC(detectorXshift),
+  "radius": 10,
 }

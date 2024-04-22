@@ -6,6 +6,7 @@
 #include "HistogramsHandler.hpp"
 #include "ShiftHistogramsFiller.hpp"
 #include "ShiftObjectsManager.hpp"
+#include "HepMCProcessor.hpp"
 
 using namespace std;
 
@@ -54,7 +55,7 @@ class ShiftDetector {
     return discriminant >= 0;
   }
 
-  bool IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticle> &particle){
+  bool IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticle> &particle, float maxDistanceInsideDetector=0.0){
     // check if the production vertex of the particle is before the detector, or at most 1m past the detector's center
     float xProd = particle->GetX() / 1e3; // convert mm to m
     float yProd = particle->GetY() / 1e3; // convert mm to m
@@ -62,7 +63,7 @@ class ShiftDetector {
 
     float particleDistance = sqrt(pow(xProd, 2)+pow(yProd, 2)+pow(zProd, 2));
     float detectorDistance = sqrt(pow(x, 2)+pow(y, 2)+pow(z, 2));
-    return particleDistance < detectorDistance;
+    return particleDistance < detectorDistance + maxDistanceInsideDetector;
   }
 
   bool DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &particle){
@@ -103,7 +104,7 @@ int main(int argc, char **argv) {
   auto shiftHistogramsFiller = make_unique<ShiftHistogramsFiller>(histogramsHandler);
   auto shiftObjectsManager = make_unique<ShiftObjectsManager>();
   auto cutFlowManager = make_unique<CutFlowManager>(eventReader);
-  // auto myHistogramsFiller = make_unique<MyHistogramsFiller>(histogramsHandler);
+  auto hepMCProcessor = make_unique<HepMCProcessor>();
 
   map<string, float> detectorParams;
   config.GetMap("detectorParams", detectorParams);
@@ -113,6 +114,8 @@ int main(int argc, char **argv) {
   cutFlowManager->RegisterCut("muonInCMS");
   cutFlowManager->RegisterCut("muonBeforeCMS");
   cutFlowManager->RegisterCut("passesThroughRock");
+  cutFlowManager->RegisterCut("triggerAndReco");
+  cutFlowManager->RegisterCut("goodDimuons");
 
   auto cmsDetector = make_shared<ShiftDetector>(detectorParams["x"], detectorParams["y"], detectorParams["z"], detectorParams["radius"]);
 
@@ -132,6 +135,9 @@ int main(int argc, char **argv) {
     int nMuonsIntersectingDetector = 0;
     int nMuonsBeforeDetector = 0;
     int nMuonsThroughRock = 0;
+    int nMuonsTriggerAndReco = 0;
+
+    vector<shared_ptr<HepMCParticle>> passingMuons;
 
     for (auto physicsObject : *goodMuonsFromDarkHadrons) {
       auto hepMCParticle = asHepMCParticle(physicsObject);
@@ -144,13 +150,19 @@ int main(int argc, char **argv) {
       nMuonsIntersectingDetector++;
 
       // Check that the production vertex is before the detector
-      if(!cmsDetector->IsProductionVertexBeforeTheEnd(hepMCParticle)) continue;
+      if(!cmsDetector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
       nMuonsBeforeDetector++;
 
       // Check that the muon goes through the rock
       if(!cmsDetector->DoesParticleGoThroughRock(hepMCParticle)) continue;
       nMuonsThroughRock++;
 
+      // Check that the muon has at least 30 GeV of energy, so that it can trigger and be reconstructed at CMS
+      if(hepMCParticle->GetLorentzVector().E() < 30) continue;
+      nMuonsTriggerAndReco++;
+
+
+      passingMuons.push_back(hepMCParticle);
     }
 
     if (nMuonsFromDarkHadrons < 2) continue;
@@ -164,6 +176,30 @@ int main(int argc, char **argv) {
 
     if(nMuonsThroughRock < 2) continue;
     cutFlowManager->UpdateCutFlow("passesThroughRock");
+
+    if(nMuonsTriggerAndReco < 2) continue;
+    cutFlowManager->UpdateCutFlow("triggerAndReco");
+
+
+    vector<pair<shared_ptr<HepMCParticle>, shared_ptr<HepMCParticle>>> dimuons;
+
+    auto allParticles = event->GetCollection("Particle");
+
+    for(int i=0; i<passingMuons.size(); i++){
+      for(int j=i+1; j<passingMuons.size(); j++){
+        auto muon1 = passingMuons[i];
+        auto muon2 = passingMuons[j];
+
+        auto commonMother = hepMCProcessor->GetCommonMother(muon1, muon2, allParticles);
+        if(!commonMother) continue;
+
+        dimuons.push_back({muon1, muon2});
+      }
+    }
+
+    if(dimuons.size() == 0) continue;
+    cutFlowManager->UpdateCutFlow("goodDimuons");
+
 
   }
 
