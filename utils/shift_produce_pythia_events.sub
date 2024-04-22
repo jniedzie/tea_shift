@@ -1,7 +1,7 @@
 Universe              = vanilla
 executable            = shift_produce_pythia_events.sh
 # part n_events m_z_prime epsilon
-arguments             = $(ProcId) 100 100 2 1 1e-7
+arguments             = $(ProcId) 100 100 20 1 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3/
 GetEnv                = True
 +Remote_Schedd = "bird-htc-sched11.desy.de"
 output                = output/$(ClusterId).$(ProcId).out
