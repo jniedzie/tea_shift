@@ -8,10 +8,10 @@ ShiftDetector::ShiftDetector(const std::map<std::string, float> &params) {
   z = params.at("z");
   radius = params.at("radius");
 
-  if (z < 0) {
+  if (x < 0) {
     forcedLHCring = true;
     float radius = 4300;  // [m]
-    z = sqrt(pow(radius, 2) - pow(x - radius, 2));
+    x = sqrt(pow(radius, 2) - pow(z - radius, 2));
   }
 }
 

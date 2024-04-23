@@ -1,9 +1,10 @@
 Universe              = vanilla
 executable            = shift_produce_pythia_events.sh
 #                       part n_events m_z_prime m_dh m_dq output_path
-# arguments             = $(ProcId) 1000 100 20 1 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3/ shift_hiddenValley_pythia_card.cmnd
-arguments             = $(ProcId) 1000 -1 -1 -1 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd/ shift_qcd_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 -2 -2 -2 -2 /nfs/dust/cms/user/jniedzie/shift/pythia_dy/ shift_dy_pythia_card.cmnd
+arguments             = $(ProcId) 1000 100 20 1 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 -1 -1 -1 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd/initial/ shift_qcd_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 -2 -2 -2 -2 /nfs/dust/cms/user/jniedzie/shift/pythia_dy/initial/ shift_dy_pythia_card.cmnd
 GetEnv                = True
 +Remote_Schedd = "bird-htc-sched11.desy.de"
 output                = output/$(ClusterId).$(ProcId).out

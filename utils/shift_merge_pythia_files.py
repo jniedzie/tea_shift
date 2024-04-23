@@ -1,14 +1,7 @@
+from shift_paths import base_path, processes, skim
+
 import os
 import argparse
-
-
-base_path = "/nfs/dust/cms/user/jniedzie/shift"
-
-
-# skim = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
-# skim = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
-# skim = "pythia_qcd"
-skim = "pythia_dy"
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -21,16 +14,17 @@ def main():
 
     merge_histograms = not args.trees
 
-    hist_path = "histograms" if merge_histograms else ""
-    input_path = f"{base_path}/{skim}/{hist_path}/*.root"
+    for process in processes:
+        hist_path = "histograms" if merge_histograms else ""
+        input_path = f"{base_path}/{process}/{skim}/{hist_path}/*.root"
 
-    hist_path = "_histograms" if merge_histograms else ""
-    output_path = f"{base_path}/merged_{skim}{hist_path}.root"
-    
-    print(f"{output_path=}")
+        hist_path = "_histograms" if merge_histograms else ""
+        output_path = f"{base_path}/{process}/merged_{skim}{hist_path}.root"
+        
+        print(f"{output_path=}")
 
-    os.system(f"rm {output_path}")
-    os.system(f"hadd -f -j -k {output_path} {input_path}")
+        os.system(f"rm {output_path}")
+        os.system(f"hadd -f -j -k {output_path} {input_path}")
 
 
 if __name__ == "__main__":

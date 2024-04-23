@@ -57,25 +57,10 @@ histParams = (
   ("Event", "nMuonsFromDarkHadrons",    100,  0,      100,     ""),
 )
 
-# define custom 2D histograms (you will have to fill them in your HistogramsFiller)
-histParams2D = (
-#  name     bins_x  xmin  xmax bins_y ymin ymax     dir
-  ("hit_xy", 100  , -20 , 20  , 100 , -20 , 20  ,   ""),
-)
-
 # specify name of the branch containing event weights
 weightsBranchName = "genWeight"
 
 eventsTreeNames = ["Events",]
 specialBranchSizes = {
   "Particle": "Event_numberP",
-}
-  
-detectorXshift = 10
-
-detectorParams = {
-  "x": 10,
-  "y": 0,
-  "z": -1, # -1 means it will be placed on the LHC ring
-  "radius": 10,
 }
