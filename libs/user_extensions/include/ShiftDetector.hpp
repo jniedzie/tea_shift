@@ -4,26 +4,10 @@
 class ShiftDetector {
   // Class to describe a spherical detector located at (x,y,z) coordinates with a given radius
  public:
-  ShiftDetector(const std::map<std::string, float> &params) {
-    x = params.at("x");
-    y = params.at("y");
-    z = params.at("z");
-    radius = params.at("radius");
-
-    if (z < 0) {
-      forcedLHCring = true;
-      float radius = 4300;  // [m]
-      z = sqrt(pow(radius,2) - pow(x - radius,2));
-    }
-  }
+  ShiftDetector(const std::map<std::string, float> &params);
   ~ShiftDetector() {}
 
-  void Print() {
-    info() << "\n\n--------------------------------------------------" << std::endl;
-    info() << "Detector at: (" << x << ", " << y << ", " << z << ") with radius: " << radius << std::endl;
-    info() << "Forced to be on the LHC ring: " << (forcedLHCring ? "yes" : "no") << std::endl;
-    info() << "--------------------------------------------------\n\n" << std::endl;
-  }
+  void Print();
 
   bool DoesParticleGoThrough(const std::shared_ptr<HepMCParticle> &particle);
   bool IsProductionVertexBeforeTheEnd(const std::shared_ptr<HepMCParticle> &particle, float maxDistanceInsideDetector = 0.0);
