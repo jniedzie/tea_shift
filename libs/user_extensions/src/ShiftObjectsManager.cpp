@@ -29,12 +29,12 @@ bool ShiftObjectsManager::IsGoodMuonFromDarkHadron(const shared_ptr<HepMCParticl
   if(fabs(particle->GetPid()) != 13) return false;
   if(!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
 
-  auto mother = particle->GetMother(allParticles);
+  // auto mother = particle->GetMother(allParticles);
 
-  if(mother->GetPid() != 4900111 && mother->GetPid() != 4900113) {
-    info() << "Mother pid: " << mother->GetPid() << endl;
-    return false;
-  }
+  // if(mother->GetPid() != 4900111 && mother->GetPid() != 4900113) {
+  //   info() << "Mother pid: " << mother->GetPid() << endl;
+  //   return false;
+  // }
   return true;
 }
 

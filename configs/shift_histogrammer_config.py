@@ -1,5 +1,5 @@
 ## specify how many events to run on (and how often to print current event number)
-nEvents = 100
+nEvents = 1000
 printEveryNevents = 100
 
 base_path = "/nfs/dust/cms/user/jniedzie/shift"
@@ -8,14 +8,15 @@ mZprime = 100
 mDarkHadron = 20
 mDarkQuark = 1
 
-# skim = "pythia_test_events"
-skim = f"pythia_mZprime-{mZprime}_mDH-{mDarkHadron}_mDQ-{mDarkQuark}_tau-1em7"
+# skim = f"pythia_mZprime-{mZprime}_mDH-{mDarkHadron}_mDQ-{mDarkQuark}_tau-1em7"
+skim = "pythia_qcd"
+# skim = "pythia_dy"
 
 # specify input/output paths 
 inputFilePath = f"{base_path}/merged_{skim}.root"
 # inputFilePath = f"{base_path}/{skim}/mZprime-{mZprime}GeV_mDarkHadron-{mDarkHadron}GeV_mDarkQuark-{mDarkQuark}GeV_lifetime-1p00em07m_nEvents-100_part-0.root"
 
-histogramsOutputFilePath = "../output_histograms.root"
+histogramsOutputFilePath = f"../histograms_{skim}.root"
 
 # define default histograms (can be filled automatically with HistogramsFiller, based on collection and variable names)
 defaultHistParams = (

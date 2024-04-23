@@ -112,13 +112,18 @@ def main():
     
     lifetime_name = clear_string(f"{lifetime:.2e}")
     
-    file_name = f"mZprime-{m_z_prime_name}GeV"
-    file_name += f"_mDarkHadron-{m_dark_hadron_name}GeV"
-    file_name += f"_mDarkQuark-{m_dark_quark_name}GeV"
-    file_name += f"_lifetime-{lifetime_name}m"
-    file_name += f"_nEvents-{n_events}"
-    file_name += f"_part-{part}"
-
+    if args.m_z_prime > 0:
+        file_name = f"mZprime-{m_z_prime_name}GeV"
+        file_name += f"_mDarkHadron-{m_dark_hadron_name}GeV"
+        file_name += f"_mDarkQuark-{m_dark_quark_name}GeV"
+        file_name += f"_lifetime-{lifetime_name}m"
+        file_name += f"_nEvents-{n_events}"
+        file_name += f"_part-{part}"
+    elif args.m_z_prime == -1:
+        file_name = f"qcd_part-{part}"
+    elif args.m_z_prime == -2:
+        file_name = f"dy_part-{part}"
+    
     # prepare pythia card
     to_change = {
         ("Main:numberOfEvents", "dummy_value"): n_events,

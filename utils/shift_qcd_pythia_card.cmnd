@@ -13,4 +13,14 @@ Beams:idB = 2212
 Beams:eB = 0.
 
 PartonLevel:ISR = on
-HardQCD:all = on
+
+! Turn on QCD processes and weak boson production
+HardQCD:all = on                  ! Enable all QCD processes
+WeakBosonAndParton:qg2gmZq = on   ! Enable Z production in QCD events
+WeakBosonAndParton:qg2Wq = on     ! Enable W production in QCD events
+
+! Force W and Z to decay to muons where relevant
+24:onMode = off                  ! Turn off all W decays
+24:onIfAny = 13 14               ! Enable W to mu nu_mu decay
+23:onMode = off                  ! Turn off all Z decays
+23:onIfMatch = 13 -13            ! Turn on Z to mu+ mu- decay

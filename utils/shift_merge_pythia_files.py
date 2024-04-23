@@ -3,9 +3,12 @@ import argparse
 
 
 base_path = "/nfs/dust/cms/user/jniedzie/shift"
-# skim = "pythia_test_events"
+
+
 # skim = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
-skim = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
+# skim = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
+# skim = "pythia_qcd"
+skim = "pythia_dy"
 
 def get_args():
     parser = argparse.ArgumentParser()
