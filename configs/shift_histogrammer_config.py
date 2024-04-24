@@ -1,22 +1,22 @@
+from shift_paths import skim
+
 ## specify how many events to run on (and how often to print current event number)
 nEvents = 1000
 printEveryNevents = 100
 
 base_path = "/nfs/dust/cms/user/jniedzie/shift"
 
-mZprime = 100
-mDarkHadron = 20
-mDarkQuark = 1
-
-# skim = f"pythia_mZprime-{mZprime}_mDH-{mDarkHadron}_mDQ-{mDarkQuark}_tau-1em7"
-skim = "pythia_qcd"
-# skim = "pythia_dy"
+# process = "pythia_qcd"
+# process = "pythia_dy"    
+# process = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
+process = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
 
 # specify input/output paths 
-inputFilePath = f"{base_path}/merged_{skim}.root"
-# inputFilePath = f"{base_path}/{skim}/mZprime-{mZprime}GeV_mDarkHadron-{mDarkHadron}GeV_mDarkQuark-{mDarkQuark}GeV_lifetime-1p00em07m_nEvents-100_part-0.root"
+inputFilePath = f"{base_path}/{process}/merged_{skim}.root"
+histogramsOutputFilePath = f"../histograms_{skim}_{process}.root"
 
-histogramsOutputFilePath = f"../histograms_{skim}.root"
+# inputFilePath = "./skimmed_test.root"
+# histogramsOutputFilePath = "../histograms_test.root"
 
 # define default histograms (can be filled automatically with HistogramsFiller, based on collection and variable names)
 defaultHistParams = (

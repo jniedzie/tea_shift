@@ -11,7 +11,10 @@ ShiftDetector::ShiftDetector(const std::map<std::string, float> &params) {
   if (x < 0) {
     forcedLHCring = true;
     float radius = 4300;  // [m]
-    x = sqrt(pow(radius, 2) - pow(z - radius, 2));
+    float x_1 = sqrt(pow(radius, 2) - pow(z, 2)) + radius;
+    float x_2 = -sqrt(pow(radius, 2) - pow(z, 2)) + radius;
+    x = min(x_1, x_2);
+    
   }
 }
 
@@ -29,25 +32,57 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
   float eta = fourVector.Eta();
   float theta = 2 * atan(exp(-eta));
   float phi = fourVector.Phi();
-  float xProd = particle->GetX() / 1e3;  // convert mm to m
-  float yProd = particle->GetY() / 1e3;  // convert mm to m
-  float zProd = particle->GetZ() / 1e3;  // convert mm to m
+  float pT = fourVector.Pt();
+  float x_p = particle->GetX() / 1e3;  // convert mm to m
+  float y_p = particle->GetY() / 1e3;  // convert mm to m
+  float z_p = particle->GetZ() / 1e3;  // convert mm to m
 
-  // Direction vector components
-  double dx = cos(phi) * sin(theta);
-  double dy = sin(phi) * sin(theta);
-  double dz = cos(theta);
+  // Calculate velocity components
+    double v_x = pT * cos(phi);
+    double v_y = pT * sin(phi);
+    double v_z = pT * sinh(eta);
+    
+    // Calculate vector from particle start to sphere center
+    double dx = x - x_p;
+    double dy = y - y_p;
+    double dz = z - z_p;
 
-  // Calculate coefficients of the quadratic equation
-  double a = dx * dx + dy * dy + dz * dz;
-  double b = 2 * (dx * (xProd - x) + dy * (yProd - y) + dz * (zProd - z));
-  double c = (xProd - x) * (xProd - x) + (yProd - y) * (yProd - y) + (zProd - z) * (zProd - z) - radius * radius;
+    // Dot product of velocity vector and vector to sphere center
+    double dotProduct = v_x * dx + v_y * dy + v_z * dz;
+    if (dotProduct <= 0) {
+        // Particle is moving away from or perpendicular to the direction of the sphere
+        return false;
+    }
 
-  // Calculate the discriminant
-  double discriminant = b * b - 4 * a * c;
+    // Coefficients of the quadratic equation At^2 + Bt + C = 0
+    double A = v_x * v_x + v_y * v_y + v_z * v_z;
+    double B = 2 * dotProduct;
+    double C = dx * dx + dy * dy + dz * dz - radius * radius;
 
-  // Check if the discriminant is non-negative
-  return discriminant >= 0;
+    // Calculate discriminant
+    double discriminant = B * B - 4 * A * C;
+    
+    // Check if there is an intersection
+    return discriminant >= 0;
+
+  // // check if the direction of the muon is towards the detector
+  // if (zProd*z < 0) return false;
+  
+  // // Direction vector components
+  // double dx = cos(phi) * sin(theta);
+  // double dy = sin(phi) * sin(theta);
+  // double dz = cos(theta);
+
+  // // Calculate coefficients of the quadratic equation
+  // double a = dx * dx + dy * dy + dz * dz;
+  // double b = 2 * (dx * (xProd - x) + dy * (yProd - y) + dz * (zProd - z));
+  // double c = (xProd - x) * (xProd - x) + (yProd - y) * (yProd - y) + (zProd - z) * (zProd - z) - radius * radius;
+
+  // // Calculate the discriminant
+  // double discriminant = b * b - 4 * a * c;
+
+  // // Check if the discriminant is non-negative
+  // return discriminant >= 0;
 }
 
 bool ShiftDetector::IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticle> &particle, float maxDistanceInsideDetector) {

@@ -117,7 +117,6 @@ def main():
         file_name += f"_mDarkHadron-{m_dark_hadron_name}GeV"
         file_name += f"_mDarkQuark-{m_dark_quark_name}GeV"
         file_name += f"_lifetime-{lifetime_name}m"
-        file_name += f"_nEvents-{n_events}"
         file_name += f"_part-{part}"
     elif args.m_z_prime == -1:
         file_name = f"qcd_part-{part}"
@@ -138,7 +137,7 @@ def main():
         
         ("4900101:m0", "dummy_value"): m_dark_quark,
     
-        ("4900111:tau0", "dummy_value"): lifetime*1000,
+        ("4900111:tau0", "dummy_value"): lifetime * 1000,
         ("4900113:tau0", "dummy_value"): lifetime * 1000,
     }
 
