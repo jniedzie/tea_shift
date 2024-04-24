@@ -41,14 +41,13 @@ int main(int argc, char **argv) {
   map<string, float> detectorParams;
   config.GetMap("detectorParams", detectorParams);
 
-  cutFlowManager->RegisterCut("Initial");
-  cutFlowManager->RegisterCut("atLeastTwoMuons");
-  cutFlowManager->RegisterCut("muonInCMS");
-  cutFlowManager->RegisterCut("muonBeforeCMS");
-  cutFlowManager->RegisterCut("passesThroughRock");
+  cutFlowManager->RegisterCut("initial");
+  cutFlowManager->RegisterCut("hasMuons");
+  cutFlowManager->RegisterCut("intersectingDetector");
+  cutFlowManager->RegisterCut("beforeDetector");
+  cutFlowManager->RegisterCut("throughRock");
   cutFlowManager->RegisterCut("triggerAndReco");
-  cutFlowManager->RegisterCut("goodDimuons");
-
+  
   auto detector = make_shared<ShiftDetector>(detectorParams);
   detector->Print();
 
@@ -57,80 +56,30 @@ int main(int argc, char **argv) {
 
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
-    shiftObjectsManager->InsertGoodMuonsFromDarkHadronsCollection(event);
+    shiftObjectsManager->InsertGoodMuonsCollection(event);
 
-    cutFlowManager->UpdateCutFlow("Initial");
+    cutFlowManager->UpdateCutFlow("initial");
     
-    auto goodMuonsFromDarkHadrons = event->GetCollection("goodMuonsFromDarkHadrons");
+    auto nMuons = make_shared<map<string, int>>();
+    nMuons->insert({"1_hasMuons", 0});
+    nMuons->insert({"2_intersectingDetector", 0});
+    nMuons->insert({"3_beforeDetector", 0});
+    nMuons->insert({"4_throughRock", 0});
+    nMuons->insert({"5_triggerAndReco", 0});
 
-    int nMuonsFromDarkHadrons = 0;
-    int nMuonsIntersectingDetector = 0;
-    int nMuonsBeforeDetector = 0;
-    int nMuonsThroughRock = 0;
-    int nMuonsTriggerAndReco = 0;
+    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, detectorParams, nMuons);
 
-    vector<shared_ptr<HepMCParticle>> passingMuons;
-
-    for (auto physicsObject : *goodMuonsFromDarkHadrons) {
-      auto hepMCParticle = asHepMCParticle(physicsObject);
-      
-      // Count muons from dark hadrons
-      nMuonsFromDarkHadrons++;
-
-      // Check that they intersect with the detector
-      if(!detector->DoesParticleGoThrough(hepMCParticle)) continue;
-      nMuonsIntersectingDetector++;
-
-      // Check that the production vertex is before the detector
-      if(!detector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
-      nMuonsBeforeDetector++;
-
-      // Check that the muon goes through the rock
-      if(!detector->DoesParticleGoThroughRock(hepMCParticle)) continue;
-      nMuonsThroughRock++;
-
-      // Check that the muon has at least 30 GeV of energy, so that it can trigger and be reconstructed at CMS
-      if(hepMCParticle->GetLorentzVector().E() < 30) continue;
-      nMuonsTriggerAndReco++;
-
-
-      passingMuons.push_back(hepMCParticle);
-    }
-
-    if (nMuonsFromDarkHadrons < 2) continue;
-    cutFlowManager->UpdateCutFlow("atLeastTwoMuons");
-
-    if(nMuonsIntersectingDetector < 2) continue;
-    cutFlowManager->UpdateCutFlow("muonInCMS");
-
-    if(nMuonsBeforeDetector < 2) continue;
-    cutFlowManager->UpdateCutFlow("muonBeforeCMS");
-
-    if(nMuonsThroughRock < 2) continue;
-    cutFlowManager->UpdateCutFlow("passesThroughRock");
-
-    if(nMuonsTriggerAndReco < 2) continue;
-    cutFlowManager->UpdateCutFlow("triggerAndReco");
-
-
-    vector<pair<shared_ptr<HepMCParticle>, shared_ptr<HepMCParticle>>> dimuons;
-
-    auto allParticles = event->GetCollection("Particle");
-
-    for(int i=0; i<passingMuons.size(); i++){
-      for(int j=i+1; j<passingMuons.size(); j++){
-        auto muon1 = passingMuons[i];
-        auto muon2 = passingMuons[j];
-
-        auto commonMother = hepMCProcessor->GetCommonMother(muon1, muon2, allParticles);
-        if(!commonMother) continue;
-
-        dimuons.push_back({muon1, muon2});
+    bool passes = true;
+    for(auto &[key, value] : *nMuons){
+      if(value < 2){
+        passes = false;
+        break;
       }
+      // remove everything before underscore:
+      string name = key.substr(key.find("_") + 1);
+      cutFlowManager->UpdateCutFlow(name);
     }
-
-    if(dimuons.size() == 0) continue;
-    cutFlowManager->UpdateCutFlow("goodDimuons");
+    if(!passes) continue;
 
     eventWriter->AddCurrentEvent("Events");
   }

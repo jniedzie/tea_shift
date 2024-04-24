@@ -1,30 +1,33 @@
-from shift_paths import skim
+from shift_paths import skim, detectorParams, base_path
 
 ## specify how many events to run on (and how often to print current event number)
 nEvents = 1000
 printEveryNevents = 100
 
-base_path = "/nfs/dust/cms/user/jniedzie/shift"
-
 # process = "pythia_qcd"
-# process = "pythia_dy"    
+# process = "pythia_dy"
 # process = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
 process = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
 
 # specify input/output paths 
-inputFilePath = f"{base_path}/{process}/merged_{skim}.root"
-histogramsOutputFilePath = f"../histograms_{skim}_{process}.root"
+# inputFilePath = f"../skimmed_merged_{process}_{skim}.root"
+# inputFilePath = f"{base_path}/{process}/merged_{skim}.root"
+# histogramsOutputFilePath = f"../histograms_{skim}_{process}.root"
+
+# inputFilePath = "../dy_part-0.root"
+# histogramsOutputFilePath = "../histograms_dy.root"
+
+# inputFilePath = "../qcd_part-0.root"
+# histogramsOutputFilePath = "../histograms_qcd.root"
+
+inputFilePath = "../mZprime-100GeV_mDarkHadron-20GeV_mDarkQuark-1GeV_lifetime-1p00em07m_part-0.root"
+histogramsOutputFilePath = "../histograms_signal.root"
 
 # inputFilePath = "./skimmed_test.root"
 # histogramsOutputFilePath = "../histograms_test.root"
 
-# define default histograms (can be filled automatically with HistogramsFiller, based on collection and variable names)
-defaultHistParams = (
-#  collection      variable          bins    xmin     xmax     dir
-  ("Particle"        , "px"            , 400,    0,       200,     ""  ),
-)
+defaultHistParams = []
 
-# define custom histograms (you will have to fill them in your HistogramsFiller)
 histParams = (
 #    name                 bins  xmin    xmax    dir
   ("Zprime", "pt"  ,      100,  0,      1000,     ""),
@@ -41,20 +44,36 @@ histParams = (
   ("DarkHadron", "pid"  ,     100,  0,      10000000,     ""),
   ("DarkHadron", "status",    100,  0,      100,     ""),
   
-  ("MuonFromDarkHadron", "pt"      ,    100,  0,      1000,     ""),
-  ("MuonFromDarkHadron", "energy"  ,    100,  0,      10000,     ""),
-  ("MuonFromDarkHadron", "eta"     ,    100,  -10,    20,     ""),
-  ("MuonFromDarkHadron", "phi"     ,    100,  -4,     4,     ""),
-  ("MuonFromDarkHadron", "mass"    ,    100,  0,      10,     ""),
-  ("MuonFromDarkHadron", "pid"     ,    100,  0,      10000000,     ""),
-  ("MuonFromDarkHadron", "status"  ,    100,  0,      100,     ""),
-  ("MuonFromDarkHadron", "x"  ,    100,  -10000000,      10000000,     ""),
-  ("MuonFromDarkHadron", "y"  ,    100,  -10000000,      10000000,     ""),
-  ("MuonFromDarkHadron", "z"  ,    100,  -1000000000,      1000000000,     ""),
-   
+  ("InitialMuons", "pt"      ,    1000,  0,      1000,     ""),
+  ("InitialMuons", "energy"  ,    100,  0,      10000,     ""),
+  ("InitialMuons", "eta"     ,    100,  -10,    20,     ""),
+  ("InitialMuons", "phi"     ,    100,  -4,     4,     ""),
+  ("InitialMuons", "mass"    ,    100,  0,      10,     ""),
+  ("InitialMuons", "pid"     ,    100,  0,      10000000,     ""),
+  ("InitialMuons", "status"  ,    100,  0,      100,     ""),
+  ("InitialMuons", "x"  ,    100,  -10000000,      10000000,     ""),
+  ("InitialMuons", "y"  ,    100,  -10000000,      10000000,     ""),
+  ("InitialMuons", "z"  ,    100,  -1000000000,      1000000000,     ""),
+  ("InitialMuonsPair", "mass"  ,    100,  0,      100,     ""),
+  ("InitialMuonsPair", "deltaR"  ,    100,  0,      10,     ""),
+  
+  ("MuonsHittingDetector", "pt"      ,    1000,  0,      1000,     ""),
+  ("MuonsHittingDetector", "energy"  ,    100,  0,      10000,     ""),
+  ("MuonsHittingDetector", "eta"     ,    100,  -10,    20,     ""),
+  ("MuonsHittingDetector", "phi"     ,    100,  -4,     4,     ""),
+  ("MuonsHittingDetector", "mass"    ,    100,  0,      10,     ""),
+  ("MuonsHittingDetector", "pid"     ,    100,  0,      10000000,     ""),
+  ("MuonsHittingDetector", "status"  ,    100,  0,      100,     ""),
+  ("MuonsHittingDetector", "x"  ,    100,  -10000000,      10000000,     ""),
+  ("MuonsHittingDetector", "y"  ,    100,  -10000000,      10000000,     ""),
+  ("MuonsHittingDetector", "z"  ,    100,  -1000000000,      1000000000,     ""),
+  ("MuonsHittingDetectorPair", "mass"  ,    100,  0,      100,     ""),
+  ("MuonsHittingDetectorPair", "deltaR"  ,    100,  0,      10,     ""),
+  
   ("Event", "nZprimes"    ,    10,  0,      10,     ""),
-  ("Event", "nDarkHadrons",    100,  0,      100,     ""),
-  ("Event", "nMuonsFromDarkHadrons",    100,  0,      100,     ""),
+  ("Event", "nDarkHadrons",    10,  0,      10,     ""),
+  ("Event", "nInitialMuons",    20,  0,      20,     ""),
+  ("Event", "nMuonsHittingDetector",    20,  0,      20,     ""),
 )
 
 # specify name of the branch containing event weights

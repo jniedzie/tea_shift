@@ -22,7 +22,7 @@ class ShiftHistogramsFiller {
 
   void FillZprimeHistograms(const std::shared_ptr<Event> event);
   void FillDarkHadronsHistograms(const std::shared_ptr<Event> event);
-  void FillMuonsFromDarkHadronsHistograms(const std::shared_ptr<Event> event);
+  void FillMuonHistograms(const std::shared_ptr<Event> event, std::string collectionName, std::string histName);
 };
 
 #endif /* ShiftHistogramsFiller_hpp */

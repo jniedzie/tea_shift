@@ -37,17 +37,26 @@ int main(int argc, char **argv) {
   auto histogramsFiller = make_unique<HistogramsFiller>(histogramsHandler);
   auto shiftHistogramsFiller = make_unique<ShiftHistogramsFiller>(histogramsHandler);
   auto shiftObjectsManager = make_unique<ShiftObjectsManager>();
-  auto cutFlowManager = make_unique<CutFlowManager>(eventReader);
+  auto cutFlowManager = make_shared<CutFlowManager>(eventReader);
   
+  map<string, float> detectorParams;
+  config.GetMap("detectorParams", detectorParams);
+
+  cutFlowManager->RegisterCut("initial");
 
   for (int iEvent = 0; iEvent < eventReader->GetNevents(); iEvent++) {
     auto event = eventReader->GetEvent(iEvent);
 
+    cutFlowManager->UpdateCutFlow("initial");
+
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
-    shiftObjectsManager->InsertGoodMuonsFromDarkHadronsCollection(event);
+    shiftObjectsManager->InsertGoodMuonsCollection(event);
+    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, detectorParams);
     shiftHistogramsFiller->Fill(event);
   }
+
+  histogramsFiller->FillCutFlow(cutFlowManager);
 
   histogramsHandler->SaveHistograms();
   cutFlowManager->Print();

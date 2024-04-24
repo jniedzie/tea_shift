@@ -12,7 +12,7 @@ ShiftHistogramsFiller::ShiftHistogramsFiller(shared_ptr<HistogramsHandler> histo
   // Try to read weights branch
   try {
     config.GetValue("weightsBranchName", weightsBranchName);
-  } catch (const Exception& e) {
+  } catch (const Exception &e) {
     info() << "Weights branch not specified -- will assume weight is 1 for all events" << endl;
   }
 
@@ -22,7 +22,7 @@ ShiftHistogramsFiller::ShiftHistogramsFiller(shared_ptr<HistogramsHandler> histo
 
 ShiftHistogramsFiller::~ShiftHistogramsFiller() {}
 
-float ShiftHistogramsFiller::GetWeight(const std::shared_ptr<Event> event) {
+float ShiftHistogramsFiller::GetWeight(const shared_ptr<Event> event) {
   // Try to get event weight, otherwise set to 1.0
   float weight = 1.0;
   try {
@@ -32,7 +32,7 @@ float ShiftHistogramsFiller::GetWeight(const std::shared_ptr<Event> event) {
   return weight;
 }
 
-void ShiftHistogramsFiller::FillZprimeHistograms(const std::shared_ptr<Event> event) {
+void ShiftHistogramsFiller::FillZprimeHistograms(const shared_ptr<Event> event) {
   // Get the good Z' collection
   auto goodZprimes = event->GetCollection("goodZprimes");
 
@@ -52,7 +52,7 @@ void ShiftHistogramsFiller::FillZprimeHistograms(const std::shared_ptr<Event> ev
   }
 }
 
-void ShiftHistogramsFiller::FillDarkHadronsHistograms(const std::shared_ptr<Event> event) {
+void ShiftHistogramsFiller::FillDarkHadronsHistograms(const shared_ptr<Event> event) {
   // Get the good dark hadrons collection
   auto goodDarkHadrons = event->GetCollection("goodDarkHadrons");
 
@@ -72,33 +72,45 @@ void ShiftHistogramsFiller::FillDarkHadronsHistograms(const std::shared_ptr<Even
   }
 }
 
-void ShiftHistogramsFiller::FillMuonsFromDarkHadronsHistograms(const std::shared_ptr<Event> event) {
-  // Get the good muons from dark hadrons collection
-  auto goodMuonsFromDarkHadrons = event->GetCollection("goodMuonsFromDarkHadrons");
+void ShiftHistogramsFiller::FillMuonHistograms(const shared_ptr<Event> event, string collectionName, string histName) {
+  auto muons = event->GetCollection(collectionName);
 
-  histogramsHandler->Fill("Event_nMuonsFromDarkHadrons", goodMuonsFromDarkHadrons->size(), GetWeight(event));
+  histogramsHandler->Fill("Event_n"+histName, muons->size(), GetWeight(event));
 
   // Loop over the good muons from dark hadrons
-  for (auto physicsObject : *goodMuonsFromDarkHadrons) {
+  for (int i = 0; i < muons->size(); i++) {
+    auto physicsObject = muons->at(i);
     auto hepMCParticle = asHepMCParticle(physicsObject);
     auto fourVector = hepMCParticle->GetLorentzVector();
 
-    histogramsHandler->Fill("MuonFromDarkHadron_mass", hepMCParticle->GetMass(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_pt", fourVector.Pt(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_energy", fourVector.E(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_eta", fourVector.Eta(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_phi", fourVector.Phi(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_pid", hepMCParticle->GetPid(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_status", hepMCParticle->GetStatus(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_mass", hepMCParticle->GetMass(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_pt", fourVector.Pt(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_energy", fourVector.E(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_eta", fourVector.Eta(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_phi", fourVector.Phi(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_pid", hepMCParticle->GetPid(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_status", hepMCParticle->GetStatus(), GetWeight(event));
 
-    histogramsHandler->Fill("MuonFromDarkHadron_x", hepMCParticle->GetX(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_y", hepMCParticle->GetY(), GetWeight(event));
-    histogramsHandler->Fill("MuonFromDarkHadron_z", hepMCParticle->GetZ(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_x", hepMCParticle->GetX(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_y", hepMCParticle->GetY(), GetWeight(event));
+    histogramsHandler->Fill(histName+"_z", hepMCParticle->GetZ(), GetWeight(event));
+    for (int j = i + 1; j < muons->size(); j++) {
+      auto physicsObject2 = muons->at(j);
+      auto hepMCParticle2 = asHepMCParticle(physicsObject2);
+      auto fourVector2 = hepMCParticle2->GetLorentzVector();
+
+      auto dimuon = fourVector + fourVector2;
+
+      histogramsHandler->Fill(histName+"Pair_deltaR", fourVector.DeltaR(fourVector2), GetWeight(event));
+      histogramsHandler->Fill(histName+"Pair_mass", dimuon.M(), GetWeight(event));
+    }
   }
 }
 
-void ShiftHistogramsFiller::Fill(const std::shared_ptr<Event> event) {
+void ShiftHistogramsFiller::Fill(const shared_ptr<Event> event) {
   FillZprimeHistograms(event);
   FillDarkHadronsHistograms(event);
-  FillMuonsFromDarkHadronsHistograms(event);
+
+  FillMuonHistograms(event, "goodMuons", "InitialMuons");
+  FillMuonHistograms(event, "muonsInDetector", "MuonsHittingDetector");
 }

@@ -1,4 +1,5 @@
 #include "ShiftObjectsManager.hpp"
+#include "ShiftDetector.hpp"
 
 #include "ConfigManager.hpp"
 #include "Logger.hpp"
@@ -6,28 +7,28 @@
 using namespace std;
 
 ShiftObjectsManager::ShiftObjectsManager() {
-  auto& config = ConfigManager::GetInstance();
+  auto &config = ConfigManager::GetInstance();
 
-    hepMCProcessor = make_unique<HepMCProcessor>();
-//   config.GetMap("detectorParams", detectorParams);
-//   config.GetMap("caloEtaEdges", caloEtaEdges);
+  hepMCProcessor = make_unique<HepMCProcessor>();
+  //   config.GetMap("detectorParams", detectorParams);
+  //   config.GetMap("caloEtaEdges", caloEtaEdges);
 }
 
 bool ShiftObjectsManager::IsGoodZprime(const shared_ptr<HepMCParticle> particle, const shared_ptr<PhysicsObjects> &allParticles) {
-  if(particle->GetPid() != 4900023) return false;
-  if(!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
+  if (particle->GetPid() != 4900023) return false;
+  if (!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
   return true;
 }
 
 bool ShiftObjectsManager::IsGoodDarkHadron(const shared_ptr<HepMCParticle> particle, const shared_ptr<PhysicsObjects> &allParticles) {
-  if(fabs(particle->GetPid()) != 4900111 && fabs(particle->GetPid()) != 4900113) return false;
-  if(!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
+  if (fabs(particle->GetPid()) != 4900111 && fabs(particle->GetPid()) != 4900113) return false;
+  if (!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
   return true;
 }
 
-bool ShiftObjectsManager::IsGoodMuonFromDarkHadron(const shared_ptr<HepMCParticle> particle, const shared_ptr<PhysicsObjects> &allParticles) {
-  if(fabs(particle->GetPid()) != 13) return false;
-  if(!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
+bool ShiftObjectsManager::IsGoodMuon(const shared_ptr<HepMCParticle> particle, const shared_ptr<PhysicsObjects> &allParticles) {
+  if (fabs(particle->GetPid()) != 13) return false;
+  if (!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
 
   // auto mother = particle->GetMother(allParticles);
 
@@ -40,10 +41,10 @@ bool ShiftObjectsManager::IsGoodMuonFromDarkHadron(const shared_ptr<HepMCParticl
 
 void ShiftObjectsManager::InsertGoodZprimesCollection(shared_ptr<Event> event) {
   auto particles = event->GetCollection("Particle");
-  
+
   auto goodZprimes = make_shared<PhysicsObjects>();
-  
-  for (int particleIndex=0; particleIndex < particles->size(); particleIndex++){
+
+  for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
     auto physicsObject = particles->at(particleIndex);
     auto hepMCParticle = asHepMCParticle(physicsObject, particleIndex, 100);
     if (!IsGoodZprime(hepMCParticle, particles)) continue;
@@ -54,10 +55,10 @@ void ShiftObjectsManager::InsertGoodZprimesCollection(shared_ptr<Event> event) {
 
 void ShiftObjectsManager::InsertGoodDarkHadronsCollection(shared_ptr<Event> event) {
   auto particles = event->GetCollection("Particle");
-  
+
   auto goodDarkHadrons = make_shared<PhysicsObjects>();
-  
-  for (int particleIndex=0; particleIndex < particles->size(); particleIndex++){
+
+  for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
     auto physicsObject = particles->at(particleIndex);
     auto hepMCParticle = asHepMCParticle(physicsObject, particleIndex, 100);
     if (!IsGoodDarkHadron(hepMCParticle, particles)) continue;
@@ -66,16 +67,49 @@ void ShiftObjectsManager::InsertGoodDarkHadronsCollection(shared_ptr<Event> even
   event->AddCollection("goodDarkHadrons", goodDarkHadrons);
 }
 
-void ShiftObjectsManager::InsertGoodMuonsFromDarkHadronsCollection(shared_ptr<Event> event) {
+void ShiftObjectsManager::InsertGoodMuonsCollection(shared_ptr<Event> event) {
   auto particles = event->GetCollection("Particle");
-  
-  auto goodMuonsFromDarkHadrons = make_shared<PhysicsObjects>();
-  
-  for (int particleIndex=0; particleIndex < particles->size(); particleIndex++){
+
+  auto goodMuons = make_shared<PhysicsObjects>();
+
+  for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
     auto physicsObject = particles->at(particleIndex);
     auto hepMCParticle = asHepMCParticle(physicsObject, particleIndex, 100);
-    if (!IsGoodMuonFromDarkHadron(hepMCParticle, particles)) continue;
-    goodMuonsFromDarkHadrons->push_back(physicsObject);
+    if (!IsGoodMuon(hepMCParticle, particles)) continue;
+    goodMuons->push_back(physicsObject);
   }
-  event->AddCollection("goodMuonsFromDarkHadrons", goodMuonsFromDarkHadrons);
+  event->AddCollection("goodMuons", goodMuons);
+}
+
+void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event> event, const map<string, float> &detectorParams,
+                                                               shared_ptr<map<string, int>> nMuons) {
+  auto goodMuons = event->GetCollection("goodMuons");
+  auto detector = make_shared<ShiftDetector>(detectorParams);
+  auto passingMuons = make_shared<PhysicsObjects>();
+
+  for (auto physicsObject : *goodMuons) {
+    auto hepMCParticle = asHepMCParticle(physicsObject);
+
+    if(nMuons) nMuons->at("1_hasMuons")++;
+
+    // Check that they intersect with the detector
+    if (!detector->DoesParticleGoThrough(hepMCParticle)) continue;
+    if(nMuons) nMuons->at("2_intersectingDetector")++;
+
+    // Check that the production vertex is before the detector
+    if (!detector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
+    if(nMuons) nMuons->at("3_beforeDetector")++;
+
+    // Check that the muon goes through the rock
+    if (!detector->DoesParticleGoThroughRock(hepMCParticle)) continue;
+    if(nMuons) nMuons->at("4_throughRock")++;
+
+    // Check that the muon has at least 30 GeV of energy, so that it can trigger and be reconstructed at CMS
+    if (hepMCParticle->GetLorentzVector().E() < 30) continue;
+    if(nMuons) nMuons->at("5_triggerAndReco")++;
+
+    passingMuons->push_back(physicsObject);
+  }
+
+  event->AddCollection("muonsInDetector", passingMuons);
 }
