@@ -12,10 +12,74 @@ Beams:eA = 6800.
 Beams:idB = 2212
 Beams:eB = 0.
 
-PartonLevel:ISR = on
+! CMS common settings
+Tune:preferLHAPDF = 2
+Main:timesAllowErrors = 10000
+Check:epTolErr = 0.01
+Beams:setProductionScalesFromLHEF = off
+SLHA:minMassSM = 1000.
+! ParticleDecays:limitTau0 = on
+! ParticleDecays:tau0Max = 10
+ParticleDecays:allowPhotonRadiation = on
 
-HardQCD:all = off                 ! Turn off all QCD processes
-WeakBosonAndParton:qqbar2gmZg = on ! Enable gamma*/Z0 production
+Tune:pp 14
+Tune:ee 7
+MultipartonInteractions:ecmPow=0.03344
+MultipartonInteractions:bProfile=2
+MultipartonInteractions:pT0Ref=1.41
+MultipartonInteractions:coreRadius=0.7634
+MultipartonInteractions:coreFraction=0.63
+ColourReconnection:range=5.176
+SigmaTotal:zeroAXB=off
+SpaceShower:alphaSorder=2
+SpaceShower:alphaSvalue=0.118
+SigmaProcess:alphaSvalue=0.118
+SigmaProcess:alphaSorder=2
+MultipartonInteractions:alphaSvalue=0.118
+MultipartonInteractions:alphaSorder=2
+TimeShower:alphaSorder=2
+TimeShower:alphaSvalue=0.118
+SigmaTotal:mode = 0
+SigmaTotal:sigmaEl = 22.08
+SigmaTotal:sigmaTot = 101.037
+! PDF:pSet=LHAPDF6:NNPDF31_nnlo_as_0118
 
-23:onMode = off                   ! Turn off all Z decays
-23:onIfMatch = 13 -13             ! Turn on decay to mu+ mu-
+! CMS DY->ll settings
+WeakSingleBoson:ffbar2gmZ = on
+23:onMode = off
+23:onIfAny = 13
+! 23:mMin = 50.
+
+! CMS Charmonium settings
+Charmonium:O(3S1)[3S1(1)] = 1.16
+Charmonium:O(3S1)[3S1(8)] = 0.0119
+Charmonium:O(3S1)[1S0(8)] = 0.01
+Charmonium:O(3S1)[3P0(8)] = 0.01
+Charmonium:gg2ccbar(3S1)[3S1(1)]g = on
+Charmonium:gg2ccbar(3S1)[3S1(1)]gm = on
+Charmonium:gg2ccbar(3S1)[3S1(8)]g = on
+Charmonium:qg2ccbar(3S1)[3S1(8)]q = on
+Charmonium:qqbar2ccbar(3S1)[3S1(8)]g = on
+Charmonium:gg2ccbar(3S1)[1S0(8)]g = on
+Charmonium:qg2ccbar(3S1)[1S0(8)]q = on
+Charmonium:qqbar2ccbar(3S1)[1S0(8)]g = on
+Charmonium:gg2ccbar(3S1)[3PJ(8)]g = on
+Charmonium:qg2ccbar(3S1)[3PJ(8)]q = on
+Charmonium:qqbar2ccbar(3S1)[3PJ(8)]g = on
+
+
+! PartonLevel:ISR = off
+! PhaseSpace:ptHatMin = 20
+
+! PhaseSpace:mHatMin = 80
+! PhaseSpace:mHatMax = 150
+
+! HardQCD:all = off                 ! Turn off all QCD processes
+! WeakBosonAndParton:qqbar2gmZg = on ! Enable gamma*/Z0 production
+! WeakSingleBoson:ffbar2gmZ = on
+
+! 23:onMode = off                   ! Turn off all Z decays
+! 23:onIfMatch = 13 -13             ! Turn on decay to mu+ mu-
+
+! 443:onMode = off  ! Disable all J/psi decays
+! 553:onMode = off  ! Disable all Upsilon decays

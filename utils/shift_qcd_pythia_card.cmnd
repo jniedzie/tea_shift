@@ -12,37 +12,84 @@ Beams:eA = 6800.
 Beams:idB = 2212
 Beams:eB = 0.
 
-PartonLevel:ISR = on
-PhaseSpace:pTHatMin = 20.0
+! CMS common settings
+Tune:preferLHAPDF = 2
+Main:timesAllowErrors = 10000
+Check:epTolErr = 0.01
+Beams:setProductionScalesFromLHEF = off
+SLHA:minMassSM = 1000.
+! ParticleDecays:limitTau0 = on
+! ParticleDecays:tau0Max = 10
+ParticleDecays:allowPhotonRadiation = on
+
+Tune:pp 14
+Tune:ee 7
+MultipartonInteractions:ecmPow=0.03344
+MultipartonInteractions:bProfile=2
+MultipartonInteractions:pT0Ref=1.41
+MultipartonInteractions:coreRadius=0.7634
+MultipartonInteractions:coreFraction=0.63
+ColourReconnection:range=5.176
+SigmaTotal:zeroAXB=off
+SpaceShower:alphaSorder=2
+SpaceShower:alphaSvalue=0.118
+SigmaProcess:alphaSvalue=0.118
+SigmaProcess:alphaSorder=2
+MultipartonInteractions:alphaSvalue=0.118
+MultipartonInteractions:alphaSorder=2
+TimeShower:alphaSorder=2
+TimeShower:alphaSvalue=0.118
+SigmaTotal:mode = 0
+SigmaTotal:sigmaEl = 22.08
+SigmaTotal:sigmaTot = 101.037
+! PDF:pSet=LHAPDF6:NNPDF31_nnlo_as_0118
+
+
+! CMS QCD settings
+! ParticleDecays:limitTau0 = off
+! ParticleDecays:limitCylinder = on
+! ParticleDecays:xyMax = 2000
+! ParticleDecays:zMax = 4000
+HardQCD:all = on
+PhaseSpace:pTHatMin = 20
+130:mayDecay = on
+211:mayDecay = on
+321:mayDecay = on
+
+
+
+! My other settings
+! PartonLevel:ISR = on
+! PhaseSpace:pTHatMin = 20.0
 
 ! Turn on QCD processes and weak boson production
-HardQCD:all = on                  ! Enable all QCD processes
-WeakBosonAndParton:qg2gmZq = on   ! Enable Z production in QCD events
-WeakBosonAndParton:qg2Wq = on     ! Enable W production in QCD events
+! HardQCD:all = on                  ! Enable all QCD processes
+! WeakBosonAndParton:qg2gmZq = on   ! Enable Z production in QCD events
+! WeakBosonAndParton:qg2Wq = on     ! Enable W production in QCD events
 
 ! Force W and Z to decay to muons where relevant
-24:onMode = off                  ! Turn off all W decays
-24:onIfAny = 13 14               ! Enable W to mu nu_mu decay
-23:onMode = off                  ! Turn off all Z decays
-23:onIfMatch = 13 -13            ! Turn on Z to mu+ mu- decay
+! 24:onMode = off                  ! Turn off all W decays
+! 24:onIfAny = 13 14               ! Enable W to mu nu_mu decay
+! 23:onMode = off                  ! Turn off all Z decays
+! 23:onIfMatch = 13 -13            ! Turn on Z to mu+ mu- decay
 
 
 ! Particle setup for J/psi production
-443:onMode = off                  ! Turn off all J/psi decays
-443:onIfMatch = 13 -13            ! Turn on decay to mu+ mu-
+! 443:onMode = off                  ! Turn off all J/psi decays
+! 443:onIfMatch = 13 -13            ! Turn on decay to mu+ mu-
 
 ! Optionally, enhance charmonium and bottomonium production
-Charmonium:all = on               ! General switch for all charmonium states
-Bottomonium:all = on              ! General switch for all bottomonium states
-Charmonium:gg2ccbar(3S1)[3S1(1)]g = on   ! Turn on specific charmonium production processes
+! Charmonium:all = on               ! General switch for all charmonium states
+! Bottomonium:all = on              ! General switch for all bottomonium states
+! Charmonium:gg2ccbar(3S1)[3S1(1)]g = on   ! Turn on specific charmonium production processes
 
 
 ! Enhance B meson decays to muonic states
-531:onMode = off               ! B_s0 decay modes off
-531:onIfMatch = 13 -13         ! B_s0 to mu+ mu-
+! 531:onMode = off               ! B_s0 decay modes off
+! 531:onIfMatch = 13 -13         ! B_s0 to mu+ mu-
 
-411:onMode = off               ! D+ decay modes off
-411:onIfAny = 13 14            ! D+ to mu+ nu_mu
+! 411:onMode = off               ! D+ decay modes off
+! 411:onIfAny = 13 14            ! D+ to mu+ nu_mu
 
-553:onMode = off               ! Upsilon decay modes off
-553:onIfMatch = 13 -13         ! Upsilon to mu+ mu-
+! 553:onMode = off               ! Upsilon decay modes off
+! 553:onIfMatch = 13 -13         ! Upsilon to mu+ mu-
