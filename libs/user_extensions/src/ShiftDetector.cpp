@@ -26,8 +26,8 @@ void ShiftDetector::Print() {
 }
 
 bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &particle) {
-  // check if the particle, given it's eta and phi, as well as production vertex x,y,z, passes through this sphere (ignore the magnetic
-  // field)
+  // check if the particle, given it's eta and phi, as well as production vertex x,y,z, passes through this sphere
+
   auto fourVector = particle->GetLorentzVector();
   float eta = fourVector.Eta();
   float theta = 2 * atan(exp(-eta));
@@ -38,51 +38,33 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
   float z_p = particle->GetZ() / 1e3;  // convert mm to m
 
   // Calculate velocity components
-    double v_x = pT * cos(phi);
-    double v_y = pT * sin(phi);
-    double v_z = pT * sinh(eta);
-    
-    // Calculate vector from particle start to sphere center
-    double dx = x - x_p;
-    double dy = y - y_p;
-    double dz = z - z_p;
+  double v_x = pT * cos(phi);
+  double v_y = pT * sin(phi);
+  double v_z = pT * sinh(eta);
 
-    // Dot product of velocity vector and vector to sphere center
-    double dotProduct = v_x * dx + v_y * dy + v_z * dz;
-    if (dotProduct <= 0) {
-        // Particle is moving away from or perpendicular to the direction of the sphere
-        return false;
-    }
+  // Calculate vector from particle start to sphere center
+  double dx = x - x_p;
+  double dy = y - y_p;
+  double dz = z - z_p;
 
-    // Coefficients of the quadratic equation At^2 + Bt + C = 0
-    double A = v_x * v_x + v_y * v_y + v_z * v_z;
-    double B = 2 * dotProduct;
-    double C = dx * dx + dy * dy + dz * dz - radius * radius;
+  // Dot product of velocity vector and vector to sphere center
+  double dotProduct = v_x * dx + v_y * dy + v_z * dz;
+  if (dotProduct <= 0) {
+    warn() << "Wrong direction" << endl;
+    // Particle is moving away from or perpendicular to the direction of the sphere
+    return false;
+  }
 
-    // Calculate discriminant
-    double discriminant = B * B - 4 * A * C;
-    
-    // Check if there is an intersection
-    return discriminant >= 0;
+  // Coefficients of the quadratic equation At^2 + Bt + C = 0
+  double A = v_x * v_x + v_y * v_y + v_z * v_z;
+  double B = 2 * dotProduct;
+  double C = dx * dx + dy * dy + dz * dz - radius * radius;
 
-  // // check if the direction of the muon is towards the detector
-  // if (zProd*z < 0) return false;
-  
-  // // Direction vector components
-  // double dx = cos(phi) * sin(theta);
-  // double dy = sin(phi) * sin(theta);
-  // double dz = cos(theta);
+  // Calculate discriminant
+  double discriminant = B * B - 4 * A * C;
 
-  // // Calculate coefficients of the quadratic equation
-  // double a = dx * dx + dy * dy + dz * dz;
-  // double b = 2 * (dx * (xProd - x) + dy * (yProd - y) + dz * (zProd - z));
-  // double c = (xProd - x) * (xProd - x) + (yProd - y) * (yProd - y) + (zProd - z) * (zProd - z) - radius * radius;
-
-  // // Calculate the discriminant
-  // double discriminant = b * b - 4 * a * c;
-
-  // // Check if the discriminant is non-negative
-  // return discriminant >= 0;
+  // Check if there is an intersection
+  return discriminant >= 0;
 }
 
 bool ShiftDetector::IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticle> &particle, float maxDistanceInsideDetector) {
@@ -103,9 +85,8 @@ bool ShiftDetector::DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &p
   float yProd = particle->GetY() / 1e3;  // convert mm to m
   float zProd = particle->GetZ() / 1e3;  // convert mm to m
 
-  float particleDistance = sqrt(pow(xProd, 2) + pow(yProd, 2) + pow(zProd, 2));
-  float detectorDistance = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
-  float distanceToDetector = detectorDistance - particleDistance - radius;
+  float distanceToDetectorCenter = sqrt(pow(xProd - x, 2) + pow(yProd - y, 2) + pow(zProd - z, 2));
+  float distanceToDetector = distanceToDetectorCenter - radius;
 
   float particleEnergy = particle->GetLorentzVector().E();
 
