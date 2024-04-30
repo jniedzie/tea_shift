@@ -4,6 +4,8 @@
     ],
     "files.associations": {
         "cmath": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "InitialMuonsPair_deltaR.C": "cpp",
+        "InitialMuonsPair_lowMass.C": "cpp"
     }
 }

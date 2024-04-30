@@ -2,6 +2,7 @@ build/*
 bin/*
 
 plots/*
+datacards/*
 
 *.root
 
