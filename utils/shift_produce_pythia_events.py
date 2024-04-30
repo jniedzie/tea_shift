@@ -20,19 +20,12 @@ def run_command(config_path, output_path, file_name, pythia_exec_path):
 
     # Convert hepmc to ROOT
     hepmc_path="./hepmc2root"
-    command = f"{hepmc_path} {output_file_path}"
+    command = f"{hepmc_path} {output_file_path} {output_path}/{file_name}.root"
 
     print(f"running command: {command}")
     if not dry_run:
         os.system(command)
     
-    # Move ROOT file to the output directory
-    command = f"mv {file_name}.root {output_path}/"
-
-    print(f"running command: {command}")
-    if not dry_run:
-        os.system(command)
-
     # Remove hepmc file
     command = f"rm {output_path}/{file_name}.hepmc"
     
