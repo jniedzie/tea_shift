@@ -47,6 +47,12 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
   double dy = y - y_p;
   double dz = z - z_p;
 
+  // check if production vertex is within the detector:
+  bool insideDetector = sqrt(dx * dx + dy * dy + dz * dz) < radius;
+  if(insideDetector) {
+    return true;
+  }
+
   // Dot product of velocity vector and vector to sphere center
   double dotProduct = v_x * dx + v_y * dy + v_z * dz;
   if (dotProduct <= 0) {
