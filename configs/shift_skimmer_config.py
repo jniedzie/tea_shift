@@ -1,6 +1,6 @@
 from shift_paths import detectorParams, base_path
 
-nEvents = 1000
+nEvents = -1
 printEveryNevents = 100
 
 skim = "initial"

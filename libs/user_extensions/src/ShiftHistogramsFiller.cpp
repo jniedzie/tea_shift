@@ -103,6 +103,7 @@ void ShiftHistogramsFiller::FillMuonHistograms(const shared_ptr<Event> event, st
 
       histogramsHandler->Fill(histName+"Pair_deltaR", fourVector.DeltaR(fourVector2), GetWeight(event));
       histogramsHandler->Fill(histName+"Pair_mass", dimuon.M(), GetWeight(event));
+      histogramsHandler->Fill(histName+"Pair_lowMass", dimuon.M(), GetWeight(event));
     }
   }
 }
@@ -113,4 +114,9 @@ void ShiftHistogramsFiller::Fill(const shared_ptr<Event> event) {
 
   FillMuonHistograms(event, "goodMuons", "InitialMuons");
   FillMuonHistograms(event, "muonsInDetector", "MuonsHittingDetector");
+
+  auto muons = event->GetCollection("muonsInDetector");
+  if(muons->size() >= 2){
+    histogramsHandler->Fill("Event_count", 0.5, GetWeight(event));
+  }
 }

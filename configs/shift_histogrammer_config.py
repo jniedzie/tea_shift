@@ -1,13 +1,13 @@
 from shift_paths import skim, detectorParams, base_path
 
 ## specify how many events to run on (and how often to print current event number)
-nEvents = 1000
+nEvents = -1
 printEveryNevents = 100
 
 # process = "pythia_qcd"
 # process = "pythia_dy"
 # process = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
-process = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
+# process = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
 
 # specify input/output paths 
 # inputFilePath = f"../skimmed_merged_{process}_{skim}.root"
@@ -54,7 +54,8 @@ histParams = (
   ("InitialMuons", "x"  ,    100,  -10000000,      10000000,     ""),
   ("InitialMuons", "y"  ,    100,  -10000000,      10000000,     ""),
   ("InitialMuons", "z"  ,    100,  -1000000000,      1000000000,     ""),
-  ("InitialMuonsPair", "mass"  ,    100,  0,      100,     ""),
+  ("InitialMuonsPair", "mass"  ,    1000,  0,      100,     ""),
+  ("InitialMuonsPair", "lowMass"  ,    1000,  0,      10,     ""),
   ("InitialMuonsPair", "deltaR"  ,    100,  0,      10,     ""),
   
   ("MuonsHittingDetector", "pt"      ,    1000,  0,      1000,     ""),
@@ -67,13 +68,15 @@ histParams = (
   ("MuonsHittingDetector", "x"  ,    100,  -10000000,      10000000,     ""),
   ("MuonsHittingDetector", "y"  ,    100,  -10000000,      10000000,     ""),
   ("MuonsHittingDetector", "z"  ,    100,  -1000000000,      1000000000,     ""),
-  ("MuonsHittingDetectorPair", "mass"  ,    100,  0,      100,     ""),
+  ("MuonsHittingDetectorPair", "mass"  ,    1000,  0,      100,     ""),
+  ("MuonsHittingDetectorPair", "lowMass"  ,    1000,  0,      10,     ""),
   ("MuonsHittingDetectorPair", "deltaR"  ,    100,  0,      10,     ""),
   
   ("Event", "nZprimes"    ,    10,  0,      10,     ""),
   ("Event", "nDarkHadrons",    10,  0,      10,     ""),
   ("Event", "nInitialMuons",    20,  0,      20,     ""),
   ("Event", "nMuonsHittingDetector",    20,  0,      20,     ""),
+  ("Event", "count",    1,  0,      1,     ""),
 )
 
 # specify name of the branch containing event weights
