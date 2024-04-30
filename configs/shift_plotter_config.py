@@ -7,7 +7,7 @@ from HistogramNormalizer import NormalizationType
 from shift_paths import luminosity, crossSections, nGenEvents, base_path, processes, skim, histograms_path
 
 
-output_path = f"../plots/{skim.replace('skimmed_', '')}/"
+output_path = f"../plots/{skim.replace('skimmed_', '')}_{histograms_path.replace('histograms_', '')}/"
 
 samples = [
     Sample(
@@ -68,6 +68,7 @@ addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0", ROOT.kGreen, 0.51)
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kGreen+1, 0.48)
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2", ROOT.kOrange, 0.45)
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3", ROOT.kRed, 0.42)
+addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5", ROOT.kRed, 0.39)
 
 
 
@@ -87,7 +88,7 @@ histograms = (
    
     Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 10, 1e1, 1e7, "Selection", "#sum genWeight"),
     
-    Histogram("Event_count", "", False, True, NormalizationType.to_lumi, 1, 0, 1, 1e-1, 1e10, "", "#events"),
+    Histogram("Event_count", "", False, True, NormalizationType.to_lumi, 1, 0, 1, 1e-10, 1e10, "", "#events"),
 )
 
 

@@ -4,15 +4,15 @@ skim = "initial"
 # skim = "skimmed_allSelections"
 
 processes = (
-    # "pythia_qcd",
-    # "pythia_dy",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
+    "pythia_qcd",
+    "pythia_dy",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
 )
 
@@ -48,16 +48,18 @@ nGenEvents = {
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5": 100*1000,
 }
 
-histograms_path = "histograms_z-300m_onLHC"
-# histograms_path = "histograms_faser/"
+# histograms_path = "histograms_z-300m_onLHC"
+# histograms_path = "histograms_faser"
+# histograms_path = "histograms_cmsFT"
+histograms_path = "histograms_atlasFT"
 
-# SHIFT
-detectorParams = {
-  "x": -1, # -1 means it will be placed on the LHC ring (based on the z coordinate)
-  "y": 0,  # usually we don't want to shift the detector up and down
-  "z": 300,
-  "radius": 10,
-}
+# # SHIFT
+# detectorParams = {
+#   "x": -1, # -1 means it will be placed on the LHC ring (based on the z coordinate)
+#   "y": 0,  # usually we don't want to shift the detector up and down
+#   "z": 300,
+#   "radius": 10,
+# }
 
 # FASER
 # detectorParams = {
@@ -76,9 +78,9 @@ detectorParams = {
 # }
 
 # # ATLAS
-# detectorParams = {
-#   "x": 0,
-#   "y": 0,
-#   "z": 0,
-#   "radius": 18,
-# }
+detectorParams = {
+  "x": 0,
+  "y": 0,
+  "z": 0,
+  "radius": 18,
+}

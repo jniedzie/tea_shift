@@ -4,7 +4,7 @@ from HistogramNormalizer import NormalizationType
 
 from shift_paths import luminosity, crossSections, nGenEvents, base_path, processes, skim, histograms_path
 
-output_path = f"../datacards/"
+
 
 add_uncertainties_on_zero = False
 include_shapes = True
@@ -14,8 +14,11 @@ include_shapes = True
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1"
-signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2"
+# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
+signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5"
+
+output_path = f"../datacards/limits_mass_{histograms_path.replace('histograms_', '')}_{signal_name.replace('pythia_', '')}"
 
 samples = [
     Sample(
