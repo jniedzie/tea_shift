@@ -22,8 +22,13 @@ luminosity_err = luminosity * 0.015  # 1.5% uncertainty
 reference_signal_cross_section = 1e-6  # nb
 
 crossSections = {
+    # Fixed target mode:
     "pythia_qcd": 2.664e-06 * 1e6,  # mb -> nb
     "pythia_dy": 2.985e-08 * 1e6, # mb -> nb
+    
+    # Collider mode:
+    "pythia_qcd": 6.247e-01 * 1e6,  # mb -> nb
+    "pythia_dy": 6.911e-06 * 1e6, # mb -> nb
     
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7": reference_signal_cross_section,
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3": reference_signal_cross_section,
