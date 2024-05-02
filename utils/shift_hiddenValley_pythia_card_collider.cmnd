@@ -6,12 +6,8 @@ Main:numberOfEvents = dummy_value
 Random:setSeed = on
 Random:seed = dummy_value
 
-! Fixed target mode:
-Beams:frameType = 2
-Beams:idA = 2212
-Beams:eA = 6800.
-Beams:idB = 2212
-Beams:eB = 0.
+! Collider mode:
+Beams:eCM = 13600
 
 ! HeavyIon:SigFitNGen = 0
 ! HeavyIon:SigFitDefPar = 18.18,2.08,0.31,0.0,0.0,0.0,0.0,0.0
