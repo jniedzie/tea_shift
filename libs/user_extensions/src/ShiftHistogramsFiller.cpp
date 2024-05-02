@@ -101,6 +101,8 @@ void ShiftHistogramsFiller::FillMuonHistograms(const shared_ptr<Event> event, st
 
       auto dimuon = fourVector + fourVector2;
 
+      if(dimuon.M() < 11.0) continue;
+
       histogramsHandler->Fill(histName+"Pair_deltaR", fourVector.DeltaR(fourVector2), GetWeight(event));
       histogramsHandler->Fill(histName+"Pair_mass", dimuon.M(), GetWeight(event));
       histogramsHandler->Fill(histName+"Pair_lowMass", dimuon.M(), GetWeight(event));
