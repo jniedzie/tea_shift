@@ -7,14 +7,14 @@ Random:setSeed = on
 Random:seed = dummy_value
 
 ! Fixed target mode:
-! Beams:frameType = 2
-! Beams:idA = 2212
-! Beams:eA = 6800.
-! Beams:idB = 2212
-! Beams:eB = 0.
+Beams:frameType = 2
+Beams:idA = 2212
+Beams:eA = 6800.
+Beams:idB = 2212
+Beams:eB = 0.
 
 ! Collider mode:
-Beams:eCM = 13600
+! Beams:eCM = 13600
 
 ! CMS common settings
 Tune:preferLHAPDF = 2

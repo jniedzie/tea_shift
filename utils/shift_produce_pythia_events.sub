@@ -10,8 +10,10 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 1000 100 20 1 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e2/initial/ shift_hiddenValley_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 100 20 1 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e3/initial/ shift_hiddenValley_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 100 20 1 1e5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e5/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 -1 -1 -1 -1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd/initial/ shift_qcd_pythia_card.cmnd
-arguments             = $(ProcId) 1000 -2 -2 -2 -2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_dy/initial/ shift_dy_pythia_card.cmnd
+
+# backgrounds (-1: QCD, -2: DY)
+arguments             = $(ProcId) 10000 -1 -1 -1 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ext/initial/ shift_qcd_pythia_card.cmnd
+# arguments             = $(ProcId) 10000 -2 -2 -2 -2 /nfs/dust/cms/user/jniedzie/shift/pythia_dy_ext/initial/ shift_dy_pythia_card.cmnd
 
 GetEnv                = True
 +Remote_Schedd = "bird-htc-sched11.desy.de"
@@ -28,4 +30,4 @@ requirements 	      = (OpSysAndVer =?= "CentOS7")
 environment           = "LD_LIBRARY_PATH=/cvmfs/sft.cern.ch/lcg/releases/gcc/8.3.0-cebb0/x86_64-centos7/lib64:$LD_LIBRARY_PATH"
 +JobFlavour           = "longlunch"
 
-queue 100
+queue 1000
