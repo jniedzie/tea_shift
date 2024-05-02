@@ -2,42 +2,45 @@ from Sample import Sample, SampleType
 from Histogram import Histogram
 from HistogramNormalizer import NormalizationType
 
-from shift_paths import luminosity, crossSections, nGenEvents, base_path, processes, skim, histograms_path
+from shift_paths import luminosity, crossSections, nGenEvents, base_path, processes, skim, histograms_path, colliderMode
 
 
 
 add_uncertainties_on_zero = False
 include_shapes = True
 
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
+signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
-signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5"
+# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5"
+
+
+signal_file_name = signal_name.replace("pythia_", "pythiaCollider_") if colliderMode else signal_name
 
 output_path = f"../datacards/limits_mass_{histograms_path.replace('histograms_', '')}_{signal_name.replace('pythia_', '')}"
 
 samples = [
     Sample(
         name="pythia_qcd",
-        file_path=f"{base_path}/pythia_qcd/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{skim}_{histograms_path}.root",
         type=SampleType.background,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents["pythia_qcd"],        
+        initial_weight_sum=nGenEvents[f"pythia{'Collider' if colliderMode else ''}_qcd"],
     ),
     Sample(
         name="pythia_dy",
-        file_path=f"{base_path}/pythia_dy/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{skim}_{histograms_path}.root",
         type=SampleType.background,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents["pythia_dy"],
+        initial_weight_sum=nGenEvents[f"pythia{'Collider' if colliderMode else ''}_dy"],
     ),
     Sample(
         name=f"signal_{signal_name}",
-        file_path=f"{base_path}/{signal_name}/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/{signal_file_name}/merged_{skim}_{histograms_path}.root",
         type=SampleType.signal,
         cross_sections=crossSections,
         initial_weight_sum=nGenEvents[signal_name],
