@@ -21,14 +21,15 @@ else:
 processes = (
     # "pythia_qcd",
     # "pythia_dy",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
     # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
     # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
     # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
     # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
     # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4",
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
 )
 
 if colliderMode:
@@ -54,7 +55,8 @@ crossSections = {
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2": reference_signal_cross_section*1e4,
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5": reference_signal_cross_section*1e6,
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4": reference_signal_cross_section*1e6,
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5": reference_signal_cross_section*1e7,
 }
 
 nGenEvents = {
@@ -68,8 +70,9 @@ nGenEvents = {
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0": 100*1000,
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1": 100*1000,
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5": 100*1000,
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3": 1000*1000,
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4": 1000*1000,
+    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5": 1000*1000,
 }
 
 histograms_path = "histograms_" + variant

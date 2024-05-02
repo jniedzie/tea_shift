@@ -2,17 +2,18 @@ Universe              = vanilla
 executable            = shift_produce_pythia_events.sh
 
 #                       part n_events m_z_prime m_dh m_dq output_path
-# arguments             = $(ProcId) 1000 100 20 1 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1em7/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 100 20 1 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1em3/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 100 20 1 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1em1/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 100 20 1 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e0/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 100 20 1 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e1/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 100 20 1 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e2/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 100 20 1 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e3/initial/ shift_hiddenValley_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 100 20 1 1e5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-20_mDQ-1_tau-1e5/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3/initial/ shift_hiddenValley_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 100 20 1 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4/initial/ shift_hiddenValley_pythia_card.cmnd
+arguments             = $(ProcId) 1000 100 20 1 1e5 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5/initial/ shift_hiddenValley_pythia_card.cmnd
 
 # backgrounds (-1: QCD, -2: DY)
-arguments             = $(ProcId) 10000 -1 -1 -1 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ext/initial/ shift_qcd_pythia_card.cmnd
+# arguments             = $(ProcId) 10000 -1 -1 -1 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ext/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 10000 -2 -2 -2 -2 /nfs/dust/cms/user/jniedzie/shift/pythia_dy_ext/initial/ shift_dy_pythia_card.cmnd
 
 GetEnv                = True
