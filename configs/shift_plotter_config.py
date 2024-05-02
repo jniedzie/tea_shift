@@ -83,8 +83,10 @@ histograms = (
 
     # photons
     Histogram("InitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 1,   0, 100, 1e-1, 1e10, "m_{#mu#mu} (GeV)", "Entries", ""),
-    Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-1, 1e10, "#Delta R_{#mu#mu} (GeV)", "Entries", ""),
+    Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-1, 1e10, "#Delta R_{#mu#mu}", "Entries", ""),
     Histogram("InitialMuonsPair_lowMass", "", False, True, NormalizationType.to_lumi, 4,   0, 5, 1e-1, 1e10, "m_{#mu#mu} (GeV)", "Entries", ""),
+   
+    Histogram("InitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e-1, 1e10, "#eta_{#mu}", "Entries", ""),
    
     Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   11, 100, 1e-3, 1e9, "m_{#mu#mu} (GeV)", "Entries", ""),
     Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-1, 1e9, "#Delta R_{#mu#mu} (GeV)", "Entries", ""),

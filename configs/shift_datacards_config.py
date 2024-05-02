@@ -2,8 +2,9 @@ from Sample import Sample, SampleType
 from Histogram import Histogram
 from HistogramNormalizer import NormalizationType
 
-from shift_paths import luminosity, crossSections, nGenEvents, base_path, processes, skim, histograms_path, colliderMode
-
+from shift_paths import luminosity, crossSections, nGenEvents, base_datacard_name
+from shift_paths import base_path, processes, skim, histograms_path, colliderMode
+from shift_utils import get_file_name
 
 
 add_uncertainties_on_zero = False
@@ -23,7 +24,7 @@ signal_name = "dummy_value"
 
 signal_file_name = signal_name.replace("pythia_", "pythiaCollider_") if colliderMode else signal_name
 
-output_path = f"../datacards/limits_mass_{histograms_path.replace('histograms_', '')}_{signal_name.replace('pythia_', '')}"
+output_path = f"../datacards/{base_datacard_name.format(get_file_name(signal_name))}"
 
 samples = [
     Sample(

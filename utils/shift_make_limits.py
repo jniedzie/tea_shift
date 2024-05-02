@@ -1,11 +1,16 @@
 import os, subprocess
 import concurrent.futures
 
-from shift_paths import processes, histograms_path
+from shift_paths import processes, histograms_path, base_datacard_name
+from shift_utils import get_file_name
 from Logger import info
 
 cmssw_path = "/afs/desy.de/user/j/jniedzie/combine/CMSSW_11_3_4/src"
 config_path = "./shift_datacards_config.py"
+
+base_config_name = "shift_datacards_config_{}.py"
+base_combine_output_name = "output_{}.txt"
+
 
 def run_commands_in_parallel(commands):
     info("Running all processes...") 
@@ -18,18 +23,17 @@ def run_commands_in_parallel(commands):
     info("All processes completed.")
 
 def prepare_datacards():
-    
     commands = []
     
     for process in processes:
-        if not process.startswith("pythia_mZprime"):
+        if "mZprime" not in process:
             continue
         
         with open(config_path, "r") as config_file:
             config = config_file.read()
             config = config.replace("signal_name = \"dummy_value\"", f"signal_name = \"{process}\"")
 
-            new_config_name = f"shift_datacards_config_{process}.py"
+            new_config_name = base_config_name.format(get_file_name(process))
             with open(new_config_name, "w") as new_config_file:
                 new_config_file.write(config)
                 
@@ -46,11 +50,11 @@ def run_combine():
     commands = []
     
     for process in processes:
-        if not process.startswith("pythia_mZprime"):
+        if "mZprime" not in process:
             continue
     
-        datacard_path = f"limits_mass_{histograms_path.replace('histograms_', '')}_{process.replace('pythia_', '')}.txt"
-        combine_output_path = f"output_{process.replace('pythia_', '')}.txt"
+        datacard_path = base_datacard_name.format(get_file_name(process)) + ".txt"
+        combine_output_path = base_combine_output_name.format(get_file_name(process))
         
         # combine_work_dir = f"combine_tmp_{process}"
         # # create work dir if doesn't exist
@@ -66,10 +70,10 @@ def run_combine():
 def get_limits():
     limits_per_process = {}
     for process in processes:
-        if not process.startswith("pythia_mZprime"):
+        if "mZprime" not in process:
             continue
         
-        combine_output_path = f"output_{process.replace('pythia_', '')}.txt"
+        combine_output_path = base_combine_output_name.format(get_file_name(process))
         with open(f"../datacards/{combine_output_path}", "r") as combine_output_file:
             combine_output = combine_output_file.read()
             r_values = [line.split("r < ")[1].strip() for line in combine_output.split("\n") if "r < " in line]    
@@ -79,9 +83,9 @@ def get_limits():
 
 def save_limits(limits_per_process):
     
-    file_path = f"../datacards/limits_mass_{histograms_path.replace('histograms_', '')}.txt"
+    file_path = f"limits_mass_{histograms_path.replace('histograms_', '')}.txt"
     
-    with open(file_path, "w") as limits_file:
+    with open(f"../datacards/{file_path}", "w") as limits_file:
         for process, limits in limits_per_process.items():
             limits_file.write(f"{process}: {limits}\n")
             info(f"{process}: {limits}")

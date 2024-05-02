@@ -15,5 +15,6 @@ class ShiftDetector {
 
  private:
   float x, y, z, radius;  // Coordinates of the detector and its radius (m)
+  float maxEta;
   bool forcedLHCring = false;
 };
