@@ -15,9 +15,15 @@ arguments             = $(ProcId) 1000 -2 -2 -2 -2 /nfs/dust/cms/user/jniedzie/s
 
 GetEnv                = True
 +Remote_Schedd = "bird-htc-sched11.desy.de"
-output                = output/$(ClusterId).$(ProcId).out
-error                 = error/$(ClusterId).$(ProcId).err
-log                   = log/$(ClusterId).log
+
+# output                = output/$(ClusterId).$(ProcId).out
+# error                 = error/$(ClusterId).$(ProcId).err
+# log                   = log/$(ClusterId).log
+
+output                = /dev/null
+error                 = /dev/null
+log                   = /dev/null
+
 requirements 	      = (OpSysAndVer =?= "CentOS7")
 environment           = "LD_LIBRARY_PATH=/cvmfs/sft.cern.ch/lcg/releases/gcc/8.3.0-cebb0/x86_64-centos7/lib64:$LD_LIBRARY_PATH"
 +JobFlavour           = "longlunch"
