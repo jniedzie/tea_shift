@@ -9,7 +9,9 @@ from shift_paths import luminosity, crossSections, nGenEvents, base_path, proces
 add_uncertainties_on_zero = False
 include_shapes = True
 
-signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
+signal_name = "dummy_value"
+
+# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1"
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0"

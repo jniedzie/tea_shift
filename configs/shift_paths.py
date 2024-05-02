@@ -4,29 +4,31 @@ skim = "initial"
 # skim = "skimmed_allSelections"
 
 
-variant = "z-300m_onLHC"
-# variant = "z-100m_onLHC"
-# variant = "faser"
+# variant = "shift100m"
+variant = "shift300m"
+# variant = "shift500m"
+# variant = "shift1000m"
+# variant = "shift2000m"
 # variant = "cmsFT"
-# variant = "atlasFT"
-# variant = "atlas"
+# variant = "cms"
+# variant = "faser"
 
-if variant == "atlas":
+if variant == "faser" or variant == "cms":
     colliderMode = True
 else:
     colliderMode = False
 
 processes = (
-    "pythia_qcd",
-    "pythia_dy",
+    # "pythia_qcd",
+    # "pythia_dy",
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
 )
 
 if colliderMode:
@@ -56,8 +58,8 @@ crossSections = {
 }
 
 nGenEvents = {
-    "pythia_qcd": 990*1000,
-    "pythia_dy": 993*1000,
+    "pythia_qcd": 999*10000,
+    "pythia_dy": 1000*10000,
     "pythiaCollider_qcd": 100*1000,
     "pythiaCollider_dy": 100*1000,
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7": 100*1000,
@@ -72,18 +74,11 @@ nGenEvents = {
 
 histograms_path = "histograms_" + variant
 
-if variant == "z-300m_onLHC":
+if "shift" in variant:
     detectorParams = {
         "x": -1, # -1 means it will be placed on the LHC ring (based on the z coordinate)
         "y": 0,  # usually we don't want to shift the detector up and down
-        "z": 300,
-        "radius": 10,
-    }
-elif variant == "z-100m_onLHC":
-    detectorParams = {
-        "x": -1, # -1 means it will be placed on the LHC ring (based on the z coordinate)
-        "y": 0,  # usually we don't want to shift the detector up and down
-        "z": 100,
+        "z": float(variant.replace("shift", "").replace("m", "")),
         "radius": 10,
     }
 elif variant == "faser":

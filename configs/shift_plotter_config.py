@@ -43,9 +43,9 @@ samples = [
 custom_stacks_order = ["pythia_dy", "pythia_qcd"]
 
 def addSignalSample(name, color, legend_y):
-    if colliderMode:
-        file_name = name.replace("pythia_", "pythiaCollider_")
-        
+    
+    file_name = name.replace("pythia_", "pythiaCollider_") if colliderMode else name
+    
     samples.append(Sample(
         name=name,
         file_path=f"{base_path}/{file_name}/merged_{skim}_{histograms_path}.root",
@@ -86,7 +86,7 @@ histograms = (
     Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-1, 1e10, "#Delta R_{#mu#mu} (GeV)", "Entries", ""),
     Histogram("InitialMuonsPair_lowMass", "", False, True, NormalizationType.to_lumi, 4,   0, 5, 1e-1, 1e10, "m_{#mu#mu} (GeV)", "Entries", ""),
    
-    Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   0, 30, 1e-1, 1e9, "m_{#mu#mu} (GeV)", "Entries", ""),
+    Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   11, 100, 1e-3, 1e9, "m_{#mu#mu} (GeV)", "Entries", ""),
     Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-1, 1e9, "#Delta R_{#mu#mu} (GeV)", "Entries", ""),
    
     Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 10, 1e1, 1e7, "Selection", "#sum genWeight"),
