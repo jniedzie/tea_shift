@@ -1,4 +1,5 @@
 import os, subprocess
+import concurrent.futures
 
 from shift_paths import processes, histograms_path
 from Logger import info
@@ -6,7 +7,20 @@ from Logger import info
 cmssw_path = "/afs/desy.de/user/j/jniedzie/combine/CMSSW_11_3_4/src"
 config_path = "./shift_datacards_config.py"
 
+def run_commands_in_parallel(commands):
+    info("Running all processes...") 
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [executor.submit(run_command, cmd) for cmd in commands]
+
+        # Wait for all commands to complete
+        for future in concurrent.futures.as_completed(futures):
+            result = future.result()
+    info("All processes completed.")
+
 def prepare_datacards():
+    
+    commands = []
+    
     for process in processes:
         if not process.startswith("pythia_mZprime"):
             continue
@@ -19,13 +33,18 @@ def prepare_datacards():
             with open(new_config_name, "w") as new_config_file:
                 new_config_file.write(config)
                 
-        os.system(f"python datacards_producer.py {new_config_name}")
+        commands.append(f"python datacards_producer.py {new_config_name}")
+        
+    run_commands_in_parallel(commands)
 
-def get_limits():
+def run_command(command):
+    return os.system(command)
+
+def run_combine():
     cwd = os.getcwd()
-    limits_per_process = {}
-    
     base_command = f"cd {cmssw_path}; cmsenv; cd {cwd}/../datacards/;"
+    commands = []
+    
     for process in processes:
         if not process.startswith("pythia_mZprime"):
             continue
@@ -33,11 +52,24 @@ def get_limits():
         datacard_path = f"limits_mass_{histograms_path.replace('histograms_', '')}_{process.replace('pythia_', '')}.txt"
         combine_output_path = f"output_{process.replace('pythia_', '')}.txt"
         
-        info(f"Calculating limits for {process}")
-        command = f"{base_command} combine -M AsymptoticLimits {datacard_path} > {combine_output_path}"
-        info(f"Running command: {command}")
-        os.system(command)
+        # combine_work_dir = f"combine_tmp_{process}"
+        # # create work dir if doesn't exist
+        # if not os.path.exists(combine_work_dir):
+        #     os.makedirs(combine_work_dir)
         
+        command = f"{base_command} combine -M AsymptoticLimits {datacard_path} > {combine_output_path}"
+        commands.append(command)
+        
+    run_commands_in_parallel(commands)
+    
+    
+def get_limits():
+    limits_per_process = {}
+    for process in processes:
+        if not process.startswith("pythia_mZprime"):
+            continue
+        
+        combine_output_path = f"output_{process.replace('pythia_', '')}.txt"
         with open(f"../datacards/{combine_output_path}", "r") as combine_output_file:
             combine_output = combine_output_file.read()
             r_values = [line.split("r < ")[1].strip() for line in combine_output.split("\n") if "r < " in line]    
@@ -54,17 +86,11 @@ def save_limits(limits_per_process):
             limits_file.write(f"{process}: {limits}\n")
             info(f"{process}: {limits}")
             
-
 def main():
     prepare_datacards()
-    
-    cwd = os.getcwd()
+    run_combine()
     limits_per_process = get_limits()
-    
     save_limits(limits_per_process)
-    os.chdir(cwd)
     
-    
-
 if __name__ == "__main__":
     main()

@@ -11,16 +11,16 @@ y_max = 1
 
 alpha = 0.5
 
-limits_300m = {
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7", 1e-7): (24.7813, 8.4111, 13.7723, 24.7500, 45.4675, 75.0284, ),
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3", 1e-3): (24.8535, 8.4536, 13.8419, 24.8750, 45.6971, 75.4073, ),
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", 1e-1): (24.0740, 8.1987, 13.4245, 24.1250, 44.3193, 73.1337, ),
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0", 1e-0): (0.2352, 0.0797, 0.1304, 0.2344, 0.4324, 0.7105, ),
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", 1e1): (0.0791, 0.0266, 0.0438, 0.0791, 0.1453, 0.2398, ),
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2", 1e2): (0.0599, 0.0202, 0.0333, 0.0601, 0.1103, 0.1821, ),
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3", 1e3): (0.0669, 0.0225, 0.0370, 0.0669, 0.1245, 0.2028, ),
-    ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5", 1e5): (0.3247, 0.0823, 0.1485, 0.3242, 0.6525, 0.9833, ),
-}
+# limits_300m = {
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7", 1e-7): (24.7813, 8.4111, 13.7723, 24.7500, 45.4675, 75.0284, ),
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3", 1e-3): (24.8535, 8.4536, 13.8419, 24.8750, 45.6971, 75.4073, ),
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", 1e-1): (24.0740, 8.1987, 13.4245, 24.1250, 44.3193, 73.1337, ),
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0", 1e-0): (0.2352, 0.0797, 0.1304, 0.2344, 0.4324, 0.7105, ),
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", 1e1): (0.0791, 0.0266, 0.0438, 0.0791, 0.1453, 0.2398, ),
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2", 1e2): (0.0599, 0.0202, 0.0333, 0.0601, 0.1103, 0.1821, ),
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3", 1e3): (0.0669, 0.0225, 0.0370, 0.0669, 0.1245, 0.2028, ),
+#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5", 1e5): (0.3247, 0.0823, 0.1485, 0.3242, 0.6525, 0.9833, ),
+# }
 
 limits_cmsFT = {
     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7", 1e-7): (0.0583, 0.0173, 0.0303, 0.0581, 0.1118, 0.1762,  ),
@@ -154,6 +154,21 @@ def create_shaded_colors(base_color, num_shades=3, min_scale=0.3):
 
     return color_indices
 
+def read_limits(path):
+    limits = {}
+    with open(path, "r") as limits_file:
+        for line in limits_file:
+            if not line.strip():
+                continue
+            parts = line.split(":")
+            name = parts[0].strip()
+            values = parts[1].replace("[", "").replace("]", "").split(",")
+            values = [float(value.replace("\'", "")) for value in values]
+            
+            ctau = float(name.split("_")[-1].replace("tau-", "").replace("em", "e-"))
+            limits[(name, ctau)] = values
+    return limits
+
 def main():
     ROOT.gROOT.SetBatch(True)
     
@@ -164,6 +179,8 @@ def main():
     # colors_faserFT = create_shaded_colors("#3366F2", 3, 0.5)
     # colors_atlasFT = create_shaded_colors("#F23374", 3, 0.5)
     colors_atlasCollider = create_shaded_colors("#55699D", 3, 0.5)
+    
+    limits_300m = read_limits("../datacards/limits_mass_shift300m.txt")
     
     graphs_300m = get_graph_set(limits_300m, colors_300m)
     # graphs_atlasFT = get_graph_set(limits_atlasFT, colors_atlasFT)
