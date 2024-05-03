@@ -1,5 +1,5 @@
-ParticleDecays:limitTau0 = off
-ResonanceWidths:minWidth = 1e-30
+! ParticleDecays:limitTau0 = off
+! ResonanceWidths:minWidth = 1e-30
 
 Main:numberOfEvents = dummy_value
 
@@ -43,10 +43,10 @@ SigmaTotal:sigmaTot = 101.037
 
 
 ! CMS QCD settings
-! ParticleDecays:limitTau0 = off
-! ParticleDecays:limitCylinder = on
-! ParticleDecays:xyMax = 2000
-! ParticleDecays:zMax = 4000
+ParticleDecays:limitTau0 = off
+ParticleDecays:limitCylinder = on
+ParticleDecays:xyMax = 7500
+ParticleDecays:zMax = 11000
 HardQCD:all = on
 PhaseSpace:pTHatMin = 20
 130:mayDecay = on
