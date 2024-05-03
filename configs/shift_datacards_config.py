@@ -25,6 +25,8 @@ signal_file_name = signal_name.replace("pythia_", "pythiaCollider_") if collider
 
 output_path = f"../datacards/{base_datacard_name.format(get_file_name(signal_name))}"
 
+signal_key = signal_name if signal_name in crossSections else signal_name.replace("Collider", "")
+
 samples = [
     Sample(
         name="pythia_qcd",
@@ -42,7 +44,7 @@ samples = [
         name=f"signal_{signal_name}",
         file_path=f"{base_path}/{signal_file_name}/merged_{variant}_histograms.root",
         type=SampleType.signal,
-        cross_sections=crossSections,
+        cross_section=crossSections[signal_key],
     ),
 ]
 
