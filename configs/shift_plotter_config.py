@@ -85,6 +85,16 @@ addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3", ROOT.kRed, legend_max
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5", ROOT.kMagenta, legend_max_y-8*legend_height)
 
 
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kViolet, legend_max_y-legend_height)
+# addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1", ROOT.kBlue, legend_max_y-2*legend_height)
+# addSignalSample("pythia_mZprime-200_mDH-20_mDQ-1_tau-1e1", ROOT.kCyan, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-500_mDH-20_mDQ-1_tau-1e1", ROOT.kGreen, legend_max_y-4*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1", ROOT.kOrange, legend_max_y-6*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1", ROOT.kRed, legend_max_y-7*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kMagenta, legend_max_y-8*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1", ROOT.kCyan, legend_max_y-9*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1", ROOT.kBlack, legend_max_y-10*legend_height)
 
 
 y_label = "Events"
