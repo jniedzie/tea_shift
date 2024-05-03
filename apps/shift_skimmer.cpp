@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 
   if(argc == 4){    
     config.SetInputPath(argv[2]);
-    config.SetOutputPath(argv[3]);
+    config.SetTreesOutputPath(argv[3]);
   }
 
   auto eventReader = make_shared<EventReader>();

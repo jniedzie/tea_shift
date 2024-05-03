@@ -5,12 +5,12 @@ skim = "initial"
 # skim = "skimmed_allSelections"
 
 
-# variant = "shift100m"
+variant = "shift100m"
 # variant = "shift300m"
 # variant = "shift500m"
 # variant = "shift1000m"
 # variant = "cmsFT"
-variant = "cms"
+# variant = "cms"
 # variant = "faser"
 
 if variant == "faser" or variant == "cms":
@@ -20,16 +20,16 @@ else:
 
 processes = (
     "pythia_qcd",
-    "pythia_dy",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
+    # "pythia_dy",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
     
     # # Z' mass scan
     # "pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1",

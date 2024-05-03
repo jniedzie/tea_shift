@@ -1,4 +1,4 @@
-from shift_paths import base_path, processes, skim, histograms_path
+from shift_paths import base_path, processes, skim, variant
 from Logger import info
 
 import os
@@ -13,19 +13,17 @@ def get_args():
 def main():
     args = get_args()
 
-    merge_histograms = not args.trees
-
     for process in processes:
         info(f"\n\n Merging {process} histograms...")
         
-        hist_path = histograms_path if merge_histograms else ""
-        input_path = f"{base_path}/{process}/{skim}/{hist_path}/*.root"
+        input_path = f"{base_path}/{process}/{variant}/histograms/*.root"
+        output_path = f"{base_path}/{process}/merged_{variant}_histograms.root"
+
+        if args.trees:
+            input_path = input_path.replace("histograms", "trees")
+            output_path = output_path.replace("histograms", "trees")
 
         info(f"\tInput path: {input_path}")
-
-        hist_path = "_"+histograms_path if merge_histograms else ""
-        output_path = f"{base_path}/{process}/merged_{skim}{hist_path}.root"
-        
         info(f"\tOutput path: {output_path}")
 
         os.system(f"rm {output_path}")

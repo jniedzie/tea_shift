@@ -11,7 +11,7 @@ class ShiftHistogramsFiller {
   ShiftHistogramsFiller(std::shared_ptr<HistogramsHandler> histogramsHandler_);
   ~ShiftHistogramsFiller();
 
-  void Fill(const std::shared_ptr<Event> event);
+  void Fill(const std::shared_ptr<Event> event, bool initial);
 
  private:
   std::shared_ptr<HistogramsHandler> histogramsHandler;

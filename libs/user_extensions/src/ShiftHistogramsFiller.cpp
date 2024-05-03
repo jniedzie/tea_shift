@@ -110,15 +110,17 @@ void ShiftHistogramsFiller::FillMuonHistograms(const shared_ptr<Event> event, st
   }
 }
 
-void ShiftHistogramsFiller::Fill(const shared_ptr<Event> event) {
-  FillZprimeHistograms(event);
-  FillDarkHadronsHistograms(event);
-
-  FillMuonHistograms(event, "goodMuons", "InitialMuons");
-  FillMuonHistograms(event, "muonsInDetector", "MuonsHittingDetector");
-
-  auto muons = event->GetCollection("muonsInDetector");
-  if(muons->size() >= 2){
-    histogramsHandler->Fill("Event_count", 0.5, GetWeight(event));
+void ShiftHistogramsFiller::Fill(const shared_ptr<Event> event, bool initial) {
+  if(initial){
+    FillZprimeHistograms(event);
+    FillDarkHadronsHistograms(event);
+    FillMuonHistograms(event, "goodMuons", "InitialMuons");
+  }
+  else{
+    FillMuonHistograms(event, "muonsInDetector", "MuonsHittingDetector");
+    auto muons = event->GetCollection("muonsInDetector");
+    if(muons->size() >= 2){
+      histogramsHandler->Fill("Event_count", 0.5, GetWeight(event));
+    }
   }
 }
