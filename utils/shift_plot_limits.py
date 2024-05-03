@@ -18,6 +18,7 @@ variants = {
     "cms": ("#F23374", "CMS (Collider Mode)"),
     "shift100m": ("#33F244", "Shift (100 m)"),
     "shift300m": ("#55699D", "Shift (300 m)"),
+    "shift500m": ("#517354", "Shift (500 m)"),
     # "faser": ("#517354", "FASER (Collider Mode, d=480 m)"),
 }
 
@@ -144,17 +145,21 @@ def create_shaded_colors(base_color, num_shades=3, min_scale=0.3):
 
 def read_limits(path):
     limits = {}
-    with open(path, "r") as limits_file:
-        for line in limits_file:
-            if not line.strip():
-                continue
-            parts = line.split(":")
-            name = parts[0].strip()
-            values = parts[1].replace("[", "").replace("]", "").split(",")
-            values = [float(value.replace("\'", "")) for value in values]
-            
-            ctau = float(name.split("_")[-1].replace("tau-", "").replace("em", "e-"))
-            limits[(name, ctau)] = values
+    try:
+        with open(path, "r") as limits_file:
+            for line in limits_file:
+                if not line.strip():
+                    continue
+                parts = line.split(":")
+                name = parts[0].strip()
+                values = parts[1].replace("[", "").replace("]", "").split(",")
+                values = [float(value.replace("\'", "")) for value in values]
+                
+                ctau = float(name.split("_")[-1].replace("tau-", "").replace("em", "e-"))
+                limits[(name, ctau)] = values
+    except FileNotFoundError:
+        error(f"File {path} not found.")
+    
     return limits
 
 def main():
@@ -174,6 +179,9 @@ def main():
         color, title = params
         colors = create_shaded_colors(color, 3, 0.5)
         limits = read_limits(f"../datacards/limits_mass_{variant}.txt")
+        
+        if not limits:
+            continue
 
         graphs[variant] = get_graph_set(limits, colors)
         draw_graphs(graphs[variant], first=first)
