@@ -1,7 +1,7 @@
 from shift_paths import skim, detectorParams, base_path
 
 ## specify how many events to run on (and how often to print current event number)
-nEvents = 100
+nEvents = -1
 printEveryNevents = 100
 
 # process = "pythia_qcd"

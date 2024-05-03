@@ -4,18 +4,16 @@ from Legend import Legend
 from Histogram import Histogram, Histogram2D
 from HistogramNormalizer import NormalizationType
 
-from shift_paths import luminosity, crossSections, nGenEvents, base_path, processes, skim, histograms_path, colliderMode
+from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
 
-
-output_path = f"../plots/{skim.replace('skimmed_', '')}_{histograms_path.replace('histograms_', '')}/"
+output_path = f"../plots/{variant}/"
 
 samples = [
     Sample(
         name="pythia_qcd",
-        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{variant}_histograms.root",
         type=SampleType.background,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents["pythia_qcd"],        
         
         fill_color=ROOT.kYellow,
         fill_alpha=1.0,
@@ -26,10 +24,9 @@ samples = [
     ),
     Sample(
         name="pythia_dy",
-        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{variant}_histograms.root",
         type=SampleType.background,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents["pythia_dy"],
 
         fill_color=ROOT.kGreen,
         fill_alpha=1.0,
@@ -48,10 +45,9 @@ def addSignalSample(name, color, legend_y):
     
     samples.append(Sample(
         name=name,
-        file_path=f"{base_path}/{file_name}/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/{file_name}/merged_{variant}_histograms.root",
         type=SampleType.signal,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents[name],
         line_alpha=1,
         line_style=1,
         fill_alpha=0,
@@ -87,6 +83,7 @@ histograms = (
     Histogram("InitialMuonsPair_lowMass", "", False, True, NormalizationType.to_lumi, 4,   0, 5, 1e-1, 1e10, "m_{#mu#mu} (GeV)", "Entries", ""),
    
     Histogram("InitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e-1, 1e10, "#eta_{#mu}", "Entries", ""),
+    Histogram("InitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 1000, 1e-1, 1e10, "#E_{#mu}", "Entries", ""),
    
     Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   11, 100, 1e-3, 1e9, "m_{#mu#mu} (GeV)", "Entries", ""),
     Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-1, 1e9, "#Delta R_{#mu#mu} (GeV)", "Entries", ""),
