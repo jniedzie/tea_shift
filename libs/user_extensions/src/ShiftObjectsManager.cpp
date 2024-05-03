@@ -89,24 +89,23 @@ void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event>
 
   for (auto physicsObject : *goodMuons) {
     auto hepMCParticle = asHepMCParticle(physicsObject);
-
     if(nMuons) nMuons->at("1_hasMuons")++;
-
-    // Check that they intersect with the detector
-    if (!detector->DoesParticleGoThrough(hepMCParticle)) continue;
-    if(nMuons) nMuons->at("2_intersectingDetector")++;
-
-    // Check that the production vertex is before the detector
-    if (!detector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
-    if(nMuons) nMuons->at("3_beforeDetector")++;
-
-    // Check that the muon goes through the rock
-    if (!detector->DoesParticleGoThroughRock(hepMCParticle)) continue;
-    if(nMuons) nMuons->at("4_throughRock")++;
 
     // Check that the muon has at least 30 GeV of energy, so that it can trigger and be reconstructed at CMS
     if (hepMCParticle->GetLorentzVector().E() < 30) continue;
-    if(nMuons) nMuons->at("5_triggerAndReco")++;
+    if(nMuons) nMuons->at("2_triggerAndReco")++;
+
+    // Check that they intersect with the detector
+    if (!detector->DoesParticleGoThrough(hepMCParticle)) continue;
+    if(nMuons) nMuons->at("3_intersectingDetector")++;
+    
+    // Check that the production vertex is before the detector
+    if (!detector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
+    if(nMuons) nMuons->at("4_beforeDetector")++;
+
+    // Check that the muon goes through the rock
+    if (!detector->DoesParticleGoThroughRock(hepMCParticle)) continue;
+    if(nMuons) nMuons->at("5_throughRock")++;
 
     passingMuons->push_back(physicsObject);
   }

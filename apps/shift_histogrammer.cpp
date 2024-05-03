@@ -45,10 +45,10 @@ int main(int argc, char **argv) {
 
   cutFlowManager->RegisterCut("initial");
   cutFlowManager->RegisterCut("hasMuons");
+  cutFlowManager->RegisterCut("triggerAndReco");
   cutFlowManager->RegisterCut("intersectingDetector");
   cutFlowManager->RegisterCut("beforeDetector");
   cutFlowManager->RegisterCut("throughRock");
-  cutFlowManager->RegisterCut("triggerAndReco");
   cutFlowManager->RegisterCut("massCut");
   
   auto detector = make_shared<ShiftDetector>(detectorParams);
@@ -60,11 +60,11 @@ int main(int argc, char **argv) {
     cutFlowManager->UpdateCutFlow("initial");
     auto nMuons = make_shared<map<string, int>>();
     nMuons->insert({"1_hasMuons", 0});
-    nMuons->insert({"2_intersectingDetector", 0});
-    nMuons->insert({"3_beforeDetector", 0});
-    nMuons->insert({"4_throughRock", 0});
-    nMuons->insert({"5_triggerAndReco", 0});
-
+    nMuons->insert({"2_triggerAndReco", 0});
+    nMuons->insert({"3_intersectingDetector", 0});
+    nMuons->insert({"4_beforeDetector", 0});
+    nMuons->insert({"5_throughRock", 0});
+    
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
     shiftObjectsManager->InsertGoodMuonsCollection(event);
