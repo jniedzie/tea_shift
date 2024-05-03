@@ -1,4 +1,4 @@
-from shift_paths import base_path, processes, skim, variant
+from shift_paths import base_path, processes, variant
 from Logger import info
 
 import os

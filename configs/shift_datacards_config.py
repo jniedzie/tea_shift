@@ -3,9 +3,8 @@ from Histogram import Histogram
 from HistogramNormalizer import NormalizationType
 
 from shift_paths import luminosity, crossSections, base_datacard_name
-from shift_paths import base_path, processes, skim, histograms_path, colliderMode
+from shift_paths import base_path, processes, histograms_path, colliderMode, variant
 from shift_utils import get_file_name
-
 
 add_uncertainties_on_zero = False
 include_shapes = True
@@ -29,19 +28,19 @@ output_path = f"../datacards/{base_datacard_name.format(get_file_name(signal_nam
 samples = [
     Sample(
         name="pythia_qcd",
-        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{variant}_histograms.root",
         type=SampleType.background,
         cross_sections=crossSections,
     ),
     Sample(
         name="pythia_dy",
-        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{variant}_histograms.root",
         type=SampleType.background,
         cross_sections=crossSections,
     ),
     Sample(
         name=f"signal_{signal_name}",
-        file_path=f"{base_path}/{signal_file_name}/merged_{skim}_{histograms_path}.root",
+        file_path=f"{base_path}/{signal_file_name}/merged_{variant}_histograms.root",
         type=SampleType.signal,
         cross_sections=crossSections,
     ),

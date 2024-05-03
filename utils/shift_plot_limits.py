@@ -60,7 +60,9 @@ def get_graph_set(values, colors, lumi_scale = 1.0):
 
     for i, (name, ctau) in enumerate(values):
         
-        scale = crossSections[name]
+        key = name if name in crossSections else name.replace("Collider", "")
+        
+        scale = crossSections[key]
         limits = values[(name, ctau)]
         
         limits = [limit*lumi_scale for limit in limits]

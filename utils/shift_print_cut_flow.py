@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 from Logger import info, error
 
-from shift_paths import luminosity, crossSections, base_path, processes, skim, variant
+from shift_paths import luminosity, crossSections, base_path, processes, variant
 
 def print_table(process_data):
     """
