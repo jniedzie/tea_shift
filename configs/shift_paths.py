@@ -145,18 +145,20 @@ histograms_path = "histograms_" + variant
 
 if "shift" in variant:
     detectorParams = {
-        "x": -1, # -1 means it will be placed on the LHC ring (based on the z coordinate)
-        "y": 0,  # usually we don't want to shift the detector up and down
-        "z": float(variant.replace("shift", "").replace("m", "")),
-        "radius": 10,
+        "x": float(variant.replace("shift", "").replace("m", "")),
+        "y": -1, # -1 means it will be placed on the LHC ring (based on the z coordinate)
+        "z": 0,  # usually we don't want to shift the detector up and down
+        "radius": 15,
+        "length": 22,
         "maxEta": 2.4,
     }
 elif variant == "faser":
     detectorParams = {
-        "x": 0,
+        "x": 480,
         "y": 0,
-        "z": 480,
-        "radius": 0.25, # equivalent sphere radius to get the same volume (and generously rounded up)
+        "z": 0,
+        "radius": 0.1,
+        "length": 1.5,
         "maxEta": 999999, # there's no hole in the detector, so we can set this to a very high value
     }
 elif "cms" in variant:
@@ -164,6 +166,7 @@ elif "cms" in variant:
         "x": 0,
         "y": 0,
         "z": 0,
-        "radius": 10,
+        "radius": 15,
+        "length": 22,
         "maxEta": 2.4,
     }

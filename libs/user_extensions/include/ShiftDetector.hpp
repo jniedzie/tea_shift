@@ -14,7 +14,9 @@ class ShiftDetector {
   bool DoesParticleGoThroughRock(const std::shared_ptr<HepMCParticle> &particle);
 
  private:
-  float x, y, z, radius;  // Coordinates of the detector and its radius (m)
-  float maxEta;
+  float x, y, z, outer_radius, inner_radius, total_length;  // (m)
   bool forcedLHCring = false;
+
+  TRotation rotation;
+  TVector3 translation;
 };

@@ -6,6 +6,7 @@
         "cmath": "cpp",
         "array": "cpp",
         "InitialMuonsPair_deltaR.C": "cpp",
-        "InitialMuonsPair_lowMass.C": "cpp"
+        "InitialMuonsPair_lowMass.C": "cpp",
+        "random": "cpp"
     }
 }
