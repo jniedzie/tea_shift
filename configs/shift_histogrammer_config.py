@@ -20,7 +20,8 @@ printEveryNevents = 100
 # inputFilePath = "../qcd_part-0.root"
 # histogramsOutputFilePath = "../histograms_qcd.root"
 
-inputFilePath = f"{base_path}/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7/initial/mZprime-100GeV_mDarkHadron-20GeV_mDarkQuark-1GeV_lifetime-1p00em07m_nEvents-1000_part-0.root"
+# inputFilePath = f"{base_path}/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7/initial/mZprime-100GeV_mDarkHadron-20GeV_mDarkQuark-1GeV_lifetime-1p00em07m_nEvents-1000_part-0.root"
+inputFilePath = f"{base_path}/pythiaCollider_qcd/initial/qcd_part-0.root"
 treeOutputFilePath = "../trees_signal.root"
 histogramsOutputFilePath = "../histograms_signal.root"
 

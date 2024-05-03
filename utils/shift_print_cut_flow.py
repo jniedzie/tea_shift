@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 from Logger import info, error
 
-from shift_paths import luminosity, crossSections, nGenEvents, base_path, processes, skim, variant
+from shift_paths import luminosity, crossSections, base_path, processes, skim, variant
 
 def print_table(process_data):
     """
@@ -71,6 +71,7 @@ def get_nice_name(process):
     # process is given in the form: "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
     # remove "pythia_", replace mZprime with m_Z, remove mDQ-1 completely:
     process = process.replace("pythia_", "")
+    process = process.replace("pythiaCollider_", "")
     process = process.replace("mZprime-", "m_Z=")
     process = process.replace("_mDH-", ", m_D=")
     process = process.replace("_mDQ-1", "")
@@ -87,31 +88,35 @@ def main():
     cut_flow_per_process = {}
     scaled_cut_flow_per_process = {}
 
+    print(f"{crossSections=}")
+
     for process in processes:
-        input_path = f"{base_path}/{process}/merged_{skim}.root"
+        input_path = f"{base_path}/{process}/merged_{variant}_histograms.root"
         print(f"Analyzing file: {input_path}")
 
-        
-
         file = ROOT.TFile(input_path, "READ")
-        dir = file.Get("CutFlow")
+        hist = file.Get("cutFlow")
         
-        if type(dir) != ROOT.TDirectoryFile:
-            error(f"Could not find CutFlow directory in file {input_path}")
+        if type(hist) != ROOT.TH1D:
+            error(f"Could not find CutFlow in file {input_path}")
             continue
         
-        keys = dir.GetListOfKeys()
-        hist_dict = OrderedDict()
-
-        for key in keys:
-            hist = dir.Get(key.GetName())
-            hist_dict[key.GetName()] = hist.GetBinContent(1)
+        hist_dict = {}
+        
+        for i in range(1, hist.GetNbinsX() + 1):
+            # get bin label and use it as a key
+            key = hist.GetXaxis().GetBinLabel(i)
+            hist_dict[key] = hist.GetBinContent(i)
 
         hist_dict = OrderedDict(
             sorted(hist_dict.items(), key=lambda x: int(x[0].split("_")[0])))
 
-        scale = luminosity*crossSections[process]
-        scale /= nGenEvents[process]
+        key = process
+        if key not in crossSections:
+            key = key.replace("Collider", "")
+
+        scale = luminosity*crossSections[key]
+        scale /= hist_dict["0_initial"]
 
         cut_flow_per_process[get_nice_name(process)] = hist_dict
         

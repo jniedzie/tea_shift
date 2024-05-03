@@ -6,11 +6,11 @@ skim = "initial"
 
 
 # variant = "shift100m"
-# variant = "shift300m"
+variant = "shift300m"
 # variant = "shift500m"
 # variant = "shift1000m"
 # variant = "cmsFT"
-variant = "cms"
+# variant = "cms"
 # variant = "faser"
 
 if variant == "faser" or variant == "cms":
@@ -91,40 +91,6 @@ crossSections = {
     "pythiaCollider_dy": 6.911e-06 * 1e6, # mb -> nb
 }
 
-nGenEvents = {
-    # Fixed target
-    "pythia_qcd": 999*10000,
-    "pythia_dy": 1000*10000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3": 1000*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4": 1000*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5": 1000*1000,
-    
-    # Z' mass scan
-    "pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1": 100*1000,
-    "pythia_mZprime-200_mDH-20_mDQ-1_tau-1e1": 100*1000,
-    "pythia_mZprime-500_mDH-20_mDQ-1_tau-1e1": 100*1000,
-
-    # hD mass scan
-    "pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1": 100*1000,
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": 100*1000,
-    "pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1": 100*1000,
-
-    # qD mass scan
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": 100*1000,
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": 100*1000,
-    
-    # Collider
-    "pythiaCollider_qcd": 1000*100,
-    "pythiaCollider_dy": 100*1000,
-}
-
 def extend_for_collider(dict):
     new_dict = {}
     
@@ -139,7 +105,6 @@ def extend_for_collider(dict):
     dict = new_dict
 
 extend_for_collider(crossSections)
-extend_for_collider(nGenEvents)
 
 histograms_path = "histograms_" + variant
 
@@ -148,7 +113,7 @@ if "shift" in variant:
         "x": float(variant.replace("shift", "").replace("m", "")),
         "y": -1, # -1 means it will be placed on the LHC ring (based on the z coordinate)
         "z": 0,  # usually we don't want to shift the detector up and down
-        "radius": 15,
+        "radius": 7.5,
         "length": 22,
         "maxEta": 2.4,
     }
@@ -166,7 +131,7 @@ elif "cms" in variant:
         "x": 0,
         "y": 0,
         "z": 0,
-        "radius": 15,
+        "radius": 7.5,
         "length": 22,
         "maxEta": 2.4,
     }

@@ -88,9 +88,9 @@ histograms = (
     Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   11, 100, 1e-3, 1e9, "m_{#mu#mu} (GeV)", "Entries", ""),
     Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-1, 1e9, "#Delta R_{#mu#mu} (GeV)", "Entries", ""),
    
-    Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 10, 1e1, 1e7, "Selection", "#sum genWeight"),
-    
     Histogram("Event_count", "", False, True, NormalizationType.to_lumi, 1, 0, 1, 1e-10, 1e10, "", "#events"),
+    
+    Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 7, 1e1, 1e10, "Selection", "#sum genWeight"),
 )
 
 

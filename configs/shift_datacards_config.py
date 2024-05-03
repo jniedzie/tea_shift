@@ -2,7 +2,7 @@ from Sample import Sample, SampleType
 from Histogram import Histogram
 from HistogramNormalizer import NormalizationType
 
-from shift_paths import luminosity, crossSections, nGenEvents, base_datacard_name
+from shift_paths import luminosity, crossSections, base_datacard_name
 from shift_paths import base_path, processes, skim, histograms_path, colliderMode
 from shift_utils import get_file_name
 
@@ -32,21 +32,18 @@ samples = [
         file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{skim}_{histograms_path}.root",
         type=SampleType.background,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents[f"pythia{'Collider' if colliderMode else ''}_qcd"],
     ),
     Sample(
         name="pythia_dy",
         file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{skim}_{histograms_path}.root",
         type=SampleType.background,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents[f"pythia{'Collider' if colliderMode else ''}_dy"],
     ),
     Sample(
         name=f"signal_{signal_name}",
         file_path=f"{base_path}/{signal_file_name}/merged_{skim}_{histograms_path}.root",
         type=SampleType.signal,
         cross_sections=crossSections,
-        initial_weight_sum=nGenEvents[signal_name],
     ),
 ]
 
