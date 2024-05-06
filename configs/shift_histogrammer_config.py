@@ -21,7 +21,7 @@ histParams = (
   ("Zprime", "pid"  ,     100,  0,      10000000,     ""),
   ("Zprime", "status",    100,  0,      100,     ""),
   
-  ("DarkHadron", "pt"  ,      100,  0,      1000,     ""),
+  ("DarkHadron", "pt"  ,      200,  0,      200,     ""),
   ("DarkHadron", "eta" ,      100,  -10,    20,     ""),
   ("DarkHadron", "phi" ,      100,  -4,     4,     ""),
   ("DarkHadron", "mass",      100,  0,      10,     ""),

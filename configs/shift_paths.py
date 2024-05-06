@@ -5,8 +5,14 @@ skim = "initial"
 # skim = "skimmed_allSelections"
 
 
+# variant = "shift80m"
 # variant = "shift100m"
-variant = "shift300m"
+variant = "shift120m" # best for short-lived
+# variant = "shift200m"
+# variant = "shift250m"  # best for long-lived
+# variant = "shift300m" # benchmark point
+# variant = "shift350m"
+# variant = "shift400m"
 # variant = "shift500m"
 # variant = "shift1000m"
 # variant = "cmsFT"
@@ -19,22 +25,25 @@ else:
     colliderMode = False
 
 processes = (
-    "pythia_qcd",
-    "pythia_dy",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4",
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
+    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1",
+    # "pythia_mZprime-40_mDH-20_mDQ-10_tau-1e1",
+    # "pythia_mZprime-40_mDH-20_mDQ-1_tau-1em3",
+    "pythia_mZprime-100_mDH-60_mDQ-1_tau-1em3",
     
-    # # Z' mass scan
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4",
+    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
+    
+    # Z' mass scan
+    # "pythia_mZprime-40_mDH-20_mDQ-1_tau-1e1",
     # "pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-200_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-500_mDH-20_mDQ-1_tau-1e1",
+    # "pythia_mZprime-110_mDH-20_mDQ-1_tau-1e1",
 
     # # hD mass scan
     # "pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1",
@@ -45,6 +54,17 @@ processes = (
     # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
     # "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1",
     # "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1",
+    
+    
+    # # other special cases
+    # "pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1",
+    # "pythia_mZprime-100_mDH-15_mDQ-7_tau-1e1",
+    
+    # new points
+    # "pythia_mZprime-30_mDH-15_mDQ-7_tau-1e1",
+    
+    # "pythia_qcd",
+    # "pythia_dy",
 )
 
 if colliderMode:
@@ -85,6 +105,12 @@ crossSections = {
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
     "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": reference_signal_cross_section*1e3,
     "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": reference_signal_cross_section*1e3,
+    
+    # # other special cases
+    "pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
+    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1": reference_signal_cross_section*1e3,
+    
+    "pythia_mZprime-100_mDH-60_mDQ-1_tau-1em3": reference_signal_cross_section,
     
     # Collider
     "pythiaCollider_qcd": 6.247e-01 * 1e6,  # mb -> nb

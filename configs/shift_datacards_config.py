@@ -9,6 +9,7 @@ from shift_utils import get_file_name
 add_uncertainties_on_zero = False
 include_shapes = True
 
+# variant = "shift500m"
 signal_name = "dummy_value"
 
 # signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"

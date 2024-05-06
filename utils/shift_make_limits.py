@@ -1,7 +1,7 @@
 import os, subprocess
 import concurrent.futures
 
-from shift_paths import processes, histograms_path, base_datacard_name
+from shift_paths import processes, variant, base_datacard_name
 from shift_utils import get_file_name
 from Logger import info
 
@@ -11,6 +11,10 @@ config_path = "./shift_datacards_config.py"
 base_config_name = "shift_datacards_config_{}.py"
 base_combine_output_name = "output_{}.txt"
 
+# variant = "shift500m"
+
+# suffix = ""
+suffix = processes[0]
 
 def run_commands_in_parallel(commands):
     info("Running all processes...") 
@@ -83,7 +87,7 @@ def get_limits():
 
 def save_limits(limits_per_process):
     
-    file_path = f"limits_mass_{histograms_path.replace('histograms_', '')}.txt"
+    file_path = f"limits_mass_{variant}{suffix}.txt"
     
     with open(f"../datacards/{file_path}", "w") as limits_file:
         for process, limits in limits_per_process.items():

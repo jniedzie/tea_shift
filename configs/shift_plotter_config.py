@@ -16,7 +16,7 @@ legend_max_y = 0.89
 legend_width = 0.15
 legend_height = 0.04
 
-signal_ref_cross_section = 2e-5
+signal_ref_cross_section = 20e-5
 
 samples = [
     Sample(
@@ -49,14 +49,30 @@ samples = [
 
 custom_stacks_order = ["pythia_dy", "pythia_qcd"]
 
+custom_titles = {
+    "pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1": "m_{Z'}= 50 GeV",
+    "pythia_mZprime-200_mDH-20_mDQ-1_tau-1e1": "m_{Z'}= 200 GeV",
+    "pythia_mZprime-500_mDH-20_mDQ-1_tau-1e1": "m_{Z'}= 500 GeV",
+    "pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1": "m_{D}= 15 GeV",
+    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": "m_{D}= 40 GeV",
+    "pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1": "m_{D}= 60 GeV",
+    "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": "m_{q}= 2 GeV",
+    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": "m_{q}= 5 GeV",
+    "pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1": "m_{Z'}= 20, m_{D}= 5",
+}
+
 def addSignalSample(name, color, legend_y):
     
     file_name = name.replace("pythia_", "pythiaCollider_") if colliderMode else name
-    title = name.replace("pythia_mZprime-100_mDH-20_mDQ-1_", "")
-    title = title.replace("tau-", "c#tau=")
-    title = title.replace("1em", "10^{-")
-    title = title.replace("1e", "10^{")
-    title += "} (m)"
+    
+    if name in custom_titles:
+        title = custom_titles[name]
+    else:
+        title = name.replace("pythia_mZprime-100_mDH-20_mDQ-1_", "")
+        title = title.replace("tau-", "c#tau=")
+        title = title.replace("1em", "10^{-")
+        title = title.replace("1e", "10^{")
+        title += "} (m)"
     
     samples.append(Sample(
         name=name,
@@ -83,18 +99,6 @@ addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kGreen+1, legend
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2", ROOT.kOrange, legend_max_y-6*legend_height)
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3", ROOT.kRed, legend_max_y-7*legend_height)
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5", ROOT.kMagenta, legend_max_y-8*legend_height)
-
-
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kViolet, legend_max_y-legend_height)
-# addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1", ROOT.kBlue, legend_max_y-2*legend_height)
-# addSignalSample("pythia_mZprime-200_mDH-20_mDQ-1_tau-1e1", ROOT.kCyan, legend_max_y-3*legend_height)
-# addSignalSample("pythia_mZprime-500_mDH-20_mDQ-1_tau-1e1", ROOT.kGreen, legend_max_y-4*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1", ROOT.kOrange, legend_max_y-6*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1", ROOT.kRed, legend_max_y-7*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kMagenta, legend_max_y-8*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1", ROOT.kCyan, legend_max_y-9*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1", ROOT.kBlack, legend_max_y-10*legend_height)
 
 
 y_label = "Events"

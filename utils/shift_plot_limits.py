@@ -1,6 +1,6 @@
 import ROOT
 
-from Logger import info, error
+from Logger import info, warn, error
 
 from shift_paths import crossSections
 
@@ -16,49 +16,49 @@ show_error_bands = False
 
 variants = {
     "cms": ("#F23374", "CMS (Collider Mode)"),
-    "shift100m": ("#33F244", "Shift (100 m)"),
-    "shift300m": ("#55699D", "Shift (300 m)"),
-    "shift500m": ("#517354", "Shift (500 m)"),
+    # "shift80m": ("#55699D", "Shift (80 m)"),
+    "shift120m": ("#33F244", "Shift (120 m)"),
+    # "shift200m": ("#517354", "Shift (200 m)"),
+    "shift250m": ("#000000", "Shift (250 m)"),
+    # "shift300m": ("#F2BC33", "Shift (300 m)"),
+    # "shift350m": ("#FF0000", "Shift (350 m)"),
+    # "shift400m": ("#3366F2", "Shift (400 m)"),
+    # "cmsFT": ("#3366F2", "FT@CMS (a.k.a. Shift 0 m)"),
     # "faser": ("#517354", "FASER (Collider Mode, d=480 m)"),
+    
+    "shift250mpythia_mZprime-100_mDH-20_mDQ-10_tau-1e1": ((20, ROOT.kBlack), "100/20/10 (250)"),
+    "cmspythiaCollider_mZprime-100_mDH-20_mDQ-10_tau-1e1": ((20, ROOT.kRed), "100/20/10 (CMS)"),
+    
+    "shift120mpythia_mZprime-40_mDH-20_mDQ-1_tau-1em3": ((21, ROOT.kGreen), "40/20/1 (120)"),
+    "cmspythiaCollider_mZprime-40_mDH-20_mDQ-1_tau-1em3": ((21, ROOT.kRed), "40/20/1 (CMS)"),
+    # "shift300mpythia_mZprime-100_mDH-15_mDQ-1_tau-1e1": ((21, ROOT.kBlue), "m_{D} = 15 GeV"),
+    # "shift300mpythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": ((21, ROOT.kGreen+1), "m_{D} = 40 GeV"),
+    # "shift300mpythia_mZprime-100_mDH-60_mDQ-1_tau-1e1": ((21, ROOT.kCyan), "m_{D} = 60 GeV"),
+    # "shift300mpythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": ((22, ROOT.kRed), "m_{q} = 2 GeV"),
+    # "shift300mpythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": ((22, ROOT.kOrange), "m_{q} = 5 GeV"),
 }
 
-# limits_cmsFT = {
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7", 1e-7): (0.0583, 0.0173, 0.0303, 0.0581, 0.1118, 0.1762,  ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3", 1e-3): (0.0583, 0.0173, 0.0303, 0.0581, 0.1118, 0.1762,  ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", 1e-1): (2.3700, 0.7028, 1.2359, 2.3672, 4.4997, 7.1772,  ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0", 1e-0): (105.0325, 38.0991, 62.0967, 104.8750, 170.9247, 253.0101,  ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", 1e1): (2153.0055, 1157.9062, 1544.6616, 2148.0000, 3012.7639, 4043.7180,  ),
-# }
 
-# limits_atlasFT = {
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7", 1e-7): (0.0583, 0.0173, 0.0303, 0.0581, 0.1118, 0.1762, ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3", 1e-3): (0.0583, 0.0173, 0.0303, 0.0581, 0.1118, 0.1762, ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", 1e-1): (2.3700, 0.7028, 1.2359, 2.3672, 4.4997, 7.1772, ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0", 1e-0): (105.0325, 38.0991, 62.0967, 104.8750, 170.9247, 253.0101,   ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", 1e1): (2153.0055, 1157.9062, 1544.6616, 2148.0000, 3012.7639, 4043.7180,   ),
-# }
-
-# limits_faserFT = {
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0", 1e-0): (2091.3732, 618.9844, 1088.5675, 2085.0000, 4029.7505, 6322.1304,   ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", 1e1): (1267.6198, 375.2500, 659.9277, 1264.0000, 2442.9758, 3832.6968,   ),
-#     ("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2", 1e2): (6271.5118, 1843.7500, 3258.7891, 4000.0000, 8049.8193, 12131.2783,   ),
-# }
-
-
-def get_graph_set(values, colors, lumi_scale = 1.0):
+def get_graph_set(values, colors, marker_style=-1, lumi_scale = 1.0):
+    
     exp_graph = ROOT.TGraphAsymmErrors()
-    exp_graph.SetLineColor(colors[1] if show_error_bands else colors[0])
-    exp_graph.SetLineWidth(2)
-    exp_graph.SetLineStyle(1)
-
     exp_graph_1sigma = ROOT.TGraphAsymmErrors()
-    exp_graph_1sigma.SetLineWidth(0)
-    exp_graph_1sigma.SetFillColorAlpha(colors[2], alpha)
-
     exp_graph_2sigma = ROOT.TGraphAsymmErrors()
-    exp_graph_2sigma.SetLineWidth(0)
-    exp_graph_2sigma.SetFillColorAlpha(colors[1], alpha)
+    
+    if marker_style == -1:
+        exp_graph.SetLineColor(colors[1] if show_error_bands else colors[0])
+        exp_graph.SetLineWidth(2)
+        exp_graph.SetLineStyle(1)
+        
+        exp_graph_1sigma.SetLineWidth(0)
+        exp_graph_1sigma.SetFillColorAlpha(colors[2], alpha)
 
+        exp_graph_2sigma.SetLineWidth(0)
+        exp_graph_2sigma.SetFillColorAlpha(colors[1], alpha)
+    else:
+        exp_graph.SetMarkerStyle(marker_style)
+        exp_graph.SetMarkerColor(colors)
+        
     for i, (name, ctau) in enumerate(values):
         
         key = name if name in crossSections else name.replace("Collider", "")
@@ -68,15 +68,20 @@ def get_graph_set(values, colors, lumi_scale = 1.0):
         
         limits = [limit*lumi_scale for limit in limits]
         
+        if len(limits) != 6:
+            warn(f"Expected 6 values, got {len(limits)} for {name}")
+            limits = [999999] * 6
+        
         central_value = limits[3]*scale
         
         exp_graph.SetPoint(i, ctau, central_value)
 
-        exp_graph_1sigma.SetPoint(i, ctau, central_value)
-        exp_graph_1sigma.SetPointError(i, 0, 0, (limits[3] - limits[2])*scale, (limits[4] - limits[3])*scale)
+        if marker_style == -1:
+            exp_graph_1sigma.SetPoint(i, ctau, central_value)
+            exp_graph_1sigma.SetPointError(i, 0, 0, (limits[3] - limits[2])*scale, (limits[4] - limits[3])*scale)
 
-        exp_graph_2sigma.SetPoint(i, ctau, central_value)
-        exp_graph_2sigma.SetPointError(i, 0, 0, (limits[3] - limits[1])*scale, (limits[5] - limits[3])*scale)
+            exp_graph_2sigma.SetPoint(i, ctau, central_value)
+            exp_graph_2sigma.SetPointError(i, 0, 0, (limits[3] - limits[1])*scale, (limits[5] - limits[3])*scale)
 
 
     return exp_graph, exp_graph_1sigma, exp_graph_2sigma
@@ -88,7 +93,11 @@ canvas.SetLogy()
 
 def draw_graphs(graphs, first):
     
-    if show_error_bands:
+    one_point = graphs[0].GetN() == 1
+    
+    if one_point:
+        graphs[0].Draw("AP" if first else "Psame")
+    elif show_error_bands:
         graphs[2].Draw("A3" if first else "3same")
         graphs[1].Draw("3same")
         graphs[0].Draw("Lsame")
@@ -153,7 +162,11 @@ def read_limits(path):
                 parts = line.split(":")
                 name = parts[0].strip()
                 values = parts[1].replace("[", "").replace("]", "").split(",")
-                values = [float(value.replace("\'", "")) for value in values]
+                try:
+                    values = [float(value.replace("\'", "")) for value in values]
+                except ValueError:
+                    warn(f"Couldn't convert some values for: {path}")
+                    continue
                 
                 ctau = float(name.split("_")[-1].replace("tau-", "").replace("em", "e-"))
                 limits[(name, ctau)] = values
@@ -165,7 +178,7 @@ def read_limits(path):
 def main():
     ROOT.gROOT.SetBatch(True)
     
-    legend = ROOT.TLegend(0.20, 0.65, 0.45, 0.9)
+    legend = ROOT.TLegend(0.20, 0.45, 0.45, 0.85)
     legend.SetBorderSize(0)
     legend.SetFillStyle(0)
     legend.SetTextFont(42)
@@ -176,16 +189,23 @@ def main():
     graphs = {}
     
     for variant, params in variants.items():
-        color, title = params
-        colors = create_shaded_colors(color, 3, 0.5)
+        
+        try:
+            color, title = params
+            colors = create_shaded_colors(color, 3, 0.3 if show_error_bands else 1.0)
+            marker_style = -1
+        except ValueError:
+            (marker_style, colors), title = params
+        
+        
         limits = read_limits(f"../datacards/limits_mass_{variant}.txt")
         
         if not limits:
             continue
 
-        graphs[variant] = get_graph_set(limits, colors)
+        graphs[variant] = get_graph_set(limits, colors, marker_style)
         draw_graphs(graphs[variant], first=first)
-        legend.AddEntry(graphs[variant][1] if show_error_bands else graphs[variant][0], title, "F" if show_error_bands else "L")
+        legend.AddEntry(graphs[variant][1] if show_error_bands else graphs[variant][0], title, "F" if show_error_bands else "L" if marker_style == -1 else "P")
         
         first = False
     
