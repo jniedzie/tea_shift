@@ -107,9 +107,9 @@ def main():
     
     if args.m_z_prime > 0:
         file_name = f"mZprime-{m_z_prime_name}GeV"
-        file_name += f"_mDarkHadron-{m_dark_hadron_name}GeV"
-        file_name += f"_mDarkQuark-{m_dark_quark_name}GeV"
-        file_name += f"_lifetime-{lifetime_name}m"
+        file_name += f"_mDH-{m_dark_hadron_name}GeV"
+        file_name += f"_mDQ-{m_dark_quark_name}GeV"
+        file_name += f"_ctau-{lifetime_name}m"
         file_name += f"_part-{part}"
     elif args.m_z_prime == -1:
         file_name = f"qcd_part-{part}"
