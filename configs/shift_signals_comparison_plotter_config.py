@@ -6,9 +6,9 @@ from HistogramNormalizer import NormalizationType
 
 from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
 
-variant = "shift120m"
-# variant = "shift250m"
-# variant = "shift300m"
+# variant = "shift120m"
+variant = "shift250m"
+
 
 output_path = f"../plots/signals_comparison_{variant}/"
 
@@ -49,6 +49,7 @@ custom_titles = {
     "pythia_mZprime-30_mDH-15_mDQ-7_tau-1e1": "m_{Z'}= 30, m_{D}= 15, m_{q}= 7",
     
     "pythia_mZprime-40_mDH-20_mDQ-10_tau-1e1": "40/20/10",
+    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e1": "100/90/1",
 }
 
 def addSignalSample(name, color, marker_style, marker_size, legend_x, legend_y):
@@ -75,23 +76,26 @@ def addSignalSample(name, color, marker_style, marker_size, legend_x, legend_y):
 
 
 addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kBlack, 20, 1.5, legend_x_1, legend_max_y-1*legend_height)
-addSignalSample("pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1", ROOT.kViolet, 24, 1.0, legend_x_1, legend_max_y-2*legend_height)
-addSignalSample("pythia_mZprime-100_mDH-15_mDQ-7_tau-1e1", ROOT.kBlue, 24, 1.0, legend_x_1, legend_max_y-3*legend_height)
-addSignalSample("pythia_mZprime-30_mDH-15_mDQ-7_tau-1e1", ROOT.kGreen+1, 24, 1.0, legend_x_1, legend_max_y-4*legend_height)
+addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1", ROOT.kViolet, 24, 1.5, legend_x_1, legend_max_y-2*legend_height)
+# addSignalSample("pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1", ROOT.kViolet, 24, 1.0, legend_x_1, legend_max_y-2*legend_height)
+addSignalSample("pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1", ROOT.kBlue, 24, 1.0, legend_x_1, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-15_mDQ-7_tau-1e1", ROOT.kBlue, 24, 1.0, legend_x_1, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-30_mDH-15_mDQ-7_tau-1e1", ROOT.kGreen+1, 24, 1.0, legend_x_1, legend_max_y-4*legend_height)
 
-addSignalSample("pythia_mZprime-40_mDH-20_mDQ-1_tau-1e1", ROOT.kBlue, 21, 1.0, legend_x_2, legend_max_y-1*legend_height)
-addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1", ROOT.kCyan, 21, 1.0, legend_x_2, legend_max_y-2*legend_height)
-addSignalSample("pythia_mZprime-110_mDH-20_mDQ-1_tau-1e1", ROOT.kCyan+1, 21, 1.0, legend_x_2, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-40_mDH-20_mDQ-1_tau-1e1", ROOT.kBlue, 21, 1.0, legend_x_2, legend_max_y-1*legend_height)
+# addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1", ROOT.kCyan, 21, 1.0, legend_x_2, legend_max_y-2*legend_height)
+# addSignalSample("pythia_mZprime-110_mDH-20_mDQ-1_tau-1e1", ROOT.kCyan+1, 21, 1.0, legend_x_2, legend_max_y-3*legend_height)
 
-addSignalSample("pythia_mZprime-40_mDH-20_mDQ-10_tau-1e1", ROOT.kBlack, 24, 1.0, legend_x_2, legend_max_y-4*legend_height)
+# addSignalSample("pythia_mZprime-40_mDH-20_mDQ-10_tau-1e1", ROOT.kBlack, 24, 1.0, legend_x_2, legend_max_y-4*legend_height)
 
-addSignalSample("pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1", ROOT.kRed , 22, 1.0, legend_x_3, legend_max_y-1*legend_height)
-addSignalSample("pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1", ROOT.kOrange, 22, 1.0, legend_x_3, legend_max_y-2*legend_height)
-addSignalSample("pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1", ROOT.kMagenta, 22, 1.0, legend_x_3, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1", ROOT.kRed , 22, 1.0, legend_x_3, legend_max_y-1*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1", ROOT.kOrange, 22, 1.0, legend_x_3, legend_max_y-2*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1", ROOT.kMagenta, 22, 1.0, legend_x_3, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-90_mDQ-1_tau-1e1", ROOT.kGreen+1, 22, 1.0, legend_x_3, legend_max_y-4*legend_height)
 
-addSignalSample("pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1", ROOT.kGreen ,23, 1.0, legend_x_3, legend_max_y-4*legend_height)
-addSignalSample("pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1", ROOT.kGreen+1, 23, 1.0, legend_x_3, legend_max_y-5*legend_height)
-addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1", ROOT.kCyan, 23, 1.0, legend_x_3, legend_max_y-6*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1", ROOT.kGreen ,23, 1.0, legend_x_3, legend_max_y-4*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1", ROOT.kGreen+1, 23, 1.0, legend_x_3, legend_max_y-5*legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1", ROOT.kCyan, 23, 1.0, legend_x_3, legend_max_y-6*legend_height)
 
 
 
@@ -102,7 +106,7 @@ y_label = "Events"
 
 histograms = (
 
-    Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 6, 1e0, 1e4, "Selection", "#sum genWeight"),
+    Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 7, 1e0, 1e4, "Selection", "#sum genWeight"),
 
     Histogram("DarkHadron_eta", "", False, True, NormalizationType.to_lumi, 1,   0, 12, 1e-3, 1e6, "#eta^{D}", "Entries", ""),
     Histogram("DarkHadron_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 200, 1e-5, 1e6, "p_{T}^{D}", "Entries", ""),

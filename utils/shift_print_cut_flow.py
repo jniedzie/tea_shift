@@ -14,6 +14,11 @@ def print_table(process_data):
     - process_data: A dictionary where keys are process names, and values are dictionaries
                     mapping selection names to the number of events after the selection.
     """
+    
+    # sort processes by c#tau value taking anything that comes after "tau-"
+    processes = sorted(process_data.keys(), key=lambda x: float(x.split("tau-")[1]) if "tau-" in x else 0)
+    
+    
     # Get a list of unique selections and processes
     selections = set()
     for process, sel_data in process_data.items():
@@ -23,8 +28,8 @@ def print_table(process_data):
     processes = sorted(process_data.keys())  # Sort processes alphabetically
 
     # Define column widths
-    col_width_sel = 20
-    col_width_proc = 15
+    col_width_sel = 30
+    col_width_proc = 30
 
     # Print header row
     header = f"Selection".ljust(col_width_sel) + "|" + "".join(f"{process}".ljust(col_width_proc) + "|" for process in processes)
@@ -43,7 +48,7 @@ def print_table(process_data):
             
             if prev_events is not None and curr_events is not None and prev_events != 0:
                 ratio = curr_events / prev_events
-                row += f"{ratio:.3f}".ljust(col_width_proc) + "|"
+                row += f"{ratio:.1e}".ljust(col_width_proc) + "|"
             elif curr_events is not None:
                 row += f"{curr_events}".ljust(col_width_proc) + "|"
             else:
@@ -59,7 +64,7 @@ def print_table(process_data):
         
         if first_events is not None and last_events is not None and first_events != 0:
             total_efficiency = last_events / first_events
-            row += f"{total_efficiency:.3f}".ljust(col_width_proc) + "|"
+            row += f"{total_efficiency:.1e}".ljust(col_width_proc) + "|"
         else:
             row += "N/A".ljust(col_width_proc) + "|"
 

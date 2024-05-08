@@ -7,6 +7,8 @@
         "array": "cpp",
         "InitialMuonsPair_deltaR.C": "cpp",
         "InitialMuonsPair_lowMass.C": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "cutFlow.C": "cpp",
+        "limits_cross_section.C": "cpp"
     }
 }
