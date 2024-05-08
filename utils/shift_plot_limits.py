@@ -4,10 +4,35 @@ from Logger import info, warn, error
 
 from shift_paths import crossSections
 
-x_min = 1e-7
-x_max = 1e5
-y_min = 1e-6
-y_max = 1
+variable = "ctau"
+# variable = "mZprime"
+# variable = "mDH"
+# variable = "mDQ"
+
+if variable == "ctau":
+    x_min = 1e-7
+    x_max = 1e5
+    y_min = 1e-6
+    y_max = 100
+    log_x = True
+elif variable == "mZprime":
+    x_min = 10
+    x_max = 110
+    y_min = 1e-6
+    y_max = 1
+    log_x = False
+elif variable == "mDH":
+    x_min = 1
+    x_max = 50
+    y_min = 1e-6
+    y_max = 1
+    log_x = False
+elif variable == "mDQ":
+    x_min = 0.005
+    x_max = 5
+    y_min = 1e-6
+    y_max = 1
+    log_x = True
 
 alpha = 0.5
 show_error_bands = False
@@ -15,31 +40,71 @@ show_error_bands = False
 # nice colors: #F23374, #55699D, #517354 #33F244 #F2BC33 #3366F2
 
 variants = {
-    "cms": ("#F23374", "CMS (Collider Mode)"),
-    # "shift80m": ("#55699D", "Shift (80 m)"),
-    "shift120m": ("#33F244", "Shift (120 m)"),
-    # "shift200m": ("#517354", "Shift (200 m)"),
-    "shift250m": ("#000000", "Shift (250 m)"),
-    # "shift300m": ("#F2BC33", "Shift (300 m)"),
-    # "shift350m": ("#FF0000", "Shift (350 m)"),
-    # "shift400m": ("#3366F2", "Shift (400 m)"),
-    # "cmsFT": ("#3366F2", "FT@CMS (a.k.a. Shift 0 m)"),
-    # "faser": ("#517354", "FASER (Collider Mode, d=480 m)"),
+    # 100/20/1/X
+    # "cms_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kRed, "CMS (100/20/1)"),
+    # "shift120m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (100/20/1)"),
+    # "shift250m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@250 (100/20/1)"),
     
-    "shift250mpythia_mZprime-100_mDH-20_mDQ-10_tau-1e1": ((20, ROOT.kBlack), "100/20/10 (250)"),
-    "cmspythiaCollider_mZprime-100_mDH-20_mDQ-10_tau-1e1": ((20, ROOT.kRed), "100/20/10 (CMS)"),
+    # 60/5/1/X
+    "cms_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kRed, "CMS (60/5/1/X)"),
+    "shift100m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@100 (60/5/1/X)"),
+    "shift120m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/1/X)"),
+    "shift140m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kMagenta, "Shift@140 (60/5/1/X)"),
+    "shift200m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kCyan, "Shift@200 (60/5/1/X)"),
     
-    "shift120mpythia_mZprime-40_mDH-20_mDQ-1_tau-1em3": ((21, ROOT.kGreen), "40/20/1 (120)"),
-    "cmspythiaCollider_mZprime-40_mDH-20_mDQ-1_tau-1em3": ((21, ROOT.kRed), "40/20/1 (CMS)"),
-    # "shift300mpythia_mZprime-100_mDH-15_mDQ-1_tau-1e1": ((21, ROOT.kBlue), "m_{D} = 15 GeV"),
-    # "shift300mpythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": ((21, ROOT.kGreen+1), "m_{D} = 40 GeV"),
-    # "shift300mpythia_mZprime-100_mDH-60_mDQ-1_tau-1e1": ((21, ROOT.kCyan), "m_{D} = 60 GeV"),
-    # "shift300mpythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": ((22, ROOT.kRed), "m_{q} = 2 GeV"),
-    # "shift300mpythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": ((22, ROOT.kOrange), "m_{q} = 5 GeV"),
+    # cτ scan (100/20/10)
+    # "cms_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kRed, "CMS (100/20/10)"),
+    # "shift120m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kGreen+1, "Shift@120 (100/20/10)"),
+    # "shift200m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlack, "Shift@200 (100/20/10)"),
+    # "shift250m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kCyan, "Shift@250 (100/20/10)"),
+    # "shift300m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kMagenta, "Shift@300 (100/20/10)"),
+    # "shift350m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlue, "Shift@350 (100/20/10)"),
+    
+    # mZ' scan (X/20/10)
+    # "cms_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/20/10)"),
+    # "shift120m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#33F244", "Shift@120 (100/20/10)"),
+    # "shift200m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#55699D", "Shift@200 (100/20/10)"),
+    # "shift290m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kBlue, "Shift@290 (100/20/10)"),
+    # "shift300m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kCyan, "Shift@300 (100/20/10)"),
+    # "shift310m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kTeal, "Shift@310 (100/20/10)"),
+    
+    # mZ' scan (X/20/1)
+    # "cms_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (X/20/1/1em1)"),
+    # "shift120m_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/20/1/1em1)"),
+    
+    # mDH scan (100/X/1)
+    # "cms_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/X/1/1em1)"),
+    # "shift120m_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (100/X/1/1em1)"),
+    
+    # mZ' scan (X/5/1)
+    # "cms_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (X/5/1/1em1)"),
+    # "shift120m_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/5/1/1em1)"),
+    
+    # mDQ scan (60/5/X)
+    # "cms_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (60/5/X/1em1)"),
+    # "shift120m_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/X/1em1)"),
+    
+    
+    # "cms_mZprime-100_mDH-20_mDQ-0p1": (-1, 3, "#F23374", "CMS (100/20/0.1)"),
+    # "shift120m_mZprime-100_mDH-20_mDQ-0p1": (-1, 3, "#55699D", "Shift@120 (100/20/0.1)"),
+    # "shift250m_mZprime-100_mDH-20_mDQ-0p1": (-1, 3, "#517354", "Shift@250 (100/20/0.1)"),
+    
+    # "shift250mpythia_mZprime-100_mDH-20_mDQ-10_tau-1e1": (20, -1, ROOT.kBlack, "100/20/10 (250)"),
+    # "cmspythiaCollider_mZprime-100_mDH-20_mDQ-10_tau-1e1": (20, -1, ROOT.kRed, "100/20/10 (CMS)"),
+    
+    # "shift250mpythia_mZprime-100_mDH-40_mDQ-10_tau-1e1": (24, -1, ROOT.kBlack, "100/40/10 (250)"),
+    # "shift250mpythia_mZprime-100_mDH-40_mDQ-20_tau-1e1": (25, -1, ROOT.kBlack, "100/40/20 (250)"),
+    # "shift250mpythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": (26, -1, ROOT.kBlack, "100/40/1 (250)"),
+    
+    # "shift120mpythia_mZprime-100_mDH-90_mDQ-1_tau-1em3": (22, -1, ROOT.kGreen, "100/90/1 (120)"),
+    # "cmspythiaCollider_mZprime-100_mDH-90_mDQ-1_tau-1em3": (22, -1, ROOT.kRed, "100/90/1 (CMS)"),
+    
+    # "shift120mpythia_mZprime-100_mDH-90_mDQ-40_tau-1em3": (23, -1, ROOT.kGreen, "100/90/40 (120)"),
+    # "cmspythiaCollider_mZprime-100_mDH-90_mDQ-40_tau-1em3": (23, -1, ROOT.kRed, "100/90/40 (CMS)"),
 }
 
 
-def get_graph_set(values, colors, marker_style=-1, lumi_scale = 1.0):
+def get_graph_set(values, colors, marker_style=-1, line_style=-1, lumi_scale = 1.0):
     
     exp_graph = ROOT.TGraphAsymmErrors()
     exp_graph_1sigma = ROOT.TGraphAsymmErrors()
@@ -48,23 +113,24 @@ def get_graph_set(values, colors, marker_style=-1, lumi_scale = 1.0):
     if marker_style == -1:
         exp_graph.SetLineColor(colors[1] if show_error_bands else colors[0])
         exp_graph.SetLineWidth(2)
-        exp_graph.SetLineStyle(1)
+        exp_graph.SetLineStyle(line_style)
         
-        exp_graph_1sigma.SetLineWidth(0)
-        exp_graph_1sigma.SetFillColorAlpha(colors[2], alpha)
+        if show_error_bands:
+            exp_graph_1sigma.SetLineWidth(0)
+            exp_graph_1sigma.SetFillColorAlpha(colors[2], alpha)
 
-        exp_graph_2sigma.SetLineWidth(0)
-        exp_graph_2sigma.SetFillColorAlpha(colors[1], alpha)
+            exp_graph_2sigma.SetLineWidth(0)
+            exp_graph_2sigma.SetFillColorAlpha(colors[1], alpha)
     else:
         exp_graph.SetMarkerStyle(marker_style)
-        exp_graph.SetMarkerColor(colors)
+        exp_graph.SetMarkerColor(colors[0])
         
-    for i, (name, ctau) in enumerate(values):
+    for i, (name, x_value) in enumerate(values):
         
         key = name if name in crossSections else name.replace("Collider", "")
         
         scale = crossSections[key]
-        limits = values[(name, ctau)]
+        limits = values[(name, x_value)]
         
         limits = [limit*lumi_scale for limit in limits]
         
@@ -74,13 +140,13 @@ def get_graph_set(values, colors, marker_style=-1, lumi_scale = 1.0):
         
         central_value = limits[3]*scale
         
-        exp_graph.SetPoint(i, ctau, central_value)
+        exp_graph.SetPoint(i, x_value, central_value)
 
         if marker_style == -1:
-            exp_graph_1sigma.SetPoint(i, ctau, central_value)
+            exp_graph_1sigma.SetPoint(i, x_value, central_value)
             exp_graph_1sigma.SetPointError(i, 0, 0, (limits[3] - limits[2])*scale, (limits[4] - limits[3])*scale)
 
-            exp_graph_2sigma.SetPoint(i, ctau, central_value)
+            exp_graph_2sigma.SetPoint(i, x_value, central_value)
             exp_graph_2sigma.SetPointError(i, 0, 0, (limits[3] - limits[1])*scale, (limits[5] - limits[3])*scale)
 
 
@@ -88,7 +154,7 @@ def get_graph_set(values, colors, marker_style=-1, lumi_scale = 1.0):
 
 canvas = ROOT.TCanvas("canvas", "", 800, 600)
 canvas.cd()
-canvas.SetLogx()
+canvas.SetLogx(log_x)
 canvas.SetLogy()
 
 def draw_graphs(graphs, first):
@@ -113,13 +179,20 @@ def draw_graphs(graphs, first):
     primitives = canvas.GetListOfPrimitives()
     first_graph = primitives.At(0)
     
+    x_titles = {
+        "ctau": "c#tau [m]",
+        "mZprime": "m_{Z'} [GeV]",
+        "mDH": "m_{D} [GeV]",
+        "mDQ": "m_{q} [GeV]",
+    }
+    
     first_graph.GetXaxis().SetTitleSize(0.05)
     first_graph.GetYaxis().SetTitleSize(0.05)
     first_graph.GetXaxis().SetLabelSize(0.04)
     first_graph.GetYaxis().SetLabelSize(0.04)
     first_graph.GetXaxis().SetTitleOffset(1.1)
     first_graph.GetYaxis().SetTitleOffset(1.1)
-    first_graph.GetXaxis().SetTitle("c#tau [m]")
+    first_graph.GetXaxis().SetTitle(x_titles[variable])
     first_graph.GetYaxis().SetTitle("#sigma_{pp #rightarrow Z' #rightarrow h_{D} #rightarrow #mu #mu} [pb]")
 
     first_graph.GetXaxis().SetLimits(x_min, x_max)
@@ -168,8 +241,15 @@ def read_limits(path):
                     warn(f"Couldn't convert some values for: {path}")
                     continue
                 
-                ctau = float(name.split("_")[-1].replace("tau-", "").replace("em", "e-"))
-                limits[(name, ctau)] = values
+                if variable == "ctau":
+                    x_value = float(name.split("_")[-1].replace("ctau-", "").replace("em", "e-"))
+                elif variable == "mZprime":
+                    x_value = float(name.split("_")[1].replace("mZprime-", ""))
+                elif variable == "mDH":
+                    x_value = float(name.split("_")[2].replace("mDH-", ""))
+                elif variable == "mDQ":
+                    x_value = float(name.split("_")[3].replace("mDQ-", "").replace("p", "."))
+                limits[(name, x_value)] = values
     except FileNotFoundError:
         error(f"File {path} not found.")
     
@@ -190,20 +270,19 @@ def main():
     
     for variant, params in variants.items():
         
-        try:
-            color, title = params
-            colors = create_shaded_colors(color, 3, 0.3 if show_error_bands else 1.0)
-            marker_style = -1
-        except ValueError:
-            (marker_style, colors), title = params
+        marker_style, line_style, color, title = params
         
+        if isinstance(color, str):
+            colors = create_shaded_colors(color, 3, 0.3 if show_error_bands else 1.0)
+        else:
+            colors = [color]
         
         limits = read_limits(f"../datacards/limits_mass_{variant}.txt")
         
         if not limits:
             continue
 
-        graphs[variant] = get_graph_set(limits, colors, marker_style)
+        graphs[variant] = get_graph_set(limits, colors, marker_style, line_style)
         draw_graphs(graphs[variant], first=first)
         legend.AddEntry(graphs[variant][1] if show_error_bands else graphs[variant][0], title, "F" if show_error_bands else "L" if marker_style == -1 else "P")
         
@@ -211,8 +290,8 @@ def main():
     
     legend.Draw()
     canvas.Update()
-    canvas.SaveAs("../plots/limits_cross_section.pdf")
-    canvas.SaveAs("../plots/limits_cross_section.C")
+    canvas.SaveAs(f"../plots/limits_cross_section_{variable}.pdf")
+    canvas.SaveAs(f"../plots/limits_cross_section_{variable}.C")
     
 
 if __name__ == "__main__":

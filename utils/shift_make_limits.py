@@ -11,10 +11,24 @@ config_path = "./shift_datacards_config.py"
 base_config_name = "shift_datacards_config_{}.py"
 base_combine_output_name = "output_{}.txt"
 
-# variant = "shift500m"
+# variable = "mZprime"
+# variable = "mDH"
+# variable = "mDQ"
+variable = "ctau"
 
 # suffix = ""
-suffix = processes[0]
+# suffix = processes[0]
+
+if variable == "mZprime":
+    parts = processes[0].split("_")
+    suffix = "_" + "_".join(processes[0].split("_")[2:])
+elif variable == "mDH":
+    suffix = "_" + "_".join(processes[0].split("_")[1:2]) + "_" + "_".join(processes[0].split("_")[3:])
+elif variable == "mDQ":
+    suffix = "_" + "_".join(processes[0].split("_")[1:3]) + "_" + "_".join(processes[0].split("_")[4:])
+elif variable == "ctau":
+    suffix = "_" + "_".join(processes[0].split("_")[1:-1])
+
 
 def run_commands_in_parallel(commands):
     info("Running all processes...") 
@@ -35,8 +49,8 @@ def prepare_datacards():
         
         with open(config_path, "r") as config_file:
             config = config_file.read()
-            config = config.replace("signal_name = \"dummy_value\"", f"signal_name = \"{process}\"")
-
+            config = config.replace("variant = \"dummy_value\"", f"variant = \"{variant}\"")
+        
             new_config_name = base_config_name.format(get_file_name(process))
             with open(new_config_name, "w") as new_config_file:
                 new_config_file.write(config)
@@ -88,6 +102,7 @@ def get_limits():
 def save_limits(limits_per_process):
     
     file_path = f"limits_mass_{variant}{suffix}.txt"
+    info(f"Saving limits to {file_path}")
     
     with open(f"../datacards/{file_path}", "w") as limits_file:
         for process, limits in limits_per_process.items():
