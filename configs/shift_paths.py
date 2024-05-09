@@ -7,9 +7,9 @@ skim = "initial"
 
 # variant = "shift80m"
 # variant = "shift100m"
-# variant = "shift120m" # short-lived 100/20/1, any 60/5/1
-# variant = "shift140m"
-variant = "shift160m"
+# variant = "shift120m" # short-lived 100/20/1
+variant = "shift140m" # any 60/5/1
+# variant = "shift160m"
 # variant = "shift200m"
 # variant = "shift250m"  # long-lived 100/20/1
 # variant = "shift290m"
@@ -29,7 +29,16 @@ else:
     colliderMode = False
 
 processes = (
-    # ctau scan 60/5/1/X
+    # 60/15/1/X
+    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em5",
+    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em3",
+    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em1",
+    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e0",
+    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e1",
+    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e3",
+    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e5",
+    
+    # 60/5/1/X
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5",
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3",
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
@@ -197,6 +206,15 @@ crossSections = {
     # Collider backgrounds
     "pythiaCollider_qcd": 6.247e-01 * 1e6,  # mb -> nb
     "pythiaCollider_dy": 6.911e-06 * 1e6, # mb -> nb
+    
+    # 60/15/1/X
+    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em5": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em3": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em1": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e1": reference_signal_cross_section*1e3,
+    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e3": reference_signal_cross_section*1e5,
+    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7,
     
     # 100/20/1/X
     "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7": reference_signal_cross_section,

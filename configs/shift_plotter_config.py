@@ -72,6 +72,8 @@ def addSignalSample(name, color, legend_y, custom_variant=variant):
         title = name.replace("pythia_mZprime-100_mDH-90_mDQ-1_", "")
         title = name.replace("pythia_mZprime-100_mDH-40_mDQ-1_", "")
         title = name.replace("pythia_mZprime-100_mDH-20_mDQ-10_", "")
+        title = name.replace("pythia_mZprime-60_mDH-5_mDQ-1_", "")
+        title = title.replace("ctau-", "c#tau=")
         title = title.replace("tau-", "c#tau=")
         title = title.replace("1em", "10^{-")
         title = title.replace("1e", "10^{")
@@ -120,13 +122,21 @@ def addSignalSample(name, color, legend_y, custom_variant=variant):
 # addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kOrange, legend_max_y-4*legend_height, "shift300m")
 # addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kRed, legend_max_y-5*legend_height, "shift310m")
 
-addSignalSample("pythia_mZprime-110_mDH-20_mDQ-1_tau-1em1", ROOT.kViolet, legend_max_y-legend_height)
-addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", ROOT.kBlue, legend_max_y-2*legend_height)
-addSignalSample("pythia_mZprime-90_mDH-20_mDQ-1_tau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
-addSignalSample("pythia_mZprime-80_mDH-20_mDQ-1_tau-1em1", ROOT.kGreen, legend_max_y-4*legend_height)
-addSignalSample("pythia_mZprime-70_mDH-20_mDQ-1_tau-1em1", ROOT.kGreen+1, legend_max_y-5*legend_height)
-addSignalSample("pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1", ROOT.kOrange, legend_max_y-6*legend_height)
-addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1em1", ROOT.kRed, legend_max_y-7*legend_height)
+# addSignalSample("pythia_mZprime-110_mDH-20_mDQ-1_tau-1em1", ROOT.kViolet, legend_max_y-legend_height)
+# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", ROOT.kBlue, legend_max_y-2*legend_height)
+# addSignalSample("pythia_mZprime-90_mDH-20_mDQ-1_tau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-80_mDH-20_mDQ-1_tau-1em1", ROOT.kGreen, legend_max_y-4*legend_height)
+# addSignalSample("pythia_mZprime-70_mDH-20_mDQ-1_tau-1em1", ROOT.kGreen+1, legend_max_y-5*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1", ROOT.kOrange, legend_max_y-6*legend_height)
+# addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1em1", ROOT.kRed, legend_max_y-7*legend_height)
+
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5", ROOT.kViolet, legend_max_y-legend_height)
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3", ROOT.kBlue, legend_max_y-2*legend_height)
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0", ROOT.kGreen, legend_max_y-4*legend_height)
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3", ROOT.kOrange, legend_max_y-6*legend_height)
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5", ROOT.kRed, legend_max_y-7*legend_height)
 
 
     
@@ -157,7 +167,7 @@ histograms = (
     Histogram("MuonsHittingDetector_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 1e-5, 1e5, "E^{#mu}", "Entries", ""),
     Histogram("MuonsHittingDetector_eta", "", False, True, NormalizationType.to_lumi, 1,   -2, 12, 1e-10, 1e10, "#eta^{#mu}", "Entries", ""),
     Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-5, 1e5, "#Delta R^{#mu#mu} (GeV)", "Entries", ""),
-    Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 40, 1e-5, 10, "m^{#mu#mu} (GeV)", "Entries", ""),
+    Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   0, 100, 1e-5, 1e5, "m^{#mu#mu} (GeV)", "Entries", ""),
     
     Histogram("Zprime_eta", "", False, True, NormalizationType.to_lumi, 1,   4, 12, 1e-5, 1e6, "#eta^{Z'}", "Entries", ""),
     Histogram("Zprime_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-15, 1e6, "p_{T}^{Z'}", "Entries", ""),

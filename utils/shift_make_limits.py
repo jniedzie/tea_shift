@@ -16,9 +16,6 @@ base_combine_output_name = "output_{}.txt"
 # variable = "mDQ"
 variable = "ctau"
 
-# suffix = ""
-# suffix = processes[0]
-
 if variable == "mZprime":
     parts = processes[0].split("_")
     suffix = "_" + "_".join(processes[0].split("_")[2:])
@@ -29,6 +26,9 @@ elif variable == "mDQ":
 elif variable == "ctau":
     suffix = "_" + "_".join(processes[0].split("_")[1:-1])
 
+
+# suffix = ""
+# suffix = processes[0]
 
 def run_commands_in_parallel(commands):
     info("Running all processes...") 
@@ -49,7 +49,7 @@ def prepare_datacards():
         
         with open(config_path, "r") as config_file:
             config = config_file.read()
-            config = config.replace("variant = \"dummy_value\"", f"variant = \"{variant}\"")
+            config = config.replace("signal_name = \"dummy_value\"", f"signal_name = \"{process}\"")
         
             new_config_name = base_config_name.format(get_file_name(process))
             with open(new_config_name, "w") as new_config_file:

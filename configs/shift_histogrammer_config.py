@@ -4,14 +4,16 @@ from shift_paths import detectorParams, base_path
 nEvents = -1
 printEveryNevents = 100
 
-mZprime = 100
+mZprime = 60
 mDH = 5
 mDQ = 1
 ctau = "1em1"
 
 # inputFilePath = f"{base_path}/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7/initial/mZprime-100GeV_mDarkHadron-20GeV_mDarkQuark-1GeV_lifetime-1p00em07m_nEvents-1000_part-0.root"
-inputFilePath = f"{base_path}/pythia_mZprime-{mZprime}_mDH-{mDH}_mDQ-{mDQ}_tau-{ctau}/initial/mZprime-{mZprime}GeV_mDarkHadron-{mDH}GeV_mDarkQuark-{mDQ}GeV_lifetime-1p00em01m_part-0.root"
+# inputFilePath = f"{base_path}/pythia_mZprime-{mZprime}_mDH-{mDH}_mDQ-{mDQ}_ctau-{ctau}/initial/mZprime-{mZprime}GeV_mDH-{mDH}GeV_mDQ-{mDQ}GeV_ctau-1p00em01m_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_qcd/initial/qcd_part-0.root"
+# inputFilePath = f"{base_path}/pythia_qcd/initial/qcd_part-0.root"
+inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
 treeOutputFilePath = "../trees_signal.root"
 histogramsOutputFilePath = "../histograms_signal.root"
 

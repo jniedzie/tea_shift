@@ -4,9 +4,9 @@ from Logger import info, warn, error
 
 from shift_paths import crossSections
 
-variable = "ctau"
+# variable = "ctau"
 # variable = "mZprime"
-# variable = "mDH"
+variable = "mDH"
 # variable = "mDQ"
 
 if variable == "ctau":
@@ -45,14 +45,7 @@ variants = {
     # "shift120m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (100/20/1)"),
     # "shift250m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@250 (100/20/1)"),
     
-    # 60/5/1/X
-    "cms_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kRed, "CMS (60/5/1/X)"),
-    "shift100m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@100 (60/5/1/X)"),
-    "shift120m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/1/X)"),
-    "shift140m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kMagenta, "Shift@140 (60/5/1/X)"),
-    "shift200m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kCyan, "Shift@200 (60/5/1/X)"),
-    
-    # cτ scan (100/20/10)
+    # 100/20/10/X
     # "cms_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kRed, "CMS (100/20/10)"),
     # "shift120m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kGreen+1, "Shift@120 (100/20/10)"),
     # "shift200m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlack, "Shift@200 (100/20/10)"),
@@ -60,7 +53,16 @@ variants = {
     # "shift300m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kMagenta, "Shift@300 (100/20/10)"),
     # "shift350m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlue, "Shift@350 (100/20/10)"),
     
-    # mZ' scan (X/20/10)
+    # 60/5/1/X
+    # "cms_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kRed+1, "CMS (60/5/1/X)"),
+    # "shift100m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@100 (60/5/1/X)"),
+    # "shift120m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/1/X)"),
+    # "shift140m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen+1, "Shift@140 (60/5/1/X)"),
+    # "shift160m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen+1, "Shift@160 (60/5/1/X)"),
+    # "shift200m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kCyan, "Shift@200 (60/5/1/X)"),
+    
+    
+    # X/20/10/1em1
     # "cms_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/20/10)"),
     # "shift120m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#33F244", "Shift@120 (100/20/10)"),
     # "shift200m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#55699D", "Shift@200 (100/20/10)"),
@@ -68,39 +70,21 @@ variants = {
     # "shift300m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kCyan, "Shift@300 (100/20/10)"),
     # "shift310m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kTeal, "Shift@310 (100/20/10)"),
     
-    # mZ' scan (X/20/1)
+    # X/20/1/1em1
     # "cms_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (X/20/1/1em1)"),
     # "shift120m_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/20/1/1em1)"),
     
-    # mDH scan (100/X/1)
-    # "cms_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/X/1/1em1)"),
-    # "shift120m_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (100/X/1/1em1)"),
+    # 100/X/1/1em1
+    "cms_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/X/1/1em1)"),
+    "shift120m_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (100/X/1/1em1)"),
     
-    # mZ' scan (X/5/1)
+    # X/5/1/1em1
     # "cms_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (X/5/1/1em1)"),
     # "shift120m_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/5/1/1em1)"),
     
-    # mDQ scan (60/5/X)
+    # 60/5/X/1em1
     # "cms_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (60/5/X/1em1)"),
     # "shift120m_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/X/1em1)"),
-    
-    
-    # "cms_mZprime-100_mDH-20_mDQ-0p1": (-1, 3, "#F23374", "CMS (100/20/0.1)"),
-    # "shift120m_mZprime-100_mDH-20_mDQ-0p1": (-1, 3, "#55699D", "Shift@120 (100/20/0.1)"),
-    # "shift250m_mZprime-100_mDH-20_mDQ-0p1": (-1, 3, "#517354", "Shift@250 (100/20/0.1)"),
-    
-    # "shift250mpythia_mZprime-100_mDH-20_mDQ-10_tau-1e1": (20, -1, ROOT.kBlack, "100/20/10 (250)"),
-    # "cmspythiaCollider_mZprime-100_mDH-20_mDQ-10_tau-1e1": (20, -1, ROOT.kRed, "100/20/10 (CMS)"),
-    
-    # "shift250mpythia_mZprime-100_mDH-40_mDQ-10_tau-1e1": (24, -1, ROOT.kBlack, "100/40/10 (250)"),
-    # "shift250mpythia_mZprime-100_mDH-40_mDQ-20_tau-1e1": (25, -1, ROOT.kBlack, "100/40/20 (250)"),
-    # "shift250mpythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": (26, -1, ROOT.kBlack, "100/40/1 (250)"),
-    
-    # "shift120mpythia_mZprime-100_mDH-90_mDQ-1_tau-1em3": (22, -1, ROOT.kGreen, "100/90/1 (120)"),
-    # "cmspythiaCollider_mZprime-100_mDH-90_mDQ-1_tau-1em3": (22, -1, ROOT.kRed, "100/90/1 (CMS)"),
-    
-    # "shift120mpythia_mZprime-100_mDH-90_mDQ-40_tau-1em3": (23, -1, ROOT.kGreen, "100/90/40 (120)"),
-    # "cmspythiaCollider_mZprime-100_mDH-90_mDQ-40_tau-1em3": (23, -1, ROOT.kRed, "100/90/40 (CMS)"),
 }
 
 

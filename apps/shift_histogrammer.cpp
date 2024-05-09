@@ -4,10 +4,9 @@
 #include "ExtensionsHelpers.hpp"
 #include "HistogramsFiller.hpp"
 #include "HistogramsHandler.hpp"
+#include "ShiftDetector.hpp"
 #include "ShiftHistogramsFiller.hpp"
 #include "ShiftObjectsManager.hpp"
-#include "HepMCProcessor.hpp"
-#include "ShiftDetector.hpp"
 
 using namespace std;
 
@@ -64,7 +63,7 @@ int main(int argc, char **argv) {
     nMuons->insert({"3_intersectingDetector", 0});
     nMuons->insert({"4_beforeDetector", 0});
     nMuons->insert({"5_throughRock", 0});
-    
+
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
     shiftObjectsManager->InsertGoodMuonsCollection(event);
@@ -73,8 +72,8 @@ int main(int argc, char **argv) {
     shiftHistogramsFiller->Fill(event, true);
 
     bool passes = true;
-    for(auto &[key, value] : *nMuons){
-      if(value < 2){
+    for (auto &[key, value] : *nMuons) {
+      if (value < 2) {
         passes = false;
         break;
       }
@@ -82,7 +81,7 @@ int main(int argc, char **argv) {
       string name = key.substr(key.find("_") + 1);
       cutFlowManager->UpdateCutFlow(name);
     }
-    if(!passes) continue;
+    if (!passes) continue;
 
     // check that at least one combination of muons passes the mass cut
     bool passesMassCut = false;
@@ -102,9 +101,9 @@ int main(int argc, char **argv) {
           break;
         }
       }
-      if(passesMassCut) break;
+      if (passesMassCut) break;
     }
-    if(!passesMassCut) continue;
+    if (!passesMassCut) continue;
     cutFlowManager->UpdateCutFlow("massCut");
 
     shiftHistogramsFiller->Fill(event, false);
