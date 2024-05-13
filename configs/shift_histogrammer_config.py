@@ -13,7 +13,10 @@ ctau = "1em1"
 # inputFilePath = f"{base_path}/pythia_mZprime-{mZprime}_mDH-{mDH}_mDQ-{mDQ}_ctau-{ctau}/initial/mZprime-{mZprime}GeV_mDH-{mDH}GeV_mDQ-{mDQ}GeV_ctau-1p00em01m_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_qcd/initial/qcd_part-0.root"
 # inputFilePath = f"{base_path}/pythia_qcd/initial/qcd_part-0.root"
-inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
+# inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
+# inputFilePath = "../mDarkPhoton-25.0_part-0.root"
+inputFilePath = f"{base_path}/pythiaCollider_mDarkPhoton-30/initial/mDarkPhoton-30.0_part-1.root"
+
 treeOutputFilePath = "../trees_signal.root"
 histogramsOutputFilePath = "../histograms_signal.root"
 
@@ -27,6 +30,13 @@ histParams = (
   ("Zprime", "mass",      100,  0,      500,     ""),
   ("Zprime", "pid"  ,     100,  0,      10000000,     ""),
   ("Zprime", "status",    100,  0,      100,     ""),
+  
+  ("DarkPhoton", "pt"  ,      100,  0,      1000,     ""),
+  ("DarkPhoton", "eta" ,      100,  -10,    20,     ""),
+  ("DarkPhoton", "phi" ,      100,  -4,     4,     ""),
+  ("DarkPhoton", "mass",      100,  0,      500,     ""),
+  ("DarkPhoton", "pid"  ,     100,  0,      10000000,     ""),
+  ("DarkPhoton", "status",    100,  0,      100,     ""),
   
   ("DarkHadron", "pt"  ,      200,  0,      200,     ""),
   ("DarkHadron", "eta" ,      100,  -10,    20,     ""),
@@ -49,6 +59,10 @@ histParams = (
   ("InitialMuonsPair", "lowMass"  ,    1000,  0,      10,     ""),
   ("InitialMuonsPair", "deltaR"  ,    100,  0,      10,     ""),
   
+  ("InitialMuonsFromDarkPhoton", "pt"      ,    1000,  0,      1000,     ""),
+  ("InitialMuonsFromDarkPhoton", "energy"  ,    100,  0,      10000,     ""),
+  ("InitialMuonsFromDarkPhoton", "eta"     ,    100,  -10,    20,     ""),
+  
   ("MuonsHittingDetector", "pt"      ,    1000,  0,      1000,     ""),
   ("MuonsHittingDetector", "energy"  ,    100,  0,      10000,     ""),
   ("MuonsHittingDetector", "eta"     ,    100,  -10,    20,     ""),
@@ -64,6 +78,7 @@ histParams = (
   ("MuonsHittingDetectorPair", "deltaR"  ,    100,  0,      10,     ""),
   
   ("Event", "nZprimes"    ,    10,  0,      10,     ""),
+  ("Event", "nDarkPhotons"    ,    10,  0,      10,     ""),
   ("Event", "nDarkHadrons",    10,  0,      10,     ""),
   ("Event", "nInitialMuons",    20,  0,      20,     ""),
   ("Event", "nMuonsHittingDetector",    20,  0,      20,     ""),

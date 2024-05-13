@@ -10,6 +10,8 @@
         "random": "cpp",
         "cutFlow.C": "cpp",
         "limits_cross_section.C": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "limits_cross_section_mass.C": "cpp",
+        "InitialMuons_energy.C": "cpp"
     }
 }

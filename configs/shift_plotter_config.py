@@ -4,8 +4,11 @@ from Legend import Legend
 from Histogram import Histogram, Histogram2D
 from HistogramNormalizer import NormalizationType
 
-from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
+# from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
+from shift_paths import crossSections, base_path, luminosity
 
+variant = "cms"
+colliderMode = True
 output_path = f"../plots/{variant}/"
 
 backgrounds_legend_x = 0.50
@@ -59,6 +62,8 @@ custom_titles = {
     "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": "m_{q}= 2 GeV",
     "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": "m_{q}= 5 GeV",
     "pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1": "m_{Z'}= 20, m_{D}= 5",
+    "pythia_mDarkPhoton-5": "m_{A'}= 5 GeV",
+    "pythia_mDarkPhoton-30": "m_{A'}= 30 GeV",
 }
 
 def addSignalSample(name, color, legend_y, custom_variant=variant):
@@ -68,6 +73,7 @@ def addSignalSample(name, color, legend_y, custom_variant=variant):
     if name in custom_titles:
         title = custom_titles[name]
     else:
+        title = name.replace("pythia_mDarkPhoton-", "m_{A'} = ")
         title = name.replace("pythia_mZprime-100_mDH-20_mDQ-1_", "")
         title = name.replace("pythia_mZprime-100_mDH-90_mDQ-1_", "")
         title = name.replace("pythia_mZprime-100_mDH-40_mDQ-1_", "")
@@ -130,23 +136,16 @@ def addSignalSample(name, color, legend_y, custom_variant=variant):
 # addSignalSample("pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1", ROOT.kOrange, legend_max_y-6*legend_height)
 # addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1em1", ROOT.kRed, legend_max_y-7*legend_height)
 
-addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5", ROOT.kViolet, legend_max_y-legend_height)
-addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3", ROOT.kBlue, legend_max_y-2*legend_height)
-addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
-addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0", ROOT.kGreen, legend_max_y-4*legend_height)
-addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
-addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3", ROOT.kOrange, legend_max_y-6*legend_height)
-addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5", ROOT.kRed, legend_max_y-7*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5", ROOT.kViolet, legend_max_y-legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3", ROOT.kBlue, legend_max_y-2*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0", ROOT.kGreen, legend_max_y-4*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3", ROOT.kOrange, legend_max_y-6*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5", ROOT.kRed, legend_max_y-7*legend_height)
 
-
-    
-    
-    
-    
-    
-    
-    
-    
+addSignalSample("pythia_mDarkPhoton-5", ROOT.kViolet, legend_max_y-1*legend_height)
+addSignalSample("pythia_mDarkPhoton-30", ROOT.kBlue, legend_max_y-2*legend_height)
 
 y_label = "Events"
 
@@ -158,21 +157,22 @@ histograms = (
     Histogram("DarkHadron_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 200, 1e-5, 1e6, "p_{T}^{D}", "Entries", ""),
 
     Histogram("InitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 10, 1e12, "E^{#mu}", "Entries", ""),
-    Histogram("InitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -2, 12, 1e0, 1e10, "#eta^{#mu}", "Entries", ""),
+    Histogram("InitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e12, "#eta^{#mu}", "Entries", ""),
     Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta R^{#mu#mu}", "Entries", ""),
-    Histogram("InitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 40, 5e-1, 1e6, "m^{#mu#mu} (GeV)", "Entries", ""),
+    Histogram("InitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 100, 1e0, 1e10, "m^{#mu#mu} (GeV)", "Entries", ""),
     
     Histogram("InitialMuons_z", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "z^{#mu} (mm)", "Entries", ""),
     
-    Histogram("MuonsHittingDetector_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 1e-5, 1e5, "E^{#mu}", "Entries", ""),
-    Histogram("MuonsHittingDetector_eta", "", False, True, NormalizationType.to_lumi, 1,   -2, 12, 1e-10, 1e10, "#eta^{#mu}", "Entries", ""),
-    Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-5, 1e5, "#Delta R^{#mu#mu} (GeV)", "Entries", ""),
-    Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 5,   0, 100, 1e-5, 1e5, "m^{#mu#mu} (GeV)", "Entries", ""),
+    Histogram("MuonsHittingDetector_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 1e-1, 1e6, "E^{#mu}", "Entries", ""),
+    Histogram("MuonsHittingDetector_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e6, "#eta^{#mu}", "Entries", ""),
+    Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 1e-1, 1e6, "#Delta R^{#mu#mu} (GeV)", "Entries", ""),
+    Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 10,   0, 100, 1e-2, 1e6, "m^{#mu#mu} (GeV)", "Entries", ""),
     
     Histogram("Zprime_eta", "", False, True, NormalizationType.to_lumi, 1,   4, 12, 1e-5, 1e6, "#eta^{Z'}", "Entries", ""),
     Histogram("Zprime_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-15, 1e6, "p_{T}^{Z'}", "Entries", ""),
     
-    
+    Histogram("DarkPhoton_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e-2, 1e4, "#eta^{A'}", "Entries", ""),
+    Histogram("DarkPhoton_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 1000, 1e-4, 1e4, "p_{T}^{A'}", "Entries", ""),
     
 )
 
