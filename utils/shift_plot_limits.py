@@ -4,16 +4,17 @@ from Logger import info, warn, error
 
 from shift_paths import crossSections
 
-# variable = "ctau"
+variable = "ctau"
 # variable = "mZprime"
-variable = "mDH"
+# variable = "mDH"
 # variable = "mDQ"
+# variable = "mDarkPhoton"
 
 if variable == "ctau":
-    x_min = 1e-7
-    x_max = 1e5
-    y_min = 1e-6
-    y_max = 100
+    x_min = 1e-5
+    x_max = 1e3
+    y_min = 1e-5
+    y_max = 1
     log_x = True
 elif variable == "mZprime":
     x_min = 10
@@ -33,13 +34,41 @@ elif variable == "mDQ":
     y_min = 1e-6
     y_max = 1
     log_x = True
+elif variable == "mDarkPhoton":
+    x_min = 0
+    x_max = 100
+    y_min = 1e-6
+    y_max = 1
+    log_x = False
+
+x_titles = {
+    "ctau": "c#tau [m]",
+    "mZprime": "m_{Z'} [GeV]",
+    "mDH": "m_{D} [GeV]",
+    "mDQ": "m_{q} [GeV]",
+    "mDarkPhoton": "m_{A'} [GeV]",
+}
 
 alpha = 0.5
-show_error_bands = False
+show_error_bands = True
+show_2sigma = False
 
 # nice colors: #F23374, #55699D, #517354 #33F244 #F2BC33 #3366F2
 
 variants = {
+    # DP: 30/X
+    "cms_pythiaCollider_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kRed+1, "CMS (DP: 30/X)"),
+    # "shift120m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kBlue, "Shift@120 (DP: 30/X)"),
+    # "shift140m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kGreen+1, "Shift@140 (DP: 30/X)"),
+    "shift160m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kMagenta+1, "Shift@160 (DP: 30/X)"),
+    # "shift200m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kCyan+1, "Shift@200 (DP: 30/X)"),
+    # "shift250m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kOrange+1, "Shift@250 (DP: 30/X)"),
+    # "shift300m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kOrange, "Shift@300 (DP: 30/X)"),
+    
+    # DP: X/?
+    # "cms_mDarkPhoton": (-1, 1, ROOT.kRed+1, "CMS (dark photons)"),
+    # "shift140m_mDarkPhoton": (-1, 1, ROOT.kGreen+1, "Shift@140 (dark photons)"),
+    
     # 100/20/1/X
     # "cms_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kRed, "CMS (100/20/1)"),
     # "shift120m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (100/20/1)"),
@@ -75,8 +104,8 @@ variants = {
     # "shift120m_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/20/1/1em1)"),
     
     # 100/X/1/1em1
-    "cms_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/X/1/1em1)"),
-    "shift120m_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (100/X/1/1em1)"),
+    # "cms_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/X/1/1em1)"),
+    # "shift120m_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (100/X/1/1em1)"),
     
     # X/5/1/1em1
     # "cms_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (X/5/1/1em1)"),
@@ -148,8 +177,12 @@ def draw_graphs(graphs, first):
     if one_point:
         graphs[0].Draw("AP" if first else "Psame")
     elif show_error_bands:
-        graphs[2].Draw("A3" if first else "3same")
-        graphs[1].Draw("3same")
+        if show_2sigma:
+            graphs[2].Draw("A3" if first else "3same")
+            graphs[1].Draw("3same")
+        else:
+            graphs[1].Draw("A3" if first else "3same")
+        
         graphs[0].Draw("Lsame")
     else:
         graphs[0].Draw("AL" if first else "Lsame")
@@ -162,13 +195,6 @@ def draw_graphs(graphs, first):
 
     primitives = canvas.GetListOfPrimitives()
     first_graph = primitives.At(0)
-    
-    x_titles = {
-        "ctau": "c#tau [m]",
-        "mZprime": "m_{Z'} [GeV]",
-        "mDH": "m_{D} [GeV]",
-        "mDQ": "m_{q} [GeV]",
-    }
     
     first_graph.GetXaxis().SetTitleSize(0.05)
     first_graph.GetYaxis().SetTitleSize(0.05)
@@ -225,14 +251,23 @@ def read_limits(path):
                     warn(f"Couldn't convert some values for: {path}")
                     continue
                 
-                if variable == "ctau":
-                    x_value = float(name.split("_")[-1].replace("ctau-", "").replace("em", "e-"))
-                elif variable == "mZprime":
-                    x_value = float(name.split("_")[1].replace("mZprime-", ""))
-                elif variable == "mDH":
-                    x_value = float(name.split("_")[2].replace("mDH-", ""))
-                elif variable == "mDQ":
-                    x_value = float(name.split("_")[3].replace("mDQ-", "").replace("p", "."))
+                parts = name.split("_")
+                
+                for part in parts:
+                    if variable not in part:
+                        continue
+                    
+                    x_value = float(part.replace(f"{variable}-", "").replace("em", "e-").replace("p", "."))
+                    break
+                
+                # if variable == "ctau":
+                #     x_value = float(name.split("_")[-1].replace("ctau-", "").replace("em", "e-"))
+                # elif variable == "mZprime":
+                #     x_value = float(name.split("_")[1].replace("mZprime-", ""))
+                # elif variable == "mDH":
+                #     x_value = float(name.split("_")[2].replace("mDH-", ""))
+                # elif variable == "mDQ":
+                #     x_value = float(name.split("_")[3].replace("mDQ-", "").replace("p", "."))
                 limits[(name, x_value)] = values
     except FileNotFoundError:
         error(f"File {path} not found.")
@@ -259,7 +294,13 @@ def main():
         if isinstance(color, str):
             colors = create_shaded_colors(color, 3, 0.3 if show_error_bands else 1.0)
         else:
-            colors = [color]
+            # Get RGB values from ROOT color index
+            color = ROOT.gROOT.GetColor(color)
+            colors = [color.GetRed(), color.GetGreen(), color.GetBlue()]
+            # transform colors to a hex string
+            colors = "#{:02x}{:02x}{:02x}".format(int(colors[0]*255), int(colors[1]*255), int(colors[2]*255))
+            print(colors)
+            colors = create_shaded_colors(colors, 3, 0.3 if show_error_bands else 1.0)
         
         limits = read_limits(f"../datacards/limits_mass_{variant}.txt")
         
