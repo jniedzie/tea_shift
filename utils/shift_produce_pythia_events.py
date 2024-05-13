@@ -5,6 +5,8 @@ import argparse
 import fileinput
 import random
 
+from Logger import info, warn, error
+
 dry_run = False
 
 
@@ -60,11 +62,15 @@ def get_args():
     parser.add_argument("-p", "--part", help="", default=0)
     parser.add_argument("-n", "--n_events", help="", default=1000)
     
-    parser.add_argument("-z", "--m_z_prime", help="Z' mass (GeV)", default=100, type=float)
+    parser.add_argument("-pr", "--process", help="", default=-1, type=int)
+    
+    parser.add_argument("-z", "--m_z_prime", help="Z' mass (GeV)", default=-999, type=float)
     parser.add_argument("-d", "--m_dark_hadron", help="Dark pi/rho mass (GeV)", default=2, type=float)
     parser.add_argument("-q", "--m_dark_quark", help="Dark quark mass (GeV)", default=1, type=float)
     
-    parser.add_argument("-l", "--lifetime", help="Dark pi/rho mean lifetime (m)", default=70, type=float)
+    parser.add_argument("-dp", "--m_dark_photon", help="Z_D mass (GeV)", default=-999, type=float)
+    
+    parser.add_argument("-l", "--lifetime", help="Dark pi/rho mean lifetime (m)", default=-999, type=float)
     
     parser.add_argument("-o", "--output_path", help="", default=".")
     
@@ -83,6 +89,12 @@ def main():
     
     args = get_args()
     
+    process = args.process
+    if process < 0:
+        error("Process not specified. Available options:")
+        error("1: QCD\n2: DY\n3: Hidden Valley\n4: Dark photon")
+        exit()
+    
     part = args.part
     n_events = args.n_events
     
@@ -90,6 +102,8 @@ def main():
     m_dark_hadron = args.m_dark_hadron
     m_dark_quark = args.m_dark_quark
     lifetime = args.lifetime
+    
+    m_dark_photon = args.m_dark_photon
     
     output_path = args.output_path
     
@@ -105,16 +119,21 @@ def main():
     
     lifetime_name = clear_string(f"{lifetime:.2e}")
     
-    if args.m_z_prime > 0:
+    
+    if process == 1:
+        file_name = f"qcd_part-{part}"
+    elif process == 2:
+        file_name = f"dy_part-{part}"
+    elif process == 3:
         file_name = f"mZprime-{m_z_prime_name}GeV"
         file_name += f"_mDH-{m_dark_hadron_name}GeV"
         file_name += f"_mDQ-{m_dark_quark_name}GeV"
         file_name += f"_ctau-{lifetime_name}m"
         file_name += f"_part-{part}"
-    elif args.m_z_prime == -1:
-        file_name = f"qcd_part-{part}"
-    elif args.m_z_prime == -2:
-        file_name = f"dy_part-{part}"
+    elif process == 4:
+        file_name = f"mDarkPhoton-{m_dark_photon}"
+        file_name += f"_ctau-{lifetime_name}m"
+        file_name += f"_part-{part}"
     
     # prepare pythia card
     to_change = {
@@ -132,6 +151,9 @@ def main():
     
         ("4900111:tau0", "dummy_value"): lifetime * 1000,
         ("4900113:tau0", "dummy_value"): lifetime * 1000,
+        
+        ("32:m0", "dummy_value"): m_dark_photon,
+        ("32:tau0", "dummy_value"): lifetime * 1000,
     }
 
     copy_and_update_config(args.base_pythia_card, new_pythia_card_path, to_change)
