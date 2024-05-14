@@ -4,11 +4,11 @@ from Legend import Legend
 from Histogram import Histogram, Histogram2D
 from HistogramNormalizer import NormalizationType
 
-# from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
+from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
 from shift_paths import crossSections, base_path, luminosity
 
-variant = "cms"
-colliderMode = True
+# variant = "cms"
+# colliderMode = True
 output_path = f"../plots/{variant}/"
 
 backgrounds_legend_x = 0.50
@@ -28,7 +28,7 @@ samples = [
         type=SampleType.background,
         cross_sections=crossSections,
         
-        fill_color=ROOT.kRed+1,
+        fill_color=ROOT.kGray,
         fill_alpha=1.0,
         marker_size=0.0,
         
@@ -41,7 +41,7 @@ samples = [
         type=SampleType.background,
         cross_sections=crossSections,
 
-        fill_color=ROOT.kGreen+1,
+        fill_color=ROOT.kGray+1,
         fill_alpha=1.0,
         marker_size=0.0,
         
@@ -144,8 +144,13 @@ def addSignalSample(name, color, legend_y, custom_variant=variant):
 # addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3", ROOT.kOrange, legend_max_y-6*legend_height)
 # addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5", ROOT.kRed, legend_max_y-7*legend_height)
 
-addSignalSample("pythia_mDarkPhoton-5", ROOT.kViolet, legend_max_y-1*legend_height)
-addSignalSample("pythia_mDarkPhoton-30", ROOT.kBlue, legend_max_y-2*legend_height)
+addSignalSample("pythia_mDarkPhoton-5_ctau-1e1", ROOT.kViolet, legend_max_y-legend_height)
+addSignalSample("pythia_mDarkPhoton-10_ctau-1e1", ROOT.kBlue, legend_max_y-2*legend_height)
+addSignalSample("pythia_mDarkPhoton-15_ctau-1e1", ROOT.kCyan, legend_max_y-3*legend_height)
+addSignalSample("pythia_mDarkPhoton-20_ctau-1e1", ROOT.kGreen, legend_max_y-4*legend_height)
+addSignalSample("pythia_mDarkPhoton-30_ctau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
+addSignalSample("pythia_mDarkPhoton-40_ctau-1e1", ROOT.kOrange, legend_max_y-6*legend_height)
+addSignalSample("pythia_mDarkPhoton-70_ctau-1e1", ROOT.kRed, legend_max_y-7*legend_height)
 
 y_label = "Events"
 
@@ -154,14 +159,21 @@ histograms = (
     Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 7, 1e-5, 1e10, "Selection", "#sum genWeight"),
 
     Histogram("DarkHadron_eta", "", False, True, NormalizationType.to_lumi, 1,   -2, 12, 1e-5, 1e6, "#eta^{D}", "Entries", ""),
-    Histogram("DarkHadron_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 200, 1e-5, 1e6, "p_{T}^{D}", "Entries", ""),
+    Histogram("DarkHadron_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 200, 1e-5, 1e6, "p_{T}^{D} (GeV)", "Entries", ""),
 
-    Histogram("InitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 10, 1e12, "E^{#mu}", "Entries", ""),
+    Histogram("InitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 10, 1e12, "E^{#mu} (GeV)", "Entries", ""),
+    Histogram("InitialMuons_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 10, 1e12, "p_{T}^{#mu} (GeV)", "Entries", ""),
     Histogram("InitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e12, "#eta^{#mu}", "Entries", ""),
-    Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta R^{#mu#mu}", "Entries", ""),
-    Histogram("InitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 100, 1e0, 1e10, "m^{#mu#mu} (GeV)", "Entries", ""),
+    Histogram("InitialMuons_phi", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e12, "#phi^{#mu}", "Entries", ""),
     
-    Histogram("InitialMuons_z", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "z^{#mu} (mm)", "Entries", ""),
+    Histogram("InitialMuons_x", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "x^{#mu} (m)", "Entries", ""),
+    Histogram("InitialMuons_y", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "y^{#mu} (m)", "Entries", ""),
+    Histogram("InitialMuons_z", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "z^{#mu} (m)", "Entries", ""),
+    
+    Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta R^{#mu#mu}", "Entries", ""),
+    # Histogram("InitialMuonsPair_deltaEta", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta #eta^{#mu#mu}", "Entries", ""),
+    # Histogram("InitialMuonsPair_deltaPhi", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta #phi^{#mu#mu}", "Entries", ""),
+    Histogram("InitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 100, 1e0, 1e10, "m^{#mu#mu} (GeV)", "Entries", ""),
     
     Histogram("MuonsHittingDetector_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 1e-1, 1e6, "E^{#mu}", "Entries", ""),
     Histogram("MuonsHittingDetector_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e6, "#eta^{#mu}", "Entries", ""),
@@ -172,7 +184,9 @@ histograms = (
     Histogram("Zprime_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-15, 1e6, "p_{T}^{Z'}", "Entries", ""),
     
     Histogram("DarkPhoton_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e-2, 1e4, "#eta^{A'}", "Entries", ""),
+    Histogram("DarkPhoton_phi", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e-2, 1e4, "#phi^{A'}", "Entries", ""),
     Histogram("DarkPhoton_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 1000, 1e-4, 1e4, "p_{T}^{A'}", "Entries", ""),
+    Histogram("DarkPhoton_mass", "", False, True, NormalizationType.to_lumi, 1,   10, 100, 1e0, 1e10, "m^{A'} (GeV)", "Entries", ""),
     
 )
 
