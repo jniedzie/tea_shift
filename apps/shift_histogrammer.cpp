@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
   auto shiftHistogramsFiller = make_unique<ShiftHistogramsFiller>(histogramsHandler);
   auto shiftObjectsManager = make_unique<ShiftObjectsManager>();
   auto cutFlowManager = make_shared<CutFlowManager>(eventReader, eventWriter);
-  
+
   map<string, float> detectorParams;
   config.GetMap("detectorParams", detectorParams);
 
@@ -64,10 +64,13 @@ int main(int argc, char **argv) {
     nMuons->insert({"4_beforeDetector", 0});
     nMuons->insert({"5_throughRock", 0});
 
+    shiftObjectsManager->InsertIndexedParticles(event);
+
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
     shiftObjectsManager->InsertGoodMuonsCollection(event);
     shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, detectorParams, nMuons);
+    shiftObjectsManager->InsertGoodDarkPhotonsCollection(event);
 
     shiftHistogramsFiller->Fill(event, true);
 
