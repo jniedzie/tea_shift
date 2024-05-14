@@ -23,7 +23,7 @@ class ShiftHistogramsFiller {
   void FillZprimeHistograms(const std::shared_ptr<Event> event);
   void FillDarkPhotonHistograms(const std::shared_ptr<Event> event);
   void FillDarkHadronsHistograms(const std::shared_ptr<Event> event);
-  void FillMuonHistograms(const std::shared_ptr<Event> event, std::string collectionName, std::string histName);
+  void FillMuonHistograms(const std::shared_ptr<Event> event, std::string collectionName, std::string histName, double minEnergy = 0.0);
 };
 
 #endif /* ShiftHistogramsFiller_hpp */

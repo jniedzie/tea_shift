@@ -1,3 +1,5 @@
+import numpy as np
+
 from shift_paths import detectorParams, base_path
 
 ## specify how many events to run on (and how often to print current event number)
@@ -15,7 +17,8 @@ ctau = "1em1"
 # inputFilePath = f"{base_path}/pythia_qcd/initial/qcd_part-0.root"
 # inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
 # inputFilePath = "../mDarkPhoton-25.0_part-0.root"
-inputFilePath = f"{base_path}/pythiaCollider_mDarkPhoton-30/initial/mDarkPhoton-30.0_part-1.root"
+# inputFilePath = f"{base_path}/pythiaCollider_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
+inputFilePath = f"{base_path}/pythia_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
 
 treeOutputFilePath = "../trees_signal.root"
 histogramsOutputFilePath = "../histograms_signal.root"
@@ -34,7 +37,7 @@ histParams = (
   ("DarkPhoton", "pt"  ,      100,  0,      1000,     ""),
   ("DarkPhoton", "eta" ,      100,  -10,    20,     ""),
   ("DarkPhoton", "phi" ,      100,  -4,     4,     ""),
-  ("DarkPhoton", "mass",      100,  0,      500,     ""),
+  ("DarkPhoton", "mass",      100,  0,      100,     ""),
   ("DarkPhoton", "pid"  ,     100,  0,      10000000,     ""),
   ("DarkPhoton", "status",    100,  0,      100,     ""),
   
@@ -52,19 +55,34 @@ histParams = (
   ("InitialMuons", "mass"    ,    100,  0,      10,     ""),
   ("InitialMuons", "pid"     ,    100,  0,      10000000,     ""),
   ("InitialMuons", "status"  ,    100,  0,      100,     ""),
-  ("InitialMuons", "x"  ,    100,  -10000000,      10000000,     ""),
-  ("InitialMuons", "y"  ,    100,  -10000000,      10000000,     ""),
-  ("InitialMuons", "z"  ,    100,  -1000000000,      1000000000,     ""),
   ("InitialMuonsPair", "mass"  ,    1000,  0,      100,     ""),
   ("InitialMuonsPair", "lowMass"  ,    1000,  0,      10,     ""),
   ("InitialMuonsPair", "deltaR"  ,    100,  0,      10,     ""),
+  ("InitialMuonsPair", "deltaEta"  ,    200,  -10,      10,     ""),
+  ("InitialMuonsPair", "deltaPhi"  ,    100,  0,      4,     ""),
+  
+  ("GoodInitialMuons", "pt"      ,    1000,  0,      1000,     ""),
+  ("GoodInitialMuons", "energy"  ,    100,  0,      10000,     ""),
+  ("GoodInitialMuons", "eta"     ,    100,  -10,    20,     ""),
+  ("GoodInitialMuons", "phi"     ,    100,  -4,     4,     ""),
+  ("GoodInitialMuons", "mass"    ,    100,  0,      10,     ""),
+  ("GoodInitialMuons", "pid"     ,    100,  0,      10000000,     ""),
+  ("GoodInitialMuons", "status"  ,    100,  0,      100,     ""),
+  ("GoodInitialMuons", "x"  ,    100,  -10000000,      10000000,     ""),
+  ("GoodInitialMuons", "y"  ,    100,  -10000000,      10000000,     ""),
+  ("GoodInitialMuons", "z"  ,    100,  -1000000000,      1000000000,     ""),
+  ("GoodInitialMuonsPair", "mass"  ,    1000,  0,      100,     ""),
+  ("GoodInitialMuonsPair", "lowMass"  ,    1000,  0,      10,     ""),
+  ("GoodInitialMuonsPair", "deltaR"  ,    100,  0,      10,     ""),
+  ("GoodInitialMuonsPair", "deltaEta"  ,    200,  -10,      10,     ""),
+  ("GoodInitialMuonsPair", "deltaPhi"  ,    100,  0,      4,     ""),
   
   ("InitialMuonsFromDarkPhoton", "pt"      ,    1000,  0,      1000,     ""),
   ("InitialMuonsFromDarkPhoton", "energy"  ,    100,  0,      10000,     ""),
   ("InitialMuonsFromDarkPhoton", "eta"     ,    100,  -10,    20,     ""),
   
   ("MuonsHittingDetector", "pt"      ,    1000,  0,      1000,     ""),
-  ("MuonsHittingDetector", "energy"  ,    100,  0,      10000,     ""),
+  ("MuonsHittingDetector", "energy"  ,    200,  0,      2000,     ""),
   ("MuonsHittingDetector", "eta"     ,    100,  -10,    20,     ""),
   ("MuonsHittingDetector", "phi"     ,    100,  -4,     4,     ""),
   ("MuonsHittingDetector", "mass"    ,    100,  0,      10,     ""),
@@ -76,13 +94,24 @@ histParams = (
   ("MuonsHittingDetectorPair", "mass"  ,    1000,  0,      100,     ""),
   ("MuonsHittingDetectorPair", "lowMass"  ,    1000,  0,      10,     ""),
   ("MuonsHittingDetectorPair", "deltaR"  ,    100,  0,      10,     ""),
+  ("MuonsHittingDetectorPair", "deltaEta"  ,    200,  -10,      10,     ""),
+  ("MuonsHittingDetectorPair", "deltaPhi"  ,    100,  0,      4,     ""),
   
   ("Event", "nZprimes"    ,    10,  0,      10,     ""),
   ("Event", "nDarkPhotons"    ,    10,  0,      10,     ""),
   ("Event", "nDarkHadrons",    10,  0,      10,     ""),
   ("Event", "nInitialMuons",    20,  0,      20,     ""),
+  ("Event", "nGoodInitialMuons",    20,  0,      20,     ""),
   ("Event", "nMuonsHittingDetector",    20,  0,      20,     ""),
   ("Event", "count",    1,  0,      1,     ""),
+)
+
+log_bins_10 = list(np.logspace(-7, 7, 150, base=10))
+
+irregularHistParams = (
+  ("InitialMuons", "x"  ,    log_bins_10,     ""),
+  ("InitialMuons", "y"  ,    log_bins_10,     ""),
+  ("InitialMuons", "z"  ,    log_bins_10,     ""),
 )
 
 # specify name of the branch containing event weights
