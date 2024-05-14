@@ -24,9 +24,11 @@ suffix = "_"
 for part in processes[0].split("_"):
     if variable in part:
         suffix += part.split("-")[0] + "-X_"
+    elif variable == "ctau" and "tau" in part:
+        suffix += part.split("-")[0] + "-X_"
     else:
         suffix += part + "_"
-    
+
 # if suffix ends with "_", remove it
 if suffix[-1] == "_":
     suffix = suffix[:-1]

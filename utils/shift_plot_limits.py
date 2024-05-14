@@ -1,121 +1,167 @@
 import ROOT
 
-from Logger import info, warn, error
+from Logger import info, warn, error, fatal
 
-from shift_paths import crossSections
+from shift_paths import crossSections, base_lumi
 
-variable = "ctau"
+# scenario = "HV"
+scenario = "DP"
+
+# variable = "ctau"
+variable = "mDarkPhoton"
+
 # variable = "mZprime"
 # variable = "mDH"
 # variable = "mDQ"
-# variable = "mDarkPhoton"
+
 
 if variable == "ctau":
     x_min = 1e-5
     x_max = 1e3
-    y_min = 1e-5
+    y_min = 2e-6
     y_max = 1
     log_x = True
+    x_title = "c#tau [m]"
 elif variable == "mZprime":
     x_min = 10
     x_max = 110
     y_min = 1e-6
     y_max = 1
     log_x = False
+    x_title = "m_{Z'} [GeV]"
 elif variable == "mDH":
     x_min = 1
     x_max = 50
     y_min = 1e-6
     y_max = 1
     log_x = False
+    x_title = "m_{D} [GeV]"
 elif variable == "mDQ":
     x_min = 0.005
     x_max = 5
     y_min = 1e-6
     y_max = 1
     log_x = True
+    x_title = "m_{q} [GeV]"
 elif variable == "mDarkPhoton":
     x_min = 0
-    x_max = 100
-    y_min = 1e-6
+    x_max = 70
+    y_min = 1e-7
     y_max = 1
     log_x = False
+    x_title = "m_{A'} [GeV]"
 
-x_titles = {
-    "ctau": "c#tau [m]",
-    "mZprime": "m_{Z'} [GeV]",
-    "mDH": "m_{D} [GeV]",
-    "mDQ": "m_{q} [GeV]",
-    "mDarkPhoton": "m_{A'} [GeV]",
+
+y_title = {
+    "DP": "#sigma_{pp #rightarrow A' #rightarrow #mu #mu} [pb]",
+    "HV": "#sigma_{pp #rightarrow Z' #rightarrow h_{D} #rightarrow #mu #mu} [pb]",
 }
+
+legend_pos = (0.165, 0.70, 0.45, 0.88)
 
 alpha = 0.5
 show_error_bands = True
 show_2sigma = False
 
+cms_label = f"CMS ({base_lumi*1e-6:.0f} fb^{{-1}})"
+shift_label = f"SHIFT ({0.01*base_lumi*1e-6:.1f} fb^{{-1}})"
+
 # nice colors: #F23374, #55699D, #517354 #33F244 #F2BC33 #3366F2
 
-variants = {
-    # DP: 30/X
-    "cms_pythiaCollider_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kRed+1, "CMS (DP: 30/X)"),
-    # "shift120m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kBlue, "Shift@120 (DP: 30/X)"),
-    # "shift140m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kGreen+1, "Shift@140 (DP: 30/X)"),
-    "shift160m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kMagenta+1, "Shift@160 (DP: 30/X)"),
-    # "shift200m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kCyan+1, "Shift@200 (DP: 30/X)"),
-    # "shift250m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kOrange+1, "Shift@250 (DP: 30/X)"),
-    # "shift300m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kOrange, "Shift@300 (DP: 30/X)"),
-    
-    # DP: X/?
-    # "cms_mDarkPhoton": (-1, 1, ROOT.kRed+1, "CMS (dark photons)"),
-    # "shift140m_mDarkPhoton": (-1, 1, ROOT.kGreen+1, "Shift@140 (dark photons)"),
-    
-    # 100/20/1/X
-    # "cms_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kRed, "CMS (100/20/1)"),
-    # "shift120m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (100/20/1)"),
-    # "shift250m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@250 (100/20/1)"),
-    
-    # 100/20/10/X
-    # "cms_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kRed, "CMS (100/20/10)"),
-    # "shift120m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kGreen+1, "Shift@120 (100/20/10)"),
-    # "shift200m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlack, "Shift@200 (100/20/10)"),
-    # "shift250m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kCyan, "Shift@250 (100/20/10)"),
-    # "shift300m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kMagenta, "Shift@300 (100/20/10)"),
-    # "shift350m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlue, "Shift@350 (100/20/10)"),
-    
-    # 60/5/1/X
-    # "cms_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kRed+1, "CMS (60/5/1/X)"),
-    # "shift100m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@100 (60/5/1/X)"),
-    # "shift120m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/1/X)"),
-    # "shift140m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen+1, "Shift@140 (60/5/1/X)"),
-    # "shift160m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen+1, "Shift@160 (60/5/1/X)"),
-    # "shift200m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kCyan, "Shift@200 (60/5/1/X)"),
-    
-    
-    # X/20/10/1em1
-    # "cms_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/20/10)"),
-    # "shift120m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#33F244", "Shift@120 (100/20/10)"),
-    # "shift200m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#55699D", "Shift@200 (100/20/10)"),
-    # "shift290m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kBlue, "Shift@290 (100/20/10)"),
-    # "shift300m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kCyan, "Shift@300 (100/20/10)"),
-    # "shift310m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kTeal, "Shift@310 (100/20/10)"),
-    
-    # X/20/1/1em1
-    # "cms_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (X/20/1/1em1)"),
-    # "shift120m_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/20/1/1em1)"),
-    
-    # 100/X/1/1em1
-    # "cms_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/X/1/1em1)"),
-    # "shift120m_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (100/X/1/1em1)"),
-    
-    # X/5/1/1em1
-    # "cms_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (X/5/1/1em1)"),
-    # "shift120m_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/5/1/1em1)"),
-    
-    # 60/5/X/1em1
-    # "cms_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (60/5/X/1em1)"),
-    # "shift120m_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/X/1em1)"),
-}
+if scenario == "HV":
+    variants = {
+        # HV: 60/X/1/X
+        "cms_pythiaCollider_mZprime-60_mDH-5_mDQ-1_ctau-X": (-1, 2, ROOT.kGray, f"m_{{DH}} = 5 GeV, {cms_label}"),
+        "cms_pythiaCollider_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 2, ROOT.kBlack, f"m_{{DH}} = 20 GeV, {cms_label}"),
+        
+        "shift160m_pythia_mZprime-60_mDH-5_mDQ-1_ctau-X": (-1, 1, ROOT.kMagenta+1, f"m_{{DH}} = 5 GeV, {shift_label}"),
+        "shift160m_pythia_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 1, ROOT.kRed, f"m_{{DH}} = 20 GeV, {shift_label}"),
+    }
+    top_title = "m_{Z'} = 60 GeV, m_{DQ} = 1 GeV"
 
+elif scenario == "DP" and variable == "ctau":
+    variants = {
+        # DP: 30/X
+        "cms_pythiaCollider_mDarkPhoton-30_ctau-X": (-1, 2, ROOT.kGray, cms_label),
+        "shift160m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kMagenta+1, shift_label),
+    }
+    top_title = "m_{A'} = 30 GeV"
+    
+elif scenario == "DP" and variable == "mDarkPhoton":
+    variants = {
+        # DP: X/1e1
+        "cms_pythiaCollider_mDarkPhoton-X_ctau-1e1": (-1, 2, ROOT.kGray, cms_label),
+        "shift160m_pythia_mDarkPhoton-X_ctau-1e1": (-1, 1, ROOT.kMagenta+1, shift_label),
+    }
+    top_title = "c#tau = 10 m"
+    
+else:
+    fatal(f"Unsupported scenario: {scenario} and variable: {variable} combination.")
+    exit()
+    
+    
+##-------------------------------------------------------------------------------------------------------
+## Old results below
+##
+
+# DP: 30/X
+# "cms_pythiaCollider_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kRed+1, "CMS (DP: 30/X)"),
+# "shift120m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kBlue, "Shift@120 (DP: 30/X)"),
+# "shift140m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kGreen+1, "Shift@140 (DP: 30/X)"),
+# "shift160m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kMagenta+1, "Shift@160 (DP: 30/X)"),
+# "shift200m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kCyan+1, "Shift@200 (DP: 30/X)"),
+# "shift250m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kOrange+1, "Shift@250 (DP: 30/X)"),
+# "shift300m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kOrange, "Shift@300 (DP: 30/X)"),
+
+# DP: X/?
+# "cms_mDarkPhoton": (-1, 1, ROOT.kRed+1, "CMS (dark photons)"),
+# "shift140m_mDarkPhoton": (-1, 1, ROOT.kGreen+1, "Shift@140 (dark photons)"),
+
+# 100/20/1/X
+# "cms_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kRed, "CMS (100/20/1)"),
+# "shift120m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (100/20/1)"),
+# "shift250m_mZprime-100_mDH-20_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@250 (100/20/1)"),
+
+# 100/20/10/X
+# "cms_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kRed, "CMS (100/20/10)"),
+# "shift120m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kGreen+1, "Shift@120 (100/20/10)"),
+# "shift200m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlack, "Shift@200 (100/20/10)"),
+# "shift250m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kCyan, "Shift@250 (100/20/10)"),
+# "shift300m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kMagenta, "Shift@300 (100/20/10)"),
+# "shift350m_mZprime-100_mDH-20_mDQ-10": (-1, 2, ROOT.kBlue, "Shift@350 (100/20/10)"),
+
+# 60/5/1/X
+# "cms_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kRed+1, "CMS (60/5/1/X)"),
+# "shift100m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kBlue, "Shift@100 (60/5/1/X)"),
+# "shift120m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/1/X)"),
+# "shift140m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen+1, "Shift@140 (60/5/1/X)"),
+# "shift160m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kGreen+1, "Shift@160 (60/5/1/X)"),
+# "shift200m_mZprime-60_mDH-5_mDQ-1": (-1, 1, ROOT.kCyan, "Shift@200 (60/5/1/X)"),
+
+
+# X/20/10/1em1
+# "cms_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/20/10)"),
+# "shift120m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#33F244", "Shift@120 (100/20/10)"),
+# "shift200m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, "#55699D", "Shift@200 (100/20/10)"),
+# "shift290m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kBlue, "Shift@290 (100/20/10)"),
+# "shift300m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kCyan, "Shift@300 (100/20/10)"),
+# "shift310m_mZprime-100_mDH-20_mDQ-10_tau-1em1": (-1, 1, ROOT.kTeal, "Shift@310 (100/20/10)"),
+
+# X/20/1/1em1
+# "cms_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (X/20/1/1em1)"),
+# "shift120m_mZprime-110_mDH-20_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/20/1/1em1)"),
+
+# 100/X/1/1em1
+# "cms_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kRed, "CMS (100/X/1/1em1)"),
+# "shift120m_mZprime-100_mDQ-1_tau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (100/X/1/1em1)"),
+
+# X/5/1/1em1
+# "cms_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (X/5/1/1em1)"),
+# "shift120m_mDH-5_mDQ-1_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (X/5/1/1em1)"),
+
+# 60/5/X/1em1
+# "cms_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kRed, "CMS (60/5/X/1em1)"),
+# "shift120m_mZprime-60_mDH-5_ctau-1em1": (-1, 1, ROOT.kGreen, "Shift@120 (60/5/X/1em1)"),
 
 def get_graph_set(values, colors, marker_style=-1, line_style=-1, lumi_scale = 1.0):
     
@@ -129,7 +175,9 @@ def get_graph_set(values, colors, marker_style=-1, line_style=-1, lumi_scale = 1
         exp_graph.SetLineStyle(line_style)
         
         if show_error_bands:
-            exp_graph_1sigma.SetLineWidth(0)
+            # exp_graph_1sigma.SetLineWidth(0)
+            exp_graph_1sigma.SetLineStyle(line_style)
+            exp_graph_1sigma.SetLineColor(colors[0])
             exp_graph_1sigma.SetFillColorAlpha(colors[2], alpha)
 
             exp_graph_2sigma.SetLineWidth(0)
@@ -202,8 +250,8 @@ def draw_graphs(graphs, first):
     first_graph.GetYaxis().SetLabelSize(0.04)
     first_graph.GetXaxis().SetTitleOffset(1.1)
     first_graph.GetYaxis().SetTitleOffset(1.1)
-    first_graph.GetXaxis().SetTitle(x_titles[variable])
-    first_graph.GetYaxis().SetTitle("#sigma_{pp #rightarrow Z' #rightarrow h_{D} #rightarrow #mu #mu} [pb]")
+    first_graph.GetXaxis().SetTitle(x_title)
+    first_graph.GetYaxis().SetTitle(y_title[scenario])
 
     first_graph.GetXaxis().SetLimits(x_min, x_max)
     
@@ -254,20 +302,16 @@ def read_limits(path):
                 parts = name.split("_")
                 
                 for part in parts:
-                    if variable not in part:
+                    var = variable
+                    
+                    if var == "ctau" and "ctau" not in part and "tau" in part:
+                        var = "tau"
+                    
+                    if var not in part:
                         continue
                     
-                    x_value = float(part.replace(f"{variable}-", "").replace("em", "e-").replace("p", "."))
+                    x_value = float(part.replace(f"{var}-", "").replace("em", "e-").replace("p", "."))
                     break
-                
-                # if variable == "ctau":
-                #     x_value = float(name.split("_")[-1].replace("ctau-", "").replace("em", "e-"))
-                # elif variable == "mZprime":
-                #     x_value = float(name.split("_")[1].replace("mZprime-", ""))
-                # elif variable == "mDH":
-                #     x_value = float(name.split("_")[2].replace("mDH-", ""))
-                # elif variable == "mDQ":
-                #     x_value = float(name.split("_")[3].replace("mDQ-", "").replace("p", "."))
                 limits[(name, x_value)] = values
     except FileNotFoundError:
         error(f"File {path} not found.")
@@ -277,7 +321,7 @@ def read_limits(path):
 def main():
     ROOT.gROOT.SetBatch(True)
     
-    legend = ROOT.TLegend(0.20, 0.45, 0.45, 0.85)
+    legend = ROOT.TLegend(legend_pos[0], legend_pos[1], legend_pos[2], legend_pos[3])
     legend.SetBorderSize(0)
     legend.SetFillStyle(0)
     legend.SetTextFont(42)
@@ -309,14 +353,23 @@ def main():
 
         graphs[variant] = get_graph_set(limits, colors, marker_style, line_style)
         draw_graphs(graphs[variant], first=first)
-        legend.AddEntry(graphs[variant][1] if show_error_bands else graphs[variant][0], title, "F" if show_error_bands else "L" if marker_style == -1 else "P")
+        legend.AddEntry(graphs[variant][1] if show_error_bands else graphs[variant][0], title, "FL" if show_error_bands else "L" if marker_style == -1 else "P")
         
         first = False
     
+    # add a label on top of the pad
+    label = ROOT.TLatex()
+    label.SetNDC()
+    label.SetTextFont(42)
+    label.SetTextSize(0.04)
+    # align to the right
+    label.SetTextAlign(31)
+    label.DrawLatex(0.90, 0.92, top_title)
+    
     legend.Draw()
     canvas.Update()
-    canvas.SaveAs(f"../plots/limits_cross_section_{variable}.pdf")
-    canvas.SaveAs(f"../plots/limits_cross_section_{variable}.C")
+    canvas.SaveAs(f"../plots/limits_{scenario}_{variable}.pdf")
+    canvas.SaveAs(f"../plots/limits_{scenario}_{variable}.C")
     
 
 if __name__ == "__main__":
