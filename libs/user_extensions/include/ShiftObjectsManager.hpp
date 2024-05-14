@@ -9,6 +9,8 @@ class ShiftObjectsManager {
   ShiftObjectsManager();
   ~ShiftObjectsManager() = default;
 
+  void InsertIndexedParticles(std::shared_ptr<Event> event);
+
   void InsertGoodZprimesCollection(std::shared_ptr<Event> event);
   void InsertGoodDarkHadronsCollection(std::shared_ptr<Event> event);
   void InsertGoodMuonsCollection(std::shared_ptr<Event> event);

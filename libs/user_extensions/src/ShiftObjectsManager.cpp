@@ -3,6 +3,7 @@
 #include "ConfigManager.hpp"
 #include "Logger.hpp"
 #include "ShiftDetector.hpp"
+#include "Profiler.hpp"
 
 using namespace std;
 
@@ -10,8 +11,19 @@ ShiftObjectsManager::ShiftObjectsManager() {
   auto &config = ConfigManager::GetInstance();
 
   hepMCProcessor = make_unique<HepMCProcessor>();
-  //   config.GetMap("detectorParams", detectorParams);
-  //   config.GetMap("caloEtaEdges", caloEtaEdges);
+  
+}
+
+void ShiftObjectsManager::InsertIndexedParticles(shared_ptr<Event> event) {
+  auto particles = event->GetCollection("Particle");
+  auto indexedParticles = make_shared<PhysicsObjects>();
+
+  for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
+    auto physicsObject = particles->at(particleIndex);
+    physicsObject->SetIndex(particleIndex);
+    indexedParticles->push_back(physicsObject);
+  }
+  event->AddCollection("IndexedParticles", indexedParticles);
 }
 
 bool ShiftObjectsManager::IsGoodZprime(const shared_ptr<HepMCParticle> particle, const shared_ptr<PhysicsObjects> &allParticles) {
@@ -46,13 +58,12 @@ bool ShiftObjectsManager::IsGoodMuon(const shared_ptr<HepMCParticle> particle, c
 }
 
 void ShiftObjectsManager::InsertGoodZprimesCollection(shared_ptr<Event> event) {
-  auto particles = event->GetCollection("Particle");
+  auto particles = event->GetCollection("IndexedParticles");
 
   auto goodZprimes = make_shared<PhysicsObjects>();
 
   for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
     auto physicsObject = particles->at(particleIndex);
-    physicsObject->SetIndex(particleIndex);
     auto hepMCParticle = asHepMCParticle(physicsObject);
     if (!IsGoodZprime(hepMCParticle, particles)) continue;
     goodZprimes->push_back(physicsObject);
@@ -61,28 +72,30 @@ void ShiftObjectsManager::InsertGoodZprimesCollection(shared_ptr<Event> event) {
 }
 
 void ShiftObjectsManager::InsertGoodDarkPhotonsCollection(shared_ptr<Event> event) {
-  auto particles = event->GetCollection("Particle");
+  auto particles = event->GetCollection("IndexedParticles");
 
   auto goodDarkPhotons = make_shared<PhysicsObjects>();
 
   for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
     auto physicsObject = particles->at(particleIndex);
-    physicsObject->SetIndex(particleIndex);
     auto hepMCParticle = asHepMCParticle(physicsObject);
-    if (!IsGoodDarkPhoton(hepMCParticle, particles)) continue;
+
+    if (!IsGoodDarkPhoton(hepMCParticle, particles)) {
+      continue;
+    }
+    
     goodDarkPhotons->push_back(physicsObject);
   }
   event->AddCollection("goodDarkPhotons", goodDarkPhotons);
 }
 
 void ShiftObjectsManager::InsertGoodDarkHadronsCollection(shared_ptr<Event> event) {
-  auto particles = event->GetCollection("Particle");
+  auto particles = event->GetCollection("IndexedParticles");
 
   auto goodDarkHadrons = make_shared<PhysicsObjects>();
 
   for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
     auto physicsObject = particles->at(particleIndex);
-    physicsObject->SetIndex(particleIndex);
     auto hepMCParticle = asHepMCParticle(physicsObject);
     if (!IsGoodDarkHadron(hepMCParticle, particles)) continue;
 
@@ -92,13 +105,12 @@ void ShiftObjectsManager::InsertGoodDarkHadronsCollection(shared_ptr<Event> even
 }
 
 void ShiftObjectsManager::InsertGoodMuonsCollection(shared_ptr<Event> event) {
-  auto particles = event->GetCollection("Particle");
+  auto particles = event->GetCollection("IndexedParticles");
 
   auto goodMuons = make_shared<PhysicsObjects>();
 
   for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
     auto physicsObject = particles->at(particleIndex);
-    physicsObject->SetIndex(particleIndex);
     auto hepMCParticle = asHepMCParticle(physicsObject);
     if (!IsGoodMuon(hepMCParticle, particles)) continue;
 
