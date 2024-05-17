@@ -44,17 +44,17 @@ elif variable == "mDQ":
     log_x = True
     x_title = "m_{q} [GeV]"
 elif variable == "mDarkPhoton":
-    x_min = 0
+    x_min = 10
     x_max = 70
-    y_min = 1e-7
-    y_max = 1
+    y_min = 5e-6
+    y_max = 10
     log_x = False
     x_title = "m_{A'} [GeV]"
 
 
 y_title = {
     "DP": "#sigma_{pp #rightarrow A' #rightarrow #mu #mu} [pb]",
-    "HV": "#sigma_{pp #rightarrow Z' #rightarrow h_{D} #rightarrow #mu #mu} [pb]",
+    "HV": "#sigma_{pp #rightarrow Z' #rightarrow DH #rightarrow #mu #mu} [pb]",
 }
 
 legend_pos = (0.165, 0.70, 0.45, 0.88)
@@ -64,6 +64,7 @@ show_error_bands = True
 show_2sigma = False
 
 cms_label = f"CMS ({base_lumi*1e-6:.0f} fb^{{-1}})"
+lhcb_label = f"LHCb ({0.01*base_lumi/25.0*1e-3:.0f} pb^{{-1}})"
 shift_label = f"SHIFT ({0.01*base_lumi*1e-6:.1f} fb^{{-1}})"
 
 # nice colors: #F23374, #55699D, #517354 #33F244 #F2BC33 #3366F2
@@ -71,18 +72,19 @@ shift_label = f"SHIFT ({0.01*base_lumi*1e-6:.1f} fb^{{-1}})"
 if scenario == "HV":
     variants = {
         # HV: 60/X/1/X
-        "cms_pythiaCollider_mZprime-60_mDH-5_mDQ-1_ctau-X": (-1, 2, ROOT.kGray, f"m_{{DH}} = 5 GeV, {cms_label}"),
-        "cms_pythiaCollider_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 2, ROOT.kBlack, f"m_{{DH}} = 20 GeV, {cms_label}"),
+        "cms_pythiaCollider_mZprime-60_mDH-5_mDQ-1_ctau-X": (-1, 1, ROOT.kGray, f"m_{{DH}} = 5 GeV, {cms_label}"),
+        "cms_pythiaCollider_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 2, ROOT.kGray+1, f"m_{{DH}} = 20 GeV, {cms_label}"),
         
         "shift160m_pythia_mZprime-60_mDH-5_mDQ-1_ctau-X": (-1, 1, ROOT.kMagenta+1, f"m_{{DH}} = 5 GeV, {shift_label}"),
-        "shift160m_pythia_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 1, ROOT.kRed, f"m_{{DH}} = 20 GeV, {shift_label}"),
+        "shift160m_pythia_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 2, ROOT.kRed, f"m_{{DH}} = 20 GeV, {shift_label}"),
     }
     top_title = "m_{Z'} = 60 GeV, m_{DQ} = 1 GeV"
 
 elif scenario == "DP" and variable == "ctau":
     variants = {
         # DP: 30/X
-        "cms_pythiaCollider_mDarkPhoton-30_ctau-X": (-1, 2, ROOT.kGray, cms_label),
+        # "lhcb_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.Green+1, lhcb_label),
+        "cms_pythiaCollider_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kGray, cms_label),
         "shift160m_pythia_mDarkPhoton-30_ctau-X": (-1, 1, ROOT.kMagenta+1, shift_label),
     }
     top_title = "m_{A'} = 30 GeV"
@@ -90,7 +92,9 @@ elif scenario == "DP" and variable == "ctau":
 elif scenario == "DP" and variable == "mDarkPhoton":
     variants = {
         # DP: X/1e1
-        "cms_pythiaCollider_mDarkPhoton-X_ctau-1e1": (-1, 2, ROOT.kGray, cms_label),
+        # "lhcb_pythia_mDarkPhoton-X_ctau-1e1": (-1, 1, ROOT.kGreen+1, lhcb_label),
+        "cmsPT_pythiaCollider_mDarkPhoton-X_ctau-1e1": (-1, 1, ROOT.kGreen+1, cms_label),
+        "cms_pythiaCollider_mDarkPhoton-X_ctau-1e1": (-1, 1, ROOT.kGray, cms_label),
         "shift160m_pythia_mDarkPhoton-X_ctau-1e1": (-1, 1, ROOT.kMagenta+1, shift_label),
     }
     top_title = "c#tau = 10 m"
@@ -338,12 +342,9 @@ def main():
         if isinstance(color, str):
             colors = create_shaded_colors(color, 3, 0.3 if show_error_bands else 1.0)
         else:
-            # Get RGB values from ROOT color index
             color = ROOT.gROOT.GetColor(color)
             colors = [color.GetRed(), color.GetGreen(), color.GetBlue()]
-            # transform colors to a hex string
             colors = "#{:02x}{:02x}{:02x}".format(int(colors[0]*255), int(colors[1]*255), int(colors[2]*255))
-            print(colors)
             colors = create_shaded_colors(colors, 3, 0.3 if show_error_bands else 1.0)
         
         limits = read_limits(f"../datacards/limits_mass_{variant}.txt")

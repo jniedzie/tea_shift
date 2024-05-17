@@ -14,10 +14,8 @@ base_combine_output_name = "output_{}.txt"
 # variable = "mZprime"
 # variable = "mDH"
 # variable = "mDQ"
-variable = "ctau"
-# variable = "mDarkPhoton"
-
-
+# variable = "ctau"
+variable = "mDarkPhoton"
 
 suffix = "_"
 
@@ -32,19 +30,6 @@ for part in processes[0].split("_"):
 # if suffix ends with "_", remove it
 if suffix[-1] == "_":
     suffix = suffix[:-1]
-
-# if variable == "mZprime":
-#     parts = processes[0].split("_")
-#     suffix = "_" + "_".join(processes[0].split("_")[2:])
-# elif variable == "mDH":
-#     suffix = "_" + "_".join(processes[0].split("_")[1:2]) + "_" + "_".join(processes[0].split("_")[3:])
-# elif variable == "mDQ":
-#     suffix = "_" + "_".join(processes[0].split("_")[1:3]) + "_" + "_".join(processes[0].split("_")[4:])
-# elif variable == "ctau":
-#     suffix = "_" + "_".join(processes[0].split("_")[1:-1])
-# elif variable == "mDarkPhoton":
-#     suffix = "_" + processes[0].split("_")[1].split("-")[0]
-
 
 # suffix = ""
 # suffix = processes[0]

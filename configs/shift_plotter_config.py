@@ -5,14 +5,17 @@ from Histogram import Histogram, Histogram2D
 from HistogramNormalizer import NormalizationType
 
 from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
-from shift_paths import crossSections, base_path, luminosity
 
 # variant = "cms"
 # colliderMode = True
+
+variant = "shift160m"
+colliderMode = False
+
 output_path = f"../plots/{variant}/"
 
-backgrounds_legend_x = 0.50
-signals_legend_x = 0.65
+backgrounds_legend_x = 0.60
+signals_legend_x = 0.20
 
 legend_max_y = 0.89
 
@@ -53,17 +56,13 @@ samples = [
 custom_stacks_order = ["pythia_dy", "pythia_qcd"]
 
 custom_titles = {
-    "pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1": "m_{Z'}= 50 GeV",
-    "pythia_mZprime-200_mDH-20_mDQ-1_tau-1e1": "m_{Z'}= 200 GeV",
-    "pythia_mZprime-500_mDH-20_mDQ-1_tau-1e1": "m_{Z'}= 500 GeV",
-    "pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1": "m_{D}= 15 GeV",
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": "m_{D}= 40 GeV",
-    "pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1": "m_{D}= 60 GeV",
-    "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": "m_{q}= 2 GeV",
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": "m_{q}= 5 GeV",
-    "pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1": "m_{Z'}= 20, m_{D}= 5",
-    "pythia_mDarkPhoton-5": "m_{A'}= 5 GeV",
-    "pythia_mDarkPhoton-30": "m_{A'}= 30 GeV",
+    "pythia_mDarkPhoton-5_ctau-1e1": "DP: m_{A'} = 5 GeV, c#tau = 10^{1} m",
+    "pythia_mDarkPhoton-30_ctau-1e1": "DP: m_{A'} = 30 GeV, c#tau = 10^{1} m",
+    "pythia_mDarkPhoton-30_ctau-1em3": "DP: m_{A'} = 30 GeV, c#tau = 10^{-3} m",
+    "pythia_mDarkPhoton-30_ctau-1e3": "DP: m_{A'} = 30 GeV, c#tau = 10^{3} m",
+    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1": "HV: m_{D} = 5 GeV, c#tau = 10^{-1} m",
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1": "HV: m_{D} = 20 GeV, c#tau = 10^{-1} m",
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1": "HV: m_{D} = 20 GeV, c#tau = 10^{-1} m",
 }
 
 def addSignalSample(name, color, legend_y, custom_variant=variant):
@@ -83,7 +82,7 @@ def addSignalSample(name, color, legend_y, custom_variant=variant):
         title = title.replace("tau-", "c#tau=")
         title = title.replace("1em", "10^{-")
         title = title.replace("1e", "10^{")
-        title += "} (m)"
+        title += "} [m]"
     
     if custom_variant != variant:
         title += f" ({custom_variant})"
@@ -106,90 +105,101 @@ def addSignalSample(name, color, legend_y, custom_variant=variant):
     
     custom_stacks_order.append(name)
 
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7", ROOT.kViolet, legend_max_y-legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3", ROOT.kBlue, legend_max_y-2*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0", ROOT.kGreen, legend_max_y-4*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2", ROOT.kOrange, legend_max_y-6*legend_height)
+addSignalSample("pythia_mDarkPhoton-5_ctau-1e1", ROOT.kViolet, legend_max_y-legend_height)
+addSignalSample("pythia_mDarkPhoton-30_ctau-1e1", ROOT.kBlue, legend_max_y-2*legend_height)
+addSignalSample("pythia_mDarkPhoton-30_ctau-1em3", ROOT.kCyan, legend_max_y-3*legend_height)
+addSignalSample("pythia_mDarkPhoton-30_ctau-1e3", ROOT.kGreen, legend_max_y-4*legend_height)
+addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1", ROOT.kOrange, legend_max_y-5*legend_height)
+addSignalSample("pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1", ROOT.kRed, legend_max_y-6*legend_height)
+# addSignalSample("pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1", ROOT.kOrange+1, legend_max_y-6*legend_height)
+
 # addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3", ROOT.kRed, legend_max_y-7*legend_height)
 # addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5", ROOT.kMagenta, legend_max_y-8*legend_height)
-
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em7", ROOT.kViolet, legend_max_y-1*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kCyan, legend_max_y-2*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1e0", ROOT.kBlue, legend_max_y-3*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1", ROOT.kOrange, legend_max_y-4*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1e3", ROOT.kRed, legend_max_y-5*legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1e5", ROOT.kMagenta, legend_max_y-6*legend_height)
-
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kViolet, legend_max_y-1*legend_height, "shift120m")
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kCyan, legend_max_y-2*legend_height, "shift200m")
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kBlue, legend_max_y-3*legend_height, "shift290m")
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kOrange, legend_max_y-4*legend_height, "shift300m")
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1", ROOT.kRed, legend_max_y-5*legend_height, "shift310m")
-
-# addSignalSample("pythia_mZprime-110_mDH-20_mDQ-1_tau-1em1", ROOT.kViolet, legend_max_y-legend_height)
-# addSignalSample("pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1", ROOT.kBlue, legend_max_y-2*legend_height)
-# addSignalSample("pythia_mZprime-90_mDH-20_mDQ-1_tau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
-# addSignalSample("pythia_mZprime-80_mDH-20_mDQ-1_tau-1em1", ROOT.kGreen, legend_max_y-4*legend_height)
-# addSignalSample("pythia_mZprime-70_mDH-20_mDQ-1_tau-1em1", ROOT.kGreen+1, legend_max_y-5*legend_height)
-# addSignalSample("pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1", ROOT.kOrange, legend_max_y-6*legend_height)
-# addSignalSample("pythia_mZprime-50_mDH-20_mDQ-1_tau-1em1", ROOT.kRed, legend_max_y-7*legend_height)
-
-# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5", ROOT.kViolet, legend_max_y-legend_height)
-# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3", ROOT.kBlue, legend_max_y-2*legend_height)
-# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1", ROOT.kCyan, legend_max_y-3*legend_height)
-# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0", ROOT.kGreen, legend_max_y-4*legend_height)
-# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
-# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3", ROOT.kOrange, legend_max_y-6*legend_height)
-# addSignalSample("pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5", ROOT.kRed, legend_max_y-7*legend_height)
-
-addSignalSample("pythia_mDarkPhoton-5_ctau-1e1", ROOT.kViolet, legend_max_y-legend_height)
-addSignalSample("pythia_mDarkPhoton-10_ctau-1e1", ROOT.kBlue, legend_max_y-2*legend_height)
-addSignalSample("pythia_mDarkPhoton-15_ctau-1e1", ROOT.kCyan, legend_max_y-3*legend_height)
-addSignalSample("pythia_mDarkPhoton-20_ctau-1e1", ROOT.kGreen, legend_max_y-4*legend_height)
-addSignalSample("pythia_mDarkPhoton-30_ctau-1e1", ROOT.kGreen+1, legend_max_y-5*legend_height)
-addSignalSample("pythia_mDarkPhoton-40_ctau-1e1", ROOT.kOrange, legend_max_y-6*legend_height)
-addSignalSample("pythia_mDarkPhoton-70_ctau-1e1", ROOT.kRed, legend_max_y-7*legend_height)
 
 y_label = "Events"
 
 histograms = (
 
-    Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 7, 1e-5, 1e10, "Selection", "#sum genWeight"),
+    Histogram("cutFlow", "", False, True, NormalizationType.to_lumi, 1, 0, 7, 1e-5, 1e10, "Selection", "#sum genWeight", "_"+variant),
 
-    Histogram("DarkHadron_eta", "", False, True, NormalizationType.to_lumi, 1,   -2, 12, 1e-5, 1e6, "#eta^{D}", "Entries", ""),
-    Histogram("DarkHadron_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 200, 1e-5, 1e6, "p_{T}^{D} (GeV)", "Entries", ""),
+    Histogram("GoodInitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   30, 4000, 10, 2e14, "E^{#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("GoodInitialMuons_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 100, 10, 1e12, "p_{T}^{#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("GoodInitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e0, 1e12, "#eta^{#mu}", "Entries", "_"+variant),
+    Histogram("GoodInitialMuons_d3d", "", True, True, NormalizationType.to_lumi, 2,   1e-7, 1e7, 1e0, 1e12, "d_{3D}^{#mu} [m]", "Entries", "_"+variant),
+    Histogram("GoodInitialMuons_properCtau", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "c#tau^{#mu} [m]", "Entries", "_"+variant),
+    Histogram("GoodInitialMuons_boost", "", False, True, NormalizationType.to_lumi, 1,   0, 1, 1e-1, 1e12, "#gamma^{#mu}", "Entries", "_"+variant),
+    Histogram("GoodInitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 10, 1e10, "#Delta R^{#mu#mu}", "Entries", "_"+variant),
+    Histogram("GoodInitialMuonsPair_deltaEta", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e0, 1e12, "#Delta #eta^{#mu#mu}", "Entries", "_"+variant),
+    Histogram("GoodInitialMuonsPair_deltaPhi", "", False, True, NormalizationType.to_lumi, 1,   0, 3.14, 1e0, 1e12, "#Delta #phi^{#mu#mu}", "Entries", "_"+variant),
+    Histogram("GoodInitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 100, 1e1, 1e11, "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    
+    
+    Histogram("MuonsHittingDetector_d3d"                , "", True , True, NormalizationType.to_lumi, 2 , 1e-4, 1e3 , 1e-1, 1e8, "d_{3D}^{#mu} [m]", "Entries", "_"+variant),
+    Histogram("MuonsHittingDetectorPair_mass"           , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-1, 1e8, "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("MuonsHittingDetectorPair_massCtauGt1cm"  , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-1, 1e8 , "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("MuonsHittingDetectorPair_massCtauGt1m"   , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-5, 1e8 , "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("MuonsHittingDetectorPair_massCtauGt10m"  , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-5, 1e8 , "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    
 
-    Histogram("InitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 10, 1e12, "E^{#mu} (GeV)", "Entries", ""),
-    Histogram("InitialMuons_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 10, 1e12, "p_{T}^{#mu} (GeV)", "Entries", ""),
-    Histogram("InitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e12, "#eta^{#mu}", "Entries", ""),
-    Histogram("InitialMuons_phi", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e12, "#phi^{#mu}", "Entries", ""),
+    Histogram("GoodPtInitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   30, 4000, 10, 2e14, "E^{#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuons_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 100, 10, 1e12, "p_{T}^{#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e0, 1e12, "#eta^{#mu}", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuons_d3d", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "d_{3D}^{#mu} [m]", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuons_properCtau", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "c#tau^{#mu} [m]", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuons_boost", "", False, True, NormalizationType.to_lumi, 1,   0, 1, 1e-1, 1e12, "#gamma^{#mu}", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta R^{#mu#mu}", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuonsPair_deltaEta", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e2, 1e11, "#Delta #eta^{#mu#mu}", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuonsPair_deltaPhi", "", False, True, NormalizationType.to_lumi, 1,   0, 3.14, 1e3, 1e10, "#Delta #phi^{#mu#mu}", "Entries", "_"+variant),
+    Histogram("GoodPtInitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 100, 1e1, 1e11, "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
     
-    Histogram("InitialMuons_x", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "x^{#mu} (m)", "Entries", ""),
-    Histogram("InitialMuons_y", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "y^{#mu} (m)", "Entries", ""),
-    Histogram("InitialMuons_z", "", True, True, NormalizationType.to_lumi, 1,   1e10, 1e11, 5e-1, 1e10, "z^{#mu} (m)", "Entries", ""),
+    Histogram("PtMuonsHittingDetector_d3d"                , "", True , True, NormalizationType.to_lumi, 2 , 1e-4, 1e3 , 1e-1, 1e8, "d_{3D}^{#mu} [m]", "Entries", "_"+variant),
+    Histogram("PtMuonsHittingDetectorPair_mass"           , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-1, 1e8, "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("PtMuonsHittingDetectorPair_massCtauGt1cm"  , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-1, 1e8 , "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("PtMuonsHittingDetectorPair_massCtauGt1m"   , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-5, 1e8 , "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    Histogram("PtMuonsHittingDetectorPair_massCtauGt10m"  , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-5, 1e8 , "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
+
+    # Histogram("DarkHadron_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e1, 1e8, "#eta^{D}", "Entries", "_"+variant),
+    # Histogram("DarkHadron_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 150, 1e0, 1e6, "p_{T}^{D} [GeV]", "Entries", "_"+variant),
+
+    # Histogram("DarkPhoton_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e1, 1e6, "#eta^{A'}", "Entries", "_"+variant),
+    # Histogram("DarkPhoton_phi", "", False, True, NormalizationType.to_lumi, 1,   -4, 4, 1e0, 1e6, "#phi^{A'}", "Entries", "_"+variant),
+    # Histogram("DarkPhoton_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 500, 1e0, 1e6, "p_{T}^{A'}", "Entries", "_"+variant),
+    # Histogram("DarkPhoton_mass", "", False, True, NormalizationType.to_lumi, 1,   10, 100, 1e0, 1e6, "m^{A'} [GeV]", "Entries", "_"+variant),
+
+    # Histogram("InitialMuons_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 10, 1e12, "E^{#mu} [GeV]", "Entries", "_"+variant),
+    # Histogram("InitialMuons_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 100, 10, 1e12, "p_{T}^{#mu} [GeV]", "Entries", "_"+variant),
+    # Histogram("InitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e0, 1e12, "#eta^{#mu}", "Entries", "_"+variant),
+    # Histogram("InitialMuons_phi", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e12, "#phi^{#mu}", "Entries", "_"+variant),
+    # Histogram("InitialMuons_x", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "x^{#mu} [m]", "Entries", "_"+variant),
+    # Histogram("InitialMuons_y", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "y^{#mu} [m]", "Entries", "_"+variant),
+    # Histogram("InitialMuons_z", "", True, True, NormalizationType.to_lumi, 1,   1e-5, 1e5, 5e1, 1e14, "z^{#mu} [m]", "Entries", "_"+variant),
+    # Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta R^{#mu#mu}", "Entries", "_"+variant),
+    # Histogram("InitialMuonsPair_deltaEta", "", False, True, NormalizationType.to_lumi, 1,   0, 20, 1e2, 1e9, "#Delta #eta^{#mu#mu}", "Entries", "_"+variant),
+    # Histogram("InitialMuonsPair_deltaPhi", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 1e2, 1e9, "#Delta #phi^{#mu#mu}", "Entries", "_"+variant),
+    # Histogram("InitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 100, 1e0, 1e10, "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
     
-    Histogram("InitialMuonsPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta R^{#mu#mu}", "Entries", ""),
-    # Histogram("InitialMuonsPair_deltaEta", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta #eta^{#mu#mu}", "Entries", ""),
-    # Histogram("InitialMuonsPair_deltaPhi", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 10, 1e10, "#Delta #phi^{#mu#mu}", "Entries", ""),
-    Histogram("InitialMuonsPair_mass", "", False, True, NormalizationType.to_lumi, 5,   10, 100, 1e0, 1e10, "m^{#mu#mu} (GeV)", "Entries", ""),
     
-    Histogram("MuonsHittingDetector_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 1e-1, 1e6, "E^{#mu}", "Entries", ""),
-    Histogram("MuonsHittingDetector_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e6, "#eta^{#mu}", "Entries", ""),
-    Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 1e-1, 1e6, "#Delta R^{#mu#mu} (GeV)", "Entries", ""),
-    Histogram("MuonsHittingDetectorPair_mass", "", False, True, NormalizationType.to_lumi, 10,   0, 100, 1e-2, 1e6, "m^{#mu#mu} (GeV)", "Entries", ""),
     
-    Histogram("Zprime_eta", "", False, True, NormalizationType.to_lumi, 1,   4, 12, 1e-5, 1e6, "#eta^{Z'}", "Entries", ""),
-    Histogram("Zprime_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-15, 1e6, "p_{T}^{Z'}", "Entries", ""),
+    # Histogram("GoodInitialMuons_phi", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e12, "#phi^{#mu}", "Entries", "_"+variant),
+    # Histogram("GoodInitialMuons_x", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "x^{#mu} [m]", "Entries", "_"+variant),
+    # Histogram("GoodInitialMuons_y", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "y^{#mu} [m]", "Entries", "_"+variant),
+    # Histogram("GoodInitialMuons_z", "", True, True, NormalizationType.to_lumi, 1,   1e-7, 1e7, 5e-1, 1e10, "z^{#mu} [m]", "Entries", "_"+variant),
     
-    Histogram("DarkPhoton_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e-2, 1e4, "#eta^{A'}", "Entries", ""),
-    Histogram("DarkPhoton_phi", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e-2, 1e4, "#phi^{A'}", "Entries", ""),
-    Histogram("DarkPhoton_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 1000, 1e-4, 1e4, "p_{T}^{A'}", "Entries", ""),
-    Histogram("DarkPhoton_mass", "", False, True, NormalizationType.to_lumi, 1,   10, 100, 1e0, 1e10, "m^{A'} (GeV)", "Entries", ""),
+    
+    # Histogram("MuonsHittingDetector_energy", "", False, True, NormalizationType.to_lumi, 1,   0, 4000, 1e-1, 1e6, "E^{#mu}", "Entries", "_"+variant),
+    # Histogram("MuonsHittingDetector_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-1, 1e6, "#eta^{#mu}", "Entries", "_"+variant),
+    # Histogram("MuonsHittingDetectorPair_deltaR", "", False, True, NormalizationType.to_lumi, 1,   0, 6, 1e-1, 1e6, "#Delta R^{#mu#mu} [GeV]", "Entries", "_"+variant),
+    
+    
+    # Histogram("Zprime_eta", "", False, True, NormalizationType.to_lumi, 1,   -12, 12, 1e-5, 1e6, "#eta^{Z'}", "Entries", "_"+variant),
+    # Histogram("Zprime_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 10, 1e-15, 1e6, "p_{T}^{Z'}", "Entries", "_"+variant),
+    
+    
     
 )
 
+
+output_formats = ["pdf"]
 
 histogramsRatio = []
 
