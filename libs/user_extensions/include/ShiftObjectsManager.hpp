@@ -16,8 +16,8 @@ class ShiftObjectsManager {
   void InsertGoodMuonsCollection(std::shared_ptr<Event> event);
   void InsertGoodDarkPhotonsCollection(std::shared_ptr<Event> event);
 
-  void InsertMuonsHittingDetectorCollection(std::shared_ptr<Event> event, const std::map<std::string, float> &detectorParams,
-                                            std::shared_ptr<std::map<std::string, int>> nMuons=nullptr);
+  void InsertMuonsHittingDetectorCollection(std::shared_ptr<Event> event, const std::map<std::string, float> &detectorParams, 
+                                            std::string variant, std::shared_ptr<std::map<std::string, int>> nMuons=nullptr);
 
  private:
   bool IsGoodZprime(const std::shared_ptr<HepMCParticle> particle, const std::shared_ptr<PhysicsObjects> &allParticles);

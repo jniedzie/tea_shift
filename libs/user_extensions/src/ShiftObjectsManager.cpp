@@ -119,18 +119,23 @@ void ShiftObjectsManager::InsertGoodMuonsCollection(shared_ptr<Event> event) {
   event->AddCollection("goodMuons", goodMuons);
 }
 
-void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event> event, const map<string, float> &detectorParams,
+void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event> event, const map<string, float> &detectorParams, string variant,
                                                                shared_ptr<map<string, int>> nMuons) {
   auto goodMuons = event->GetCollection("goodMuons");
-  auto detector = make_shared<ShiftDetector>(detectorParams);
+  auto detector = make_unique<ShiftDetector>(detectorParams, variant == "lhcb");
   auto passingMuons = make_shared<PhysicsObjects>();
 
   for (auto physicsObject : *goodMuons) {
     auto hepMCParticle = asHepMCParticle(physicsObject);
     if (nMuons) nMuons->at("1_hasMuons")++;
 
-    // Check that the muon has at least 30 GeV of energy, so that it can trigger and be reconstructed at CMS
-    if (hepMCParticle->GetLorentzVector().E() < 30) continue;
+    float recoVariable = hepMCParticle->GetLorentzVector().E();
+    if(variant == "cmsPT"){
+      recoVariable = hepMCParticle->GetLorentzVector().Pt();
+    }
+
+    // Check that the muon has at least 30 GeV of energy (or pT in case of CMS), so that it can trigger and be reconstructed at CMS
+    if (recoVariable < 30) continue;
     if (nMuons) nMuons->at("2_triggerAndReco")++;
 
     // Check that they intersect with the detector

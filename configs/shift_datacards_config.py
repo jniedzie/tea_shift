@@ -50,6 +50,7 @@ samples = [
 
 # List histograms for which to create datacards 
 histograms = [Histogram(name="MuonsHittingDetectorPair_mass", norm_type=NormalizationType.to_lumi, rebin=5)]
+# histograms = [Histogram(name="PtMuonsHittingDetectorPair_mass", norm_type=NormalizationType.to_lumi, rebin=5)]
 
 # List nuisance parameters (they will only be added for processes for which they were listed) 
 nuisances = {
