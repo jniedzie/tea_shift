@@ -2,38 +2,59 @@
 
 using namespace std;
 
-ShiftDetector::ShiftDetector(const std::map<std::string, float> &params) {
-  x = params.at("x");
-  y = params.at("y");
-  z = params.at("z");
-  outer_radius = params.at("radius");
-  total_length = params.at("length");
-  double maxEta = params.at("maxEta");
-
-  double theta_inner = 2 * std::atan(std::exp(-2.4));
-  inner_radius = total_length / 2.0 * tan(theta_inner);
-
-  if (y < 0) {
-    forcedLHCring = true;
-    float outer_radius = 4300;  // [m]
-    float y_1 = sqrt(pow(outer_radius, 2) - pow(x, 2)) + outer_radius;
-    float y_2 = -sqrt(pow(outer_radius, 2) - pow(x, 2)) + outer_radius;
-    y = min(y_1, y_2);
+ShiftDetector::ShiftDetector(const std::map<std::string, float> &params, bool isLHCb_) :
+isLHCb(isLHCb_){
+  if(isLHCb){
+    minLength = params.at("minLength");
+    maxLength = params.at("maxLength");
+    minEta = params.at("minEta");
+    maxEta = params.at("maxEta");
+    maxDistance = minLength + (maxLength - minLength)/2;
   }
+  else{
+    x = params.at("x");
+    y = params.at("y");
+    z = params.at("z");
+    outer_radius = params.at("radius");
+    total_length = params.at("length");
+    double maxEta = params.at("maxEta");
 
-  double theta = TMath::ATan2(y, x);
-  rotation.RotateY(theta);
+    double theta_inner = 2 * std::atan(std::exp(-2.4));
+    inner_radius = total_length / 2.0 * tan(theta_inner);
 
-  TVector3 detectorCenter(x, y, z);
+    if (y < 0) {
+      forcedLHCring = true;
+      float lhc_radius = 4300;  // [m]
+      float y_1 = sqrt(pow(lhc_radius, 2) - pow(x, 2)) + lhc_radius;
+      float y_2 = -sqrt(pow(lhc_radius, 2) - pow(x, 2)) + lhc_radius;
+      y = min(y_1, y_2);
+    }
 
-  auto newCenter = detectorCenter;
-  newCenter *= rotation;
-  translation = -newCenter;
+    double theta = TMath::ATan2(y, x);
+    rotation.RotateY(theta);
+
+    TVector3 detectorCenter(x, y, z);
+
+    auto newCenter = detectorCenter;
+    newCenter *= rotation;
+    translation = -newCenter;
+  }
 }
 
 void ShiftDetector::Print() {
+  if(isLHCb){
+    info() << "\n\n--------------------------------------------------" << endl;
+    info() << "Detector at LHCb" << endl;
+    info() << "Length: " << minLength << " < L < " << maxLength << endl;
+    info() << "Eta: " << minEta << " < eta < " << maxEta << endl;
+    info() << "--------------------------------------------------\n\n" << endl;
+    return;
+  }
+
   info() << "\n\n--------------------------------------------------" << endl;
-  info() << "Detector at: (" << x << ", " << y << ", " << z << ") with radius: " << outer_radius << " and length: " << total_length << endl;
+  info() << "Detector at: (" << x << ", " << y << ", " << z << ") " << endl;
+  info() << "Total distance: " << sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2)) << endl;
+  info() << "Outer radius: " << outer_radius << "\tinner radius: " <<inner_radius << "\tlength: " << total_length << endl;
   // calculate the fraction of the solid angle the detector covers
   float distance = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
   float fullArea = 4 * TMath::Pi() * distance * distance;
@@ -44,6 +65,10 @@ void ShiftDetector::Print() {
 }
 
 bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &particle) {
+  if(isLHCb){
+    return IsWithinLHCbAcceptance(particle);
+  }
+
   // convert mm to m. x is our y, y is our z, z is our x
   TVector3 origin(particle->GetZ() / 1e3, particle->GetX() / 1e3, particle->GetY() / 1e3);
 
@@ -140,6 +165,9 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
 }
 
 bool ShiftDetector::IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticle> &particle, float maxDistanceInsideDetector) {
+  if(isLHCb){
+    return true;
+  }
   // check if the production vertex of the particle is before the detector, or at most 1m past the detector's center
   // convert mm to m. x is our y, y is our z, z is our x
   float xProd = particle->GetZ() / 1e3;
@@ -152,6 +180,9 @@ bool ShiftDetector::IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticl
 }
 
 bool ShiftDetector::DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &particle) {
+  if(isLHCb){
+    return true;
+  }
   // calculate the distance the particle has to travel from production vertex to the edge of the detector
   // convert mm to m. x is our y, y is our z, z is our x
   float xProd = particle->GetZ() / 1e3;
@@ -163,5 +194,29 @@ bool ShiftDetector::DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &p
 
   float particleEnergy = particle->GetLorentzVector().E();
 
-  return particleEnergy > distanceToDetector;
+  float criticalEnergy = 0.5 * distanceToDetector + 1;
+
+  return particleEnergy > criticalEnergy;
+}
+
+bool ShiftDetector::IsWithinLHCbAcceptance(const std::shared_ptr<HepMCParticle> &particle) {
+
+
+  // convert mm to m. x is our y, y is our z, z is our x
+  float xProd = particle->GetZ() / 1e3;
+  float yProd = particle->GetX() / 1e3;
+  float zProd = particle->GetY() / 1e3;
+
+  float particleDistance = sqrt(pow(xProd, 2) + pow(yProd, 2) + pow(zProd, 2));
+
+  if (particleDistance > maxDistance) {
+    return false;
+  }
+
+  float eta = fabs(particle->GetLorentzVector().Eta());
+  if (eta > maxEta || eta < minEta) {
+    return false;
+  }
+
+  return true;
 }

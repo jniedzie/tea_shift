@@ -42,6 +42,9 @@ int main(int argc, char **argv) {
   map<string, float> detectorParams;
   config.GetMap("detectorParams", detectorParams);
 
+  string variant;
+  config.GetValue("variant", variant);
+
   cutFlowManager->RegisterCut("initial");
   cutFlowManager->RegisterCut("hasMuons");
   cutFlowManager->RegisterCut("triggerAndReco");
@@ -50,7 +53,7 @@ int main(int argc, char **argv) {
   cutFlowManager->RegisterCut("throughRock");
   cutFlowManager->RegisterCut("massCut");
   
-  auto detector = make_shared<ShiftDetector>(detectorParams);
+  auto detector = make_shared<ShiftDetector>(detectorParams, variant == "lhcb");
   detector->Print();
 
   for (int iEvent = 0; iEvent < eventReader->GetNevents(); iEvent++) {
@@ -69,7 +72,7 @@ int main(int argc, char **argv) {
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
     shiftObjectsManager->InsertGoodMuonsCollection(event);
-    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, detectorParams, nMuons);
+    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, detectorParams, variant, nMuons);
     shiftObjectsManager->InsertGoodDarkPhotonsCollection(event);
 
     shiftHistogramsFiller->Fill(event, true);

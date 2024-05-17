@@ -5,11 +5,12 @@ skim = "initial"
 # skim = "skimmed_allSelections"
 
 variant = "cms"
+# variant = "shift160m" # good for all signals
+
 # variant = "shift80m"
 # variant = "shift100m"
 # variant = "shift120m" # short-lived HV:100/20/1/X
 # variant = "shift140m" # any HV:60/5/1/X
-# variant = "shift160m" # short-lived DP:30/X (but long-lived also ok)
 # variant = "shift200m" # long-lived DP:30/X (but short-lived also ok)
 # variant = "shift250m" # long-lived HV:100/20/1/X
 # variant = "shift290m"
@@ -21,22 +22,32 @@ variant = "cms"
 # variant = "shift1000m"
 # variant = "cmsFT"
 # variant = "faser"
+# variant = "lhcb"
+# variant = "cmsPT"
 
-if variant == "faser" or variant == "cms":
+if variant == "faser" or variant == "cms" or variant == "cmsPT":
     colliderMode = True
 else:
     colliderMode = False
 
 processes = (
-    # DP: X/1e1
+    # benchmark points:
     "pythia_mDarkPhoton-5_ctau-1e1",
-    "pythia_mDarkPhoton-10_ctau-1e1",
-    "pythia_mDarkPhoton-15_ctau-1e1",
-    "pythia_mDarkPhoton-20_ctau-1e1",
     "pythia_mDarkPhoton-30_ctau-1e1",
-    "pythia_mDarkPhoton-40_ctau-1e1",
-    "pythia_mDarkPhoton-50_ctau-1e1",
-    "pythia_mDarkPhoton-70_ctau-1e1",
+    "pythia_mDarkPhoton-30_ctau-1em3",
+    "pythia_mDarkPhoton-30_ctau-1e3",
+    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1",
+    
+    # DP: X/1e1
+    # "pythia_mDarkPhoton-5_ctau-1e1",
+    # "pythia_mDarkPhoton-10_ctau-1e1",
+    # "pythia_mDarkPhoton-15_ctau-1e1",
+    # "pythia_mDarkPhoton-20_ctau-1e1",
+    # "pythia_mDarkPhoton-30_ctau-1e1",
+    # "pythia_mDarkPhoton-40_ctau-1e1",
+    # "pythia_mDarkPhoton-50_ctau-1e1",
+    # "pythia_mDarkPhoton-70_ctau-1e1",
     
     # DP: 30/X
     # "pythia_mDarkPhoton-30_ctau-1em5",
@@ -62,171 +73,22 @@ processes = (
     # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1",
     # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3",
     # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5",
-    
-    # DP: X/?
-    # "pythia_mDarkPhoton-5",
-    # "pythia_mDarkPhoton-10",
-    # "pythia_mDarkPhoton-15",
-    # "pythia_mDarkPhoton-20",
-    # "pythia_mDarkPhoton-30",
-    # "pythia_mDarkPhoton-50",
-    # "pythia_mDarkPhoton-70",
-    
-    # 60/15/1/X
-    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em5",
-    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em3",
-    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e0",
-    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e1",
-    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e3",
-    # "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e5",
-    
-    
-
-    # mass scans (60/5/X/1em1)
-    # "pythia_mZprime-60_mDH-5_mDQ-3_ctau-1em1",
-    # "pythia_mZprime-60_mDH-5_mDQ-2_ctau-1em1",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-60_mDH-5_mDQ-0p5_ctau-1em1",
-    # "pythia_mZprime-60_mDH-5_mDQ-0p1_ctau-1em1",
-    # "pythia_mZprime-60_mDH-5_mDQ-0p01_ctau-1em1",
-    
-    # mass scans (X/5/1/1em1)
-    # "pythia_mZprime-110_mDH-5_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-100_mDH-5_mDQ-1_tau-1em1",
-    # "pythia_mZprime-90_mDH-5_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-80_mDH-5_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-70_mDH-5_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-50_mDH-5_mDQ-1_ctau-1em1",
-    
-    # mass scans (100/X/1/1em1)
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-30_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-10_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-5_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-2_mDQ-1_tau-1em1",
-    
-    # mass scans (X/20/1/1em1)
-    # "pythia_mZprime-110_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-90_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-80_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-70_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-50_mDH-20_mDQ-1_tau-1em1",
-    
-    # mass scans (X/20/10/1em1)
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1",
-    # "pythia_mZprime-90_mDH-20_mDQ-10_tau-1em1",
-    # "pythia_mZprime-80_mDH-20_mDQ-10_tau-1em1",
-    # "pythia_mZprime-70_mDH-20_mDQ-10_tau-1em1",
-    # "pythia_mZprime-60_mDH-20_mDQ-10_tau-1em1",
-    # "pythia_mZprime-50_mDH-20_mDQ-10_tau-1em1",
-    
-    
-    # 100/20/0.1
-    # "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1em7",
-    # "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1em1",
-    # "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1e0",
-    # "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1e3",
-    
-    # 100/20/5
-    # "pythia_mZprime-100_mDH-20_mDQ-5_tau-1em7",
-    # "pythia_mZprime-100_mDH-20_mDQ-5_tau-1em1",
-    # "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e0",
-    # "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e3",
-    
-    
-    
-    # 100/20/10
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1em7",
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1",
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e0",
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e3",
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e5",
-    
-    # 100/40/1
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1em7",
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e0",
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e3",
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e5",
-    
-    # best for 120m (100/90/1) -- pythia errors, meaningless limits
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em7",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em3",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em2",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e0",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e3",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e5",
-    
-    
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-40_mDQ-20_tau-1e1",
-    # "pythia_mZprime-100_mDH-90_mDQ-10_tau-1e1",
-    # "pythia_mZprime-100_mDH-40_mDQ-10_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1",
-    # "pythia_mZprime-40_mDH-20_mDQ-10_tau-1e1",
-    # "pythia_mZprime-40_mDH-20_mDQ-1_tau-1em3",
-    # "pythia_mZprime-100_mDH-60_mDQ-1_tau-1em3",
-    # "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em3",
-    # "pythia_mZprime-100_mDH-90_mDQ-40_tau-1em3",
-    # "pythia_mZprime-30_mDH-20_mDQ-10_tau-1e1",
-    # "pythia_mZprime-100_mDH-15_mDQ-7_tau-1e1",
-    
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4",
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5",
-    
-    # Z' mass scan
-    # "pythia_mZprime-40_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-110_mDH-20_mDQ-1_tau-1e1",
-
-    # # hD mass scan
-    # "pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1",
-
-    # # qD mass scan
-    # "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1",
-    # "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1",
-    
-    
-    # # other special cases
-    # "pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1",
-    # "pythia_mZprime-100_mDH-15_mDQ-7_tau-1e1",
-    
-    # new points
-    # "pythia_mZprime-30_mDH-15_mDQ-7_tau-1e1",
-    
-    # "pythia_qcd",
-    # "pythia_dy",
+     
+    "pythia_qcd",
+    "pythia_dy",
 )
 
 # base_lumi = 150 * 1e6  # fb^-1 -> nb^-1, Run 2
-base_lumi = 750 * 1e6  # fb^-1 -> nb^-1, Run 4
+base_lumi = 715 * 1e6  # fb^-1 -> nb^-1, Run 4
 
 if colliderMode:
     processes = [process.replace("pythia_", "pythiaCollider_") for process in processes]
     luminosity = base_lumi
 else:
     luminosity = 0.01 * base_lumi  # 1% of nominal luminosity for fixed-target mode
+
+if variant == "lhcb":
+    luminosity /= 25 # LHCb collects 25 times less data than CMS
 
 luminosity_err = luminosity * 0.015  # 1.5% uncertainty
 
@@ -242,13 +104,13 @@ crossSections = {
     "pythiaCollider_dy": 6.911e-06 * 1e6, # mb -> nb
     
     # DP: X/1e1
-    "pythia_mDarkPhoton-5_ctau-1e1": reference_signal_cross_section*1e4,
-    "pythia_mDarkPhoton-10_ctau-1e1": reference_signal_cross_section*1e6,
+    "pythia_mDarkPhoton-5_ctau-1e1": reference_signal_cross_section*1e5,
+    "pythia_mDarkPhoton-10_ctau-1e1": reference_signal_cross_section*1e7,
     "pythia_mDarkPhoton-15_ctau-1e1": reference_signal_cross_section*1e4,
-    "pythia_mDarkPhoton-20_ctau-1e1": reference_signal_cross_section*1e4,
-    "pythia_mDarkPhoton-40_ctau-1e1": reference_signal_cross_section*1e2,
-    "pythia_mDarkPhoton-50_ctau-1e1": reference_signal_cross_section*1e2,
-    "pythia_mDarkPhoton-70_ctau-1e1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-20_ctau-1e1": reference_signal_cross_section*1e5,
+    "pythia_mDarkPhoton-40_ctau-1e1": reference_signal_cross_section*1e4,
+    "pythia_mDarkPhoton-50_ctau-1e1": reference_signal_cross_section*1e4,
+    "pythia_mDarkPhoton-70_ctau-1e1": reference_signal_cross_section*1e3,
     
     # DP: 30/X
     "pythia_mDarkPhoton-30_ctau-1em5": reference_signal_cross_section*1e2,
@@ -259,156 +121,34 @@ crossSections = {
     "pythia_mDarkPhoton-30_ctau-1e3": reference_signal_cross_section*1e5,
     "pythia_mDarkPhoton-30_ctau-1e5": reference_signal_cross_section*1e6,
     
-    # DP: X/?
-    "pythia_mDarkPhoton-5": reference_signal_cross_section*1e5,
-    "pythia_mDarkPhoton-10": reference_signal_cross_section*1e5,
-    "pythia_mDarkPhoton-15": reference_signal_cross_section*1e5,
-    "pythia_mDarkPhoton-20": reference_signal_cross_section*1e2,
-    "pythia_mDarkPhoton-30": reference_signal_cross_section*1e2,
-    "pythia_mDarkPhoton-50": reference_signal_cross_section*1e2,
-    "pythia_mDarkPhoton-70": reference_signal_cross_section*1e2,
-    
-    # 60/15/1/X
-    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em5": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em3": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e0": reference_signal_cross_section*1e2,
-    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-60_mDH-15_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7,
-    
-    # 100/20/1/X
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0": reference_signal_cross_section*1e2,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2": reference_signal_cross_section*1e4,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e4": reference_signal_cross_section*1e6,
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5": reference_signal_cross_section*1e7,
-    
-    # 60/5/1/X
+    # HV: 60/5/1/X
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5": reference_signal_cross_section,
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3": reference_signal_cross_section,
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section,
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0": reference_signal_cross_section*1e2,
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1": reference_signal_cross_section*1e3,
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7,
+    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7, 
     
-    # 60/5/X/1em1
-    "pythia_mZprime-60_mDH-5_mDQ-3_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-5_mDQ-2_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-5_mDQ-0p5_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-5_mDQ-0p1_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-5_mDQ-0p01_ctau-1em1": reference_signal_cross_section,
+    # HV: 60/20/1/X
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em7": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em5": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em3": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1e0": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1e1": reference_signal_cross_section*1e3,
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1e3": reference_signal_cross_section*1e5,
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7, 
     
-    # X/5/1/1em1
-    "pythia_mZprime-110_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-90_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-80_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-70_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-50_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section,
-    
-    # 100/X/1/1em1
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-30_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-10_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-5_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-2_mDQ-1_tau-1em1": reference_signal_cross_section,
-    
-    # X/20/1/1em1
-    "pythia_mZprime-110_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-90_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-80_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-70_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-50_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    
-    # 100/20/0.1/X
-    "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1em7": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1e0": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-20_mDQ-0p1_tau-1e3": reference_signal_cross_section*1e5,
-    
-    # 60/20/1/X
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1em7": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e0": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e3": reference_signal_cross_section*1e5,
-    
-    # 60/20/1/X
+    # for old (bad) names
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em7": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em5": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em3": reference_signal_cross_section,
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e0": reference_signal_cross_section,
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e3": reference_signal_cross_section*1e5,
-    
-    # 100/20/10/X
-    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1em7": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e0": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e5": reference_signal_cross_section*1e7,
-    
-    # X/20/10/1em1
-    "pythia_mZprime-90_mDH-20_mDQ-10_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-80_mDH-20_mDQ-10_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-70_mDH-20_mDQ-10_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-20_mDQ-10_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-50_mDH-20_mDQ-10_tau-1em1": reference_signal_cross_section,
-    
-    # 100/40/1/X
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1em7": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e0": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e5": reference_signal_cross_section*1e7,
-    
-    # 100/90/1/X
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em7": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em3": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em2": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e0": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e1": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e3": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1e5": reference_signal_cross_section,
-    
-    # X/10/1/1e1
-    "pythia_mZprime-50_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-200_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-500_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-
-    # 100/X/1/1e1
-    "pythia_mZprime-100_mDH-15_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-40_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-60_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-
-    # 100/20/X/1e1
-    "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-20_mDQ-2_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-20_mDQ-5_tau-1e1": reference_signal_cross_section*1e3,
-    
-    # other special cases
-    "pythia_mZprime-20_mDH-5_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-20_mDQ-10_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-30_mDH-20_mDQ-10_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-15_mDQ-7_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-40_mDQ-10_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-90_mDQ-10_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-100_mDH-40_mDQ-20_tau-1e1": reference_signal_cross_section*1e3,
-    
-    "pythia_mZprime-100_mDH-60_mDQ-1_tau-1em3": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-1_tau-1em3": reference_signal_cross_section,
-    "pythia_mZprime-100_mDH-90_mDQ-40_tau-1em3": reference_signal_cross_section,
-    
-    
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e5": reference_signal_cross_section*1e7, 
 }
 
 def extend_for_collider(dict):
@@ -454,4 +194,11 @@ elif "cms" in variant:
         "radius": 7.5,
         "length": 22,
         "maxEta": 2.4,
+    }
+elif variant == "lhcb":
+    detectorParams = {
+        "minLength": 12.5,
+        "maxLength": 22.0,
+        "minEta": 2.0,
+        "maxEta": 5.0,
     }
