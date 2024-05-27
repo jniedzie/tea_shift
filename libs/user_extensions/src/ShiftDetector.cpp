@@ -183,6 +183,10 @@ bool ShiftDetector::DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &p
   if(isLHCb){
     return true;
   }
+  if (x == 0 && y == 0 && z == 0) {
+    return true;
+  }
+
   // calculate the distance the particle has to travel from production vertex to the edge of the detector
   // convert mm to m. x is our y, y is our z, z is our x
   float xProd = particle->GetZ() / 1e3;
