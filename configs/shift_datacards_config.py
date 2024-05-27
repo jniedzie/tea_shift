@@ -10,21 +10,8 @@ add_uncertainties_on_zero = False
 include_shapes = True
 
 signal_name = "dummy_value"
-
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7"
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em3"
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1em1"
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e0"
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e1"
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e2"
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e3"
-# signal_name = "pythia_mZprime-100_mDH-20_mDQ-1_tau-1e5"
-
-
 signal_file_name = signal_name.replace("pythia_", "pythiaCollider_") if colliderMode else signal_name
-
 output_path = f"../datacards/{base_datacard_name.format(get_file_name(signal_name))}"
-
 signal_key = signal_name if signal_name in crossSections else signal_name.replace("Collider", "")
 
 samples = [
@@ -49,8 +36,8 @@ samples = [
 ]
 
 # List histograms for which to create datacards 
-histograms = [Histogram(name="MuonsHittingDetectorPair_mass", norm_type=NormalizationType.to_lumi, rebin=5)]
-# histograms = [Histogram(name="PtMuonsHittingDetectorPair_mass", norm_type=NormalizationType.to_lumi, rebin=5)]
+
+histograms = [Histogram(name="dummy_value", norm_type=NormalizationType.to_lumi, rebin=5)]
 
 # List nuisance parameters (they will only be added for processes for which they were listed) 
 nuisances = {

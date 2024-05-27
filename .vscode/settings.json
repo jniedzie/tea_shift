@@ -13,6 +13,12 @@
         "ostream": "cpp",
         "limits_cross_section_mass.C": "cpp",
         "InitialMuons_energy.C": "cpp",
-        "cutFlow_cms.C": "cpp"
+        "cutFlow_cms.C": "cpp",
+        "any": "cpp",
+        "optional": "cpp",
+        "*.tcc": "cpp",
+        "system_error": "cpp",
+        "regex": "cpp",
+        "limits_DP_ctau.C": "cpp"
     }
 }

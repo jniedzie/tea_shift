@@ -11,13 +11,21 @@ config_path = "./shift_datacards_config.py"
 base_config_name = "shift_datacards_config_{}.py"
 base_combine_output_name = "output_{}.txt"
 
+histogram_name = "MuonsHittingDetectorPair_mass"
+# histogram_name = "PtMuonsHittingDetectorPair_mass"
+# histogram_name = "MuonsHittingDetectorPair_massCtauGt1cm"
+# histogram_name = "MuonsHittingDetectorSameVertexPair_mass"
+
 # variable = "mZprime"
 # variable = "mDH"
 # variable = "mDQ"
 # variable = "ctau"
-variable = "mDarkPhoton"
+# variable = "mDarkPhoton"
+variable = "2d"
 
 suffix = "_"
+
+skip_combine = False
 
 for part in processes[0].split("_"):
     if variable in part:
@@ -30,6 +38,9 @@ for part in processes[0].split("_"):
 # if suffix ends with "_", remove it
 if suffix[-1] == "_":
     suffix = suffix[:-1]
+
+if variable == "2d":
+    suffix = "_2d"
 
 # suffix = ""
 # suffix = processes[0]
@@ -54,6 +65,7 @@ def prepare_datacards():
         with open(config_path, "r") as config_file:
             config = config_file.read()
             config = config.replace("signal_name = \"dummy_value\"", f"signal_name = \"{process}\"")
+            config = config.replace("Histogram(name=\"dummy_value\"", f"Histogram(name=\"{histogram_name}\"")
         
             new_config_name = base_config_name.format(get_file_name(process))
             with open(new_config_name, "w") as new_config_file:
@@ -105,7 +117,7 @@ def get_limits():
 
 def save_limits(limits_per_process):
     
-    file_path = f"limits_mass_{variant}{suffix}.txt"
+    file_path = f"limits_{histogram_name}_{variant}{suffix}.txt"
     info(f"Saving limits to {file_path}")
     
     with open(f"../datacards/{file_path}", "w") as limits_file:
@@ -114,8 +126,9 @@ def save_limits(limits_per_process):
             info(f"{process}: {limits}")
             
 def main():
-    prepare_datacards()
-    run_combine()
+    if not skip_combine:
+        prepare_datacards()
+        run_combine()
     limits_per_process = get_limits()
     save_limits(limits_per_process)
     

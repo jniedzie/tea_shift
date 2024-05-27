@@ -4,8 +4,8 @@ base_datacard_name = "datacard_{}"
 skim = "initial"
 # skim = "skimmed_allSelections"
 
-variant = "cms"
-# variant = "shift160m" # good for all signals
+# variant = "cms"
+variant = "shift160m" # good for all signals
 
 # variant = "shift80m"
 # variant = "shift100m"
@@ -32,50 +32,88 @@ else:
 
 processes = (
     # benchmark points:
-    "pythia_mDarkPhoton-5_ctau-1e1",
-    "pythia_mDarkPhoton-30_ctau-1e1",
-    "pythia_mDarkPhoton-30_ctau-1em3",
-    "pythia_mDarkPhoton-30_ctau-1e3",
-    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
-    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1",
+    # "pythia_mDarkPhoton-5_ctau-1e1",
+    # "pythia_mDarkPhoton-30_ctau-1e1",
+    # "pythia_mDarkPhoton-30_ctau-1em3",
+    # "pythia_mDarkPhoton-30_ctau-1e3",
+    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
+    # "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1",
+    
+    # # HV: 60/20/1/X
+    # # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em7",
+    # # "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1",
+    # # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e0",
+    # # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e1",
+    # # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e3",
+    
+    # # HV: 60/5/1/X
+    # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5",
+    # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3",
+    # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
+    # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0",
+    # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1",
+    # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3", # exclude for CMS
+    # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5",
     
     # DP: X/1e1
-    # "pythia_mDarkPhoton-5_ctau-1e1",
-    # "pythia_mDarkPhoton-10_ctau-1e1",
-    # "pythia_mDarkPhoton-15_ctau-1e1",
-    # "pythia_mDarkPhoton-20_ctau-1e1",
-    # "pythia_mDarkPhoton-30_ctau-1e1",
-    # "pythia_mDarkPhoton-40_ctau-1e1",
-    # "pythia_mDarkPhoton-50_ctau-1e1",
-    # "pythia_mDarkPhoton-70_ctau-1e1",
+    "pythia_mDarkPhoton-5_ctau-1e1",
+    "pythia_mDarkPhoton-10_ctau-1e1",
+    "pythia_mDarkPhoton-15_ctau-1e1",
+    "pythia_mDarkPhoton-20_ctau-1e1",
+    "pythia_mDarkPhoton-30_ctau-1e1",
+    "pythia_mDarkPhoton-40_ctau-1e1",
+    "pythia_mDarkPhoton-50_ctau-1e1",
+    "pythia_mDarkPhoton-70_ctau-1e1",
     
     # DP: 30/X
-    # "pythia_mDarkPhoton-30_ctau-1em5",
-    # "pythia_mDarkPhoton-30_ctau-1em3",
-    # "pythia_mDarkPhoton-30_ctau-1em1",
-    # "pythia_mDarkPhoton-30_ctau-1e0",
+    "pythia_mDarkPhoton-30_ctau-1em5",
+    "pythia_mDarkPhoton-30_ctau-1em3",
+    "pythia_mDarkPhoton-30_ctau-1em1",
+    "pythia_mDarkPhoton-30_ctau-1e0",
     # "pythia_mDarkPhoton-30_ctau-1e1",
-    # "pythia_mDarkPhoton-30_ctau-1e3",
-    # "pythia_mDarkPhoton-30_ctau-1e5",
+    "pythia_mDarkPhoton-30_ctau-1e3",
+    # "pythia_mDarkPhoton-30_ctau-1e5", # exclude for CMS
     
-    # HV: 60/20/1/X
-    # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em7",
-    # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1",
-    # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e0",
-    # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e1",
-    # "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e3",
     
-    # HV: 60/5/1/X
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em5",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em3",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3",
-    # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5",
-     
-    "pythia_qcd",
-    "pythia_dy",
+    # DP grid scan    
+    # DP: X/1em5
+    "pythia_mDarkPhoton-10_ctau-1em5",
+    "pythia_mDarkPhoton-15_ctau-1em5",
+    "pythia_mDarkPhoton-20_ctau-1em5",
+    "pythia_mDarkPhoton-40_ctau-1em5",
+    "pythia_mDarkPhoton-50_ctau-1em5",
+    "pythia_mDarkPhoton-70_ctau-1em5",
+    "pythia_mDarkPhoton-70_ctau-1em5",
+
+    # DP: X/1em1
+    "pythia_mDarkPhoton-10_ctau-1em1",
+    "pythia_mDarkPhoton-15_ctau-1em1",
+    "pythia_mDarkPhoton-20_ctau-1em1",
+    "pythia_mDarkPhoton-40_ctau-1em1",
+    "pythia_mDarkPhoton-50_ctau-1em1",
+    "pythia_mDarkPhoton-60_ctau-1em1",
+    "pythia_mDarkPhoton-70_ctau-1em1",
+
+    # DP: X/1e0
+    "pythia_mDarkPhoton-10_ctau-1e0",
+    "pythia_mDarkPhoton-15_ctau-1e0",
+    "pythia_mDarkPhoton-20_ctau-1e0",
+    "pythia_mDarkPhoton-40_ctau-1e0",
+    "pythia_mDarkPhoton-50_ctau-1e0",
+    "pythia_mDarkPhoton-60_ctau-1e0",
+    "pythia_mDarkPhoton-70_ctau-1e0",
+
+    # DP: X/1e3
+    "pythia_mDarkPhoton-10_ctau-1e3", # exclude for CMS
+    "pythia_mDarkPhoton-15_ctau-1e3", # exclude for CMS
+    "pythia_mDarkPhoton-20_ctau-1e3",
+    "pythia_mDarkPhoton-40_ctau-1e3",
+    "pythia_mDarkPhoton-50_ctau-1e3",
+    "pythia_mDarkPhoton-60_ctau-1e3",
+    "pythia_mDarkPhoton-70_ctau-1e3",
+
+    # "pythia_qcd",
+    # "pythia_dy",
 )
 
 # base_lumi = 150 * 1e6  # fb^-1 -> nb^-1, Run 2
@@ -105,19 +143,19 @@ crossSections = {
     
     # DP: X/1e1
     "pythia_mDarkPhoton-5_ctau-1e1": reference_signal_cross_section*1e5,
-    "pythia_mDarkPhoton-10_ctau-1e1": reference_signal_cross_section*1e7,
+    "pythia_mDarkPhoton-10_ctau-1e1": reference_signal_cross_section*1e5,
     "pythia_mDarkPhoton-15_ctau-1e1": reference_signal_cross_section*1e4,
-    "pythia_mDarkPhoton-20_ctau-1e1": reference_signal_cross_section*1e5,
-    "pythia_mDarkPhoton-40_ctau-1e1": reference_signal_cross_section*1e4,
-    "pythia_mDarkPhoton-50_ctau-1e1": reference_signal_cross_section*1e4,
-    "pythia_mDarkPhoton-70_ctau-1e1": reference_signal_cross_section*1e3,
+    "pythia_mDarkPhoton-20_ctau-1e1": reference_signal_cross_section*1e4,
+    "pythia_mDarkPhoton-40_ctau-1e1": reference_signal_cross_section*1e3,
+    "pythia_mDarkPhoton-50_ctau-1e1": reference_signal_cross_section*1e3,
+    "pythia_mDarkPhoton-70_ctau-1e1": reference_signal_cross_section*1e2,
     
     # DP: 30/X
     "pythia_mDarkPhoton-30_ctau-1em5": reference_signal_cross_section*1e2,
     "pythia_mDarkPhoton-30_ctau-1em3": reference_signal_cross_section*1e2,
     "pythia_mDarkPhoton-30_ctau-1em1": reference_signal_cross_section*1e2,
-    "pythia_mDarkPhoton-30_ctau-1e0": reference_signal_cross_section*1e3,
-    "pythia_mDarkPhoton-30_ctau-1e1": reference_signal_cross_section*1e4,
+    "pythia_mDarkPhoton-30_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-30_ctau-1e1": reference_signal_cross_section*1e2,
     "pythia_mDarkPhoton-30_ctau-1e3": reference_signal_cross_section*1e5,
     "pythia_mDarkPhoton-30_ctau-1e5": reference_signal_cross_section*1e6,
     
@@ -127,8 +165,8 @@ crossSections = {
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section,
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e0": reference_signal_cross_section*1e2,
     "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7, 
+    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3": reference_signal_cross_section*1e7,
+    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5": reference_signal_cross_section*1e9, 
     
     # HV: 60/20/1/X
     "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em7": reference_signal_cross_section,
@@ -141,14 +179,61 @@ crossSections = {
     "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7, 
     
     # for old (bad) names
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em7": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em5": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em3": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e0": reference_signal_cross_section,
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em7": reference_signal_cross_section*1e2,
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1": reference_signal_cross_section*1e2,
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e0": reference_signal_cross_section*1e2,
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e3": reference_signal_cross_section*1e5,
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1e5": reference_signal_cross_section*1e7, 
+    
+    # DP grid scan
+    # DP: 70/X
+    "pythia_mDarkPhoton-70_ctau-1em5": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-70_ctau-1em1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-70_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-70_ctau-1e3": reference_signal_cross_section*1e5,
+
+    # DP: 10/X
+    "pythia_mDarkPhoton-10_ctau-1em5": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-10_ctau-1em1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-10_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-10_ctau-1e3": reference_signal_cross_section*1e5,
+
+    # DP: X/1e3
+    "pythia_mDarkPhoton-10_ctau-1e3": reference_signal_cross_section*1e5,
+    "pythia_mDarkPhoton-15_ctau-1e3": reference_signal_cross_section*1e5,
+    "pythia_mDarkPhoton-20_ctau-1e3": reference_signal_cross_section*1e4,
+    "pythia_mDarkPhoton-50_ctau-1e3": reference_signal_cross_section*1e3,
+    "pythia_mDarkPhoton-70_ctau-1e3": reference_signal_cross_section*1e2,
+
+    # DP: X/1em5
+    "pythia_mDarkPhoton-10_ctau-1em5": reference_signal_cross_section*1e4,
+    "pythia_mDarkPhoton-15_ctau-1em5": reference_signal_cross_section*1e3,
+    "pythia_mDarkPhoton-20_ctau-1em5": reference_signal_cross_section*1e3,
+    "pythia_mDarkPhoton-50_ctau-1em5": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-70_ctau-1em5": reference_signal_cross_section*1e1,
+    
+    # DP: X/1e0
+    "pythia_mDarkPhoton-15_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-20_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-50_ctau-1e0": reference_signal_cross_section*1e2,
+
+    # DP: X/1em1
+    "pythia_mDarkPhoton-15_ctau-1em1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-20_ctau-1em1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-50_ctau-1em1": reference_signal_cross_section*1e2,
+    
+    # DP: 40/X
+    "pythia_mDarkPhoton-40_ctau-1em5": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-40_ctau-1em1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-40_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-40_ctau-1e3": reference_signal_cross_section*1e5,
+
+    # DP: 60/X
+    "pythia_mDarkPhoton-60_ctau-1em1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-60_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-60_ctau-1e1": reference_signal_cross_section*1e2,
+    "pythia_mDarkPhoton-60_ctau-1e2": reference_signal_cross_section*1e3,
+    "pythia_mDarkPhoton-60_ctau-1e3": reference_signal_cross_section*1e5,
 }
 
 def extend_for_collider(dict):
