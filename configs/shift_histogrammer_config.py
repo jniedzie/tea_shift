@@ -1,5 +1,12 @@
 import numpy as np
 
+import sys
+import os
+
+# Add the directory containing shift_paths.py to the system path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
+
 from shift_paths import detectorParams, base_path, variant
 
 ## specify how many events to run on (and how often to print current event number)
@@ -19,7 +26,9 @@ ctau = "1em1"
 # inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
 # inputFilePath = "../mDarkPhoton-25.0_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
-inputFilePath = f"{base_path}/pythia_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
+# inputFilePath = f"{base_path}/pythia_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
+
+inputFilePath = "../utils/example_signal.root"
 
 # inputFilePath = f"{base_path}/pythia_mZprime-{mZprime}_mDH-{mDH}_mDQ-{mDQ}_ctau-{ctau}/initial/mZprime-{mZprime}GeV_mDH-{mDH}GeV_mDQ-{mDQ}GeV_ctau-1p00em01m_part-0.root"
 
