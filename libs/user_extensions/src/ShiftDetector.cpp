@@ -22,22 +22,29 @@ isLHCb(isLHCb_){
     double theta_inner = 2 * std::atan(std::exp(-2.4));
     inner_radius = total_length / 2.0 * tan(theta_inner);
 
+    float lhc_radius = 4300;  // [m]
+
     if (y < 0) {
       forcedLHCring = true;
-      float lhc_radius = 4300;  // [m]
+      
       float y_1 = sqrt(pow(lhc_radius, 2) - pow(x, 2)) + lhc_radius;
       float y_2 = -sqrt(pow(lhc_radius, 2) - pow(x, 2)) + lhc_radius;
       y = min(y_1, y_2);
     }
 
-    double theta = TMath::ATan2(y, x);
-    rotation.RotateY(theta);
+    // old implementation with a bug
+    // double theta = TMath::ATan2(y, x);
+    // rotation.RotateY(theta);
+
+    double theta = TMath::Pi() + TMath::ATan2(-x, y-lhc_radius);
+    rotation.RotateZ(theta);
 
     TVector3 detectorCenter(x, y, z);
 
-    auto newCenter = detectorCenter;
-    newCenter *= rotation;
-    translation = -newCenter;
+    // old implementation with a bug
+    // detectorCenter *= rotation;
+
+    translation = -detectorCenter;
   }
 }
 
