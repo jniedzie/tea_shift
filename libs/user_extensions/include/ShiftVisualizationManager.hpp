@@ -15,6 +15,8 @@ class ShiftVisualizationManager {
 
   std::pair<std::vector<TVector3>, std::vector<TVector3>> CalculateHelixPoints(TVector3 origin, TVector3 momentum, int charge);
   void AddHelixToVolume(TVector3 origin, TVector3 momentum, int charge);
+  std::vector<TVector3> CalculateDarkLine(TVector3 muonOrigin);
+  void AddDarkLine(TVector3 origin);
 
  private:
   std::shared_ptr<ShiftDetector> detector;
@@ -28,7 +30,12 @@ class ShiftVisualizationManager {
   TRotation rotation;
   TVector3 translation;
 
+  std::string doProjection;
+  bool showAxes;
+  int backgroundColor, cmsColor, shiftColor;
+
   void SetupGeomManager();
+  void AddLHC();
   void AddCMSDetector();
   void AddSHIFT();
   void AddAxes();

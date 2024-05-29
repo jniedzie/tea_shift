@@ -40,13 +40,17 @@ int main(int argc, char **argv) {
   string variant;
   config.GetValue("variant", variant);
 
+  int startingEvent;
+  config.GetValue("startingEvent", startingEvent);
+
   auto detector = make_shared<ShiftDetector>(detectorParams, variant == "lhcb");
   detector->Print();
 
-  auto visuzalizationManager = make_shared<ShiftVisualizationManager>(detector, 2.0);
-  set<shared_ptr<HepMCParticle>> visMuons;
+  float magField;
+  config.GetValue("magField", magField);
 
-  int startingEvent = 20;
+  auto visuzalizationManager = make_shared<ShiftVisualizationManager>(detector, magField);
+  set<shared_ptr<HepMCParticle>> visMuons;
 
   for (int iEvent = startingEvent; iEvent < eventReader->GetNevents(); iEvent++) {
     auto event = eventReader->GetEvent(iEvent);
@@ -105,6 +109,10 @@ int main(int argc, char **argv) {
     // if making visualization, break once the first passing event is found
     info() << "Passing event: " << iEvent << endl;
     break;
+  }
+
+  for(auto particle : visMuons) {
+    info() << "Muon momentum: " << particle->GetMomentum().X() << " " << particle->GetMomentum().Y() << " " << particle->GetMomentum().Z() << endl;
   }
 
   info() << "N muons: " << visMuons.size() << endl;
