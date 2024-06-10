@@ -53,8 +53,16 @@ Zprime:gmZmode = 3                 ! Only Z' production
 32:tauCalc = off
 32:onMode = off                    ! Turn off all decay modes
 32:onIfAny = 13                    ! Turn on decay only to muon-antimuon
+
+! changing couplings to muons to reproduce SM m_inv spectrum
 Zprime:vmu = -0.04
 Zprime:amu = -0.5  
+
+! modifying couplings to SM to change the theory cross section
+Zprime:vd =  -0.04
+Zprime:ad =  -0.04
+Zprime:vu =  0.02
+Zprime:au =  0.02
 
 ! Turn off DY
 WeakSingleBoson:ffbar2gmZ = off
