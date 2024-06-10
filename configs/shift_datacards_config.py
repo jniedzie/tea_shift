@@ -3,35 +3,36 @@ from Histogram import Histogram
 from HistogramNormalizer import NormalizationType
 
 from shift_paths import luminosity, crossSections, base_datacard_name
-from shift_paths import base_path, processes, histograms_path, colliderMode, variant
+from shift_paths import base_path, processes, histograms_path, colliderMode
 from shift_utils import get_file_name
 
 add_uncertainties_on_zero = False
 include_shapes = True
 
 signal_name = "dummy_value"
+variant_name = "dummy_value"
 signal_file_name = signal_name.replace("pythia_", "pythiaCollider_") if colliderMode else signal_name
-output_path = f"../datacards/{base_datacard_name.format(get_file_name(signal_name))}"
+output_path = f"../datacards/{base_datacard_name.format(get_file_name(signal_name, variant_name))}"
 signal_key = signal_name if signal_name in crossSections else signal_name.replace("Collider", "")
 
 samples = [
     Sample(
-        name="pythia_qcd",
-        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{variant}_histograms.root",
+        name=f"pythia{'Collider' if colliderMode else ''}_qcd",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{variant_name}_histograms.root",
         type=SampleType.background,
         cross_sections=crossSections,
     ),
     Sample(
-        name="pythia_dy",
-        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{variant}_histograms.root",
+        name=f"pythia{'Collider' if colliderMode else ''}_dy",
+        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_dy/merged_{variant_name}_histograms.root",
         type=SampleType.background,
         cross_sections=crossSections,
     ),
     Sample(
         name=f"signal_{signal_name}",
-        file_path=f"{base_path}/{signal_file_name}/merged_{variant}_histograms.root",
+        file_path=f"{base_path}/{signal_file_name}/merged_{variant_name}_histograms.root",
         type=SampleType.signal,
-        cross_section=crossSections[signal_key],
+        cross_section=crossSections[signal_key.replace('_smallCoupling', '')],
     ),
 ]
 
@@ -42,12 +43,12 @@ histograms = [Histogram(name="dummy_value", norm_type=NormalizationType.to_lumi,
 # List nuisance parameters (they will only be added for processes for which they were listed) 
 nuisances = {
     "lumi": {
-        "pythia_qcd": 1.015,
-        "pythia_dy": 1.015,
+        f"pythia{'Collider' if colliderMode else ''}_qcd": 1.015,
+        f"pythia{'Collider' if colliderMode else ''}_dy": 1.015,
         f"signal_{signal_name}": 1.015,
     },
     "other_systematics": {
-        "pythia_qcd": 1.10,
-        "pythia_dy": 1.10,
+        f"pythia{'Collider' if colliderMode else ''}_qcd": 1.10,
+        f"pythia{'Collider' if colliderMode else ''}_dy": 1.10,
     }
 }

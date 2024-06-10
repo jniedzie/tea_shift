@@ -119,7 +119,7 @@ for prefix in ["InitialMuons", "GoodInitialMuons", "GoodPtInitialMuons", "MuonsH
 
 
 # specify name of the branch containing event weights
-weightsBranchName = "genWeight"
+weightsBranchName = ""
 
 eventsTreeNames = ["Events",]
 specialBranchSizes = {
