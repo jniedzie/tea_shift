@@ -7,6 +7,7 @@
 #include "ShiftDetector.hpp"
 #include "ShiftHistogramsFiller.hpp"
 #include "ShiftObjectsManager.hpp"
+#include "ArgsManager.hpp"
 
 using namespace std;
 
@@ -20,18 +21,18 @@ void CheckArgs(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-  CheckArgs(argc, argv);
+  // CheckArgs(argc, argv);
 
-  ConfigManager::Initialize(argv[1]);
-  auto &config = ConfigManager::GetInstance();
+  // ConfigManager::Initialize(argv[1]);
+  // auto &config = ConfigManager::GetInstance();
 
-  if (argc == 5) {
-    config.SetInputPath(argv[2]);
-    config.SetTreesOutputPath(argv[3]);
-    config.SetHistogramsOutputPath(argv[4]);
-  }
+  // if (argc == 5) {
+  //   config.SetInputPath(argv[2]);
+  //   config.SetTreesOutputPath(argv[3]);
+  //   config.SetHistogramsOutputPath(argv[4]);
+  // }
 
-  /*
+  
     auto args = make_unique<ArgsManager>(argc, argv);
 
   // check if optional value "config" is present
@@ -55,14 +56,7 @@ int main(int argc, char **argv) {
     config.SetHistogramsOutputPath(args->GetString("output_hists_path").value());
   }
 
-  if (args->GetInt("some_number").has_value()){
-    info() << "Some number: " << args->GetInt("some_number").value() << endl;
-  }
-
-  if (args->GetString("redirector").has_value()){
-    info() << "Redirector: " << args->GetString("redirector").value() << endl;
-  }
-  */
+  
 
   auto eventReader = make_shared<EventReader>();
   auto eventWriter = make_shared<EventWriter>(eventReader);

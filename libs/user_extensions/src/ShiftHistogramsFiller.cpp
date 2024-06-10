@@ -25,6 +25,9 @@ ShiftHistogramsFiller::~ShiftHistogramsFiller() {}
 float ShiftHistogramsFiller::GetWeight(const shared_ptr<Event> event) {
   // Try to get event weight, otherwise set to 1.0
   float weight = 1.0;
+
+  if(weightsBranchName == "") return weight;
+
   try {
     weight = event->Get(weightsBranchName);
   } catch (const Exception &e) {
