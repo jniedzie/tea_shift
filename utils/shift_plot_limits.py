@@ -44,15 +44,18 @@ interpolation_precision = 100
 special_legend = None
 
 if variable == "ctau":
-    x_min = 1e-2
-    x_max = 1e3
+    
     
     if scenario == "DP":
+        x_min = 1e-2
+        x_max = 1e3
         y_min = 1e-5
         y_max = 1e3
     elif scenario == "HV":
-        y_min = 1e-9
-        y_max = 1e2
+        x_min = 1e-2
+        x_max = 1e1
+        y_min = 5e-6
+        y_max = 1e5
     
     if "CtauGt1cm" in histogram_name:
         y_min = 1e-8
@@ -92,7 +95,7 @@ elif variable == "mDarkPhoton":
     x_min = 10
     x_max = 70
     y_min = 1e-5
-    y_max = 1e5
+    y_max = 1e2
     
     if "CtauGt1cm" in histogram_name:
         y_min = 1e-8
@@ -145,15 +148,28 @@ shift_label = f"SHIFT ({0.01*base_lumi*1e-6:.2f} fb^{{-1}}, #sqrt{{s}} = 113 GeV
 
 if scenario == "HV":
     variants = {
-        # HV: 60/X/1/X
         #                                                   ms  ls band color
-        "cms_pythiaCollider_mZprime-60_mDH-5_mDQ-1_ctau-X": (-1, 1, True, ROOT.kGray, f"m_{{DH}} = 5 GeV, {cms_label}"),
-        "cms_pythiaCollider_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 1, True, ROOT.kBlack, f"m_{{DH}} = 20 GeV, {cms_label}"),
+        "cms_pythiaCollider_mZprime-15_mDH-5_mDQ-1_ctau-X": (-1, 1, True, ROOT.kCyan+1, f"CMS: m_{{Z'(DH)}} = 15 (5) GeV"),
+        "shift160m_pythia_mZprime-15_mDH-5_mDQ-1_ctau-X": (-1, 1, True, ROOT.kMagenta+1, f"SHIFT: m_{{Z'(DH)}} = 15 (5) GeV"),
         
-        "shift160m_pythia_mZprime-60_mDH-5_mDQ-1_ctau-X": (-1, 1, True, ROOT.kMagenta+1, f"m_{{DH}} = 5 GeV, {shift_label}"),
-        "shift160m_pythia_mZprime-60_mDH-20_mDQ-1_tau-X": (-1, 1, True, ROOT.kRed, f"m_{{DH}} = 20 GeV, {shift_label}"),
+        "cms_pythiaCollider_mZprime-40_mDH-15_mDQ-1_ctau-X": (-1, 1, True, ROOT.kBlue, f"CMS: m_{{Z'(DH))}} = 40 (15) GeV"),
+        "shift160m_pythia_mZprime-40_mDH-15_mDQ-1_ctau-X": (-1, 1, True, ROOT.kRed, f"SHIFT: m_{{Z'(DH)}} = 40 (15) GeV"),
     }
-    top_title = "m_{Z'} = 60 GeV, m_{DQ} = 1 GeV"
+    top_title = f"{cms_label}, {shift_label}"
+    
+    legend_pos = (0.18, 0.70, 0.35, 0.88)
+    special_legend = ROOT.TLegend(0.18, 0.64, 0.45, 0.70)
+    special_legend.SetBorderSize(0)
+    special_legend.SetFillStyle(0)
+    special_legend.SetTextFont(42)
+    special_legend.SetTextSize(0.04)
+    
+    dummy_graph_dashed = ROOT.TGraph()
+    dummy_graph_dashed.SetLineColor(ROOT.kBlack)
+    dummy_graph_dashed.SetLineWidth(4)
+    dummy_graph_dashed.SetLineStyle(2)
+    
+    special_legend.AddEntry(dummy_graph_dashed, "Benchmark model", "L")
 
 elif scenario == "DP" and variable == "ctau":
     variants = {
@@ -177,7 +193,7 @@ elif scenario == "DP" and variable == "ctau":
     dummy_graph_dashed.SetLineWidth(4)
     dummy_graph_dashed.SetLineStyle(2)
     
-    special_legend.AddEntry(dummy_graph_dashed, "Theory prediction", "L")
+    special_legend.AddEntry(dummy_graph_dashed, "Benchmark model", "L")
     
 elif scenario == "DP" and variable == "mDarkPhoton":
     variants = {
@@ -186,16 +202,16 @@ elif scenario == "DP" and variable == "mDarkPhoton":
         # "lhcb_pythia_mDarkPhoton-X_ctau-1e1"            : (-1, 1, True, ROOT.kGreen+1, lhcb_label),
         # "cmsPT_pythiaCollider_mDarkPhoton-X_ctau-1e1"   : (-1, 1, True, ROOT.kGreen+1, cms_label),
         
-        # "cms_pythiaCollider_mDarkPhoton-X_ctau-1e1"     : (-1, 1, True, ROOT.kGray, cms_label),
-        # "shift160m_pythia_mDarkPhoton-X_ctau-1e1"       : (-1, 1, True, ROOT.kMagenta+1, shift_label),
+        "cms_pythiaCollider_mDarkPhoton-X_ctau-1e1"     : (-1, 1, True, ROOT.kGray, cms_label),
+        "shift160m_pythia_mDarkPhoton-X_ctau-1e1"       : (-1, 1, True, ROOT.kMagenta+1, shift_label),
         
-        "cms_pythiaCollider_mDarkPhoton-X_ctau-1e2"     : (-1, 1, True, ROOT.kGray, cms_label),
-        "shift160m_pythia_mDarkPhoton-X_ctau-1e2"       : (-1, 1, True, ROOT.kMagenta+1, shift_label),
+        # "cms_pythiaCollider_mDarkPhoton-X_ctau-1e2"     : (-1, 1, True, ROOT.kGray, cms_label),
+        # "shift160m_pythia_mDarkPhoton-X_ctau-1e2"       : (-1, 1, True, ROOT.kMagenta+1, shift_label),
     }
     top_title = "c#tau = 10 m"
     
-    legend_pos = (0.3, 0.75, 0.45, 0.88)
-    special_legend = ROOT.TLegend(0.3, 0.69, 0.45, 0.75)
+    legend_pos = (0.6, 0.75, 0.45, 0.88)
+    special_legend = ROOT.TLegend(0.6, 0.69, 0.45, 0.75)
     special_legend.SetBorderSize(0)
     special_legend.SetFillStyle(0)
     special_legend.SetTextFont(42)
@@ -206,7 +222,7 @@ elif scenario == "DP" and variable == "mDarkPhoton":
     dummy_graph_dashed.SetLineWidth(4)
     dummy_graph_dashed.SetLineStyle(2)
     
-    special_legend.AddEntry(dummy_graph_dashed, "Theory prediction", "L")
+    special_legend.AddEntry(dummy_graph_dashed, "Benchmark model", "L")
     
 elif scenario == "DP" and variable == "2d":
     if mode == "shift160":
@@ -365,6 +381,12 @@ canvas_ratio.SetLogx(log_x)
 canvas_ratio.SetLogy(log_y)
 canvas_ratio.SetLogz(log_z)
 
+# ratio_y_min = 0
+# ratio_y_max = 12
+
+ratio_y_min = 1e-3
+ratio_y_max = 1e3
+
 def draw_graphs(graphs, first, show_band):
     canvas.cd()
     one_point = graphs[0].GetN() == 1
@@ -401,6 +423,7 @@ def draw_graphs(graphs, first, show_band):
     first_graph.GetYaxis().SetTitle(y_title[scenario])
 
     first_graph.GetXaxis().SetLimits(x_min, x_max)
+    # first_graph.GetXaxis().SetRangeUser(x_min, x_max)
     
     first_graph.SetMinimum(y_min)
     first_graph.SetMaximum(y_max)
@@ -428,7 +451,7 @@ def draw_2d_graphs(graph):
     
     z_title = "log_{10}(#sigma_{pp #rightarrow A' #rightarrow #mu #mu} [pb])"
     if doTheoryOverLimit:
-        z_title = "#sigma_{theory} / #sigma_{limit}"
+        z_title = "#sigma_{benchmark} / #sigma_{limit}"
     
     graph.GetHistogram().GetXaxis().SetTitle(x_title)
     graph.GetHistogram().GetYaxis().SetTitle(y_title)
@@ -616,13 +639,13 @@ def get_theory_over_limit(limit, theory, color, line_style):
     graph.GetXaxis().SetTitleOffset(1.1)
     graph.GetYaxis().SetTitleOffset(1.1)
     graph.GetXaxis().SetTitle(x_title)
-    graph.GetYaxis().SetTitle("#sigma_{theory} / #sigma_{limit}")
+    graph.GetYaxis().SetTitle("#sigma_{benchmark} / #sigma_{limit}")
 
     
     graph.GetXaxis().SetLimits(x_min, x_max)
     
-    graph.SetMinimum(1e-2)
-    graph.SetMaximum(1e2)
+    graph.SetMinimum(ratio_y_min)
+    graph.SetMaximum(ratio_y_max)
     
     return graph
 
@@ -691,6 +714,9 @@ def main():
         elif variable == "ctau" and scenario == "HV":
             mass = get_mass_from_name(variant, "mZprime")
             theory_lines[variant] = get_theory_line(colliderMode, mass)
+            canvas_ratio.cd()
+            ratio_graphs[variant] = get_theory_over_limit(graphs[variant][0], theory_lines[variant], colors[2], line_style)
+            ratio_graphs[variant].Draw("AL" if first else "Lsame")
             
         if variant in theory_lines:
             canvas.cd()
@@ -722,7 +748,22 @@ def main():
     canvas_ratio.cd()
     ROOT.gPad.SetLeftMargin(0.15)
     ROOT.gPad.SetBottomMargin(0.15)
-    legend.Draw()
+    
+    ratio_legend = legend.Clone()
+    
+    for entry in ratio_legend.GetListOfPrimitives():
+        obj = entry.GetObject()
+        if obj:
+            # Change the draw option from "FL" to "L"
+            entry.SetOption("L")
+            # Set the line color to match the fill color
+            fill_color = obj.GetFillColor()
+            obj.SetLineColor(fill_color)
+            obj.SetLineWidth(3)
+
+    
+    ratio_legend.Draw()
+    label.DrawLatex(0.90, 0.92, top_title)
     
     canvas.Update()
     canvas_ratio.Update()

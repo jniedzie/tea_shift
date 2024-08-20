@@ -58,12 +58,20 @@ processes = (
     # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e3", # exclude for CMS
     # # "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1e5",
     
-    # # HV: 30/15/1/X
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1em5",
-    "pythia_mZprime-30_mDH-15_mDQ-1_ctau-1em1",
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1e0",
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1e1",
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1e3",
+    # # HV: 40/15/1/X
+    # "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1em5",
+    # "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1em1",
+    # "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1e0",
+    # "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1e1",
+    # "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1e3",
+    
+    # # HV: 15/5/1/X
+    # "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1em5",
+    # "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1em1",
+    # "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e0",
+    # "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e1",
+    # "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e2",
+    # "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e3", # more stat for CMS and SHIFT ongoing
     
     # # DP: X/1e1
     # "pythia_mDarkPhoton-10_ctau-1e1",
@@ -141,6 +149,7 @@ processes = (
     # "pythia_mDarkPhoton-70_ctau-1e4",
 
     # "pythia_qcd",
+    "pythia_qcd_lowPtHat",
     # "pythia_dy",
 )
 
@@ -165,6 +174,7 @@ luminosity_err = luminosity * 0.015  # 1.5% uncertainty
 crossSections = {
     # Fixed target backgrounds
     "pythia_qcd": 2.664e-06 * 1e6,  # mb -> nb
+    "pythia_qcd_lowPtHat": 7.296e-04 * 1e6,  # mb -> nb
     "pythia_dy": 2.985e-08 * 1e6, # mb -> nb
     
     # Collider backgrounds
@@ -213,12 +223,20 @@ crossSections = {
     "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1e3": reference_signal_cross_section*1e5,
     "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1e5": reference_signal_cross_section*1e7, 
     
-    # # HV: 30/15/1/X
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1em5": reference_signal_cross_section,
-    "pythia_mZprime-30_mDH-15_mDQ-1_ctau-1em1": reference_signal_cross_section,
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1e0": reference_signal_cross_section*1e2,
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1e1": reference_signal_cross_section*1e3,
-    "pythia_mZprime-30_mDH-15_mDQ-1_tau-1e3": reference_signal_cross_section*1e7,
+    # # HV: 40/15/1/X
+    "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1em5": reference_signal_cross_section,
+    "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1em1": reference_signal_cross_section,
+    "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1e0": reference_signal_cross_section*1e2,
+    "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1e1": reference_signal_cross_section*1e3,
+    "pythia_mZprime-40_mDH-15_mDQ-1_ctau-1e3": reference_signal_cross_section*1e3,
+    
+    # # HV: 15/5/1/X
+    "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1em5": reference_signal_cross_section*1e3,
+    "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1em1": reference_signal_cross_section*1e3,
+    "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e0": reference_signal_cross_section*1e3,
+    "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e1": reference_signal_cross_section*1e5,
+    "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e2": reference_signal_cross_section*1e6,
+    "pythia_mZprime-15_mDH-5_mDQ-1_ctau-1e3": reference_signal_cross_section*1e7,
     
     # for old (bad) names
     "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em7": reference_signal_cross_section*1e2,

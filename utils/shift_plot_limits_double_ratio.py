@@ -65,6 +65,8 @@ def main():
     contours[0] = 1.0    
     contour_hist = shift_graph_ratio.GetHistogram().Clone("contour_hist")
     contour_hist.SetContour(1, contours.GetArray())
+    contour_hist.SetLineColor(ROOT.kViolet)
+    contour_hist.SetLineWidth(3)
     contour_hist.Draw("cont3 same")  # 'cont3' draws the contour line without filling
     
     ROOT.gPad.SetLogz()
@@ -74,7 +76,7 @@ def main():
     
     shift_graph_ratio.GetXaxis().SetTitle("log_{10}(c#tau [m])")
     shift_graph_ratio.GetYaxis().SetTitle("m_{A'} [GeV]")
-    shift_graph_ratio.GetZaxis().SetTitle("#frac{#sigma^{SHIFT}_{theory}}{#sigma^{SHIFT}_{limit}} / #frac{#sigma^{CMS}_{theory}}{#sigma^{CMS}_{limit}}")
+    shift_graph_ratio.GetZaxis().SetTitle("#frac{#sigma^{SHIFT}_{benchmark}}{#sigma^{SHIFT}_{limit}} / #frac{#sigma^{CMS}_{benchmark}}{#sigma^{CMS}_{limit}}")
     
     shift_graph_ratio.GetXaxis().SetTitleSize(0.05)
     shift_graph_ratio.GetYaxis().SetTitleSize(0.05)

@@ -12,8 +12,8 @@ base_config_name = "shift_datacards_config_{}.py"
 base_combine_output_name = "output_{}.txt"
 
 
-variants = ["cms"]
-# variants = ["shift160m"]
+# variants = ["cms"]
+variants = ["shift160m"]
 
 # variants = ["shift30m", "shift50m", "shift80m", "shift120m", "shift140m", "shift160m", "shift200m", "shift250m", "shift270m", "shift300m"]
 
@@ -33,7 +33,7 @@ variable = "ctau"
 
 suffix = "_"
 
-skip_combine = False
+skip_combine = True
 
 for part in processes[0].split("_"):
     if variable in part:

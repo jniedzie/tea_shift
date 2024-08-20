@@ -6,11 +6,11 @@ from HistogramNormalizer import NormalizationType
 
 from shift_paths import crossSections, base_path, variant, colliderMode, luminosity
 
-variant = "cms"
-colliderMode = True
+# variant = "cms"
+# colliderMode = True
 
-# variant = "shift160m"
-# colliderMode = False
+variant = "shift160m"
+colliderMode = False
 
 output_path = f"../plots/{variant}/"
 
@@ -54,17 +54,17 @@ samples = [
 ]
 
 
-custom_stacks_order = ["pythia_qcd", "pythiaCollider_qcd", "pythia_dy", "pythiaCollider_dy"]
-# custom_stacks_order = ["pythia_dy", "pythiaCollider_dy", "pythia_qcd", "pythiaCollider_qcd"]
+# custom_stacks_order = ["pythia_qcd", "pythiaCollider_qcd", "pythia_dy", "pythiaCollider_dy"]
+custom_stacks_order = ["pythia_dy", "pythiaCollider_dy", "pythia_qcd", "pythiaCollider_qcd"]
 
 custom_titles = {
     "pythia_mDarkPhoton-5_ctau-1e1": "DP: m_{A'} = 5 GeV, c#tau = 10^{1} m",
     "pythia_mDarkPhoton-30_ctau-1e1": "DP: m_{A'} = 30 GeV, c#tau = 10^{1} m",
     "pythia_mDarkPhoton-30_ctau-1em3": "DP: m_{A'} = 30 GeV, c#tau = 10^{-3} m",
     "pythia_mDarkPhoton-30_ctau-1e3": "DP: m_{A'} = 30 GeV, c#tau = 10^{3} m",
-    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1": "HV: m_{D} = 5 GeV, c#tau = 10^{-1} m",
-    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1": "HV: m_{D} = 20 GeV, c#tau = 10^{-1} m",
-    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1": "HV: m_{D} = 20 GeV, c#tau = 10^{-1} m",
+    "pythia_mZprime-60_mDH-5_mDQ-1_ctau-1em1": "HV: m_{DH} = 5 GeV, c#tau = 10^{-1} m",
+    "pythia_mZprime-60_mDH-20_mDQ-1_ctau-1em1": "HV: m_{DH} = 20 GeV, c#tau = 10^{-1} m",
+    "pythia_mZprime-60_mDH-20_mDQ-1_tau-1em1": "HV: m_{DH} = 20 GeV, c#tau = 10^{-1} m",
 }
 
 def addSignalSample(name, color, legend_y, custom_variant=variant):
@@ -127,7 +127,7 @@ histograms = (
     Histogram("GoodInitialMuons_energy", "", False, True, NormalizationType.to_lumi, 2,   30, 1000, 1e0, 1e20, "E^{#mu} [GeV]", "Entries", "_"+variant),
     Histogram("GoodInitialMuons_eta", "", False, True, NormalizationType.to_lumi, 1,   -10, 10, 1e0, 1e20, "#eta^{#mu}", "Entries", "_"+variant),
     Histogram("GoodInitialMuonsPair_mass"               , "", False, True, NormalizationType.to_lumi, 5, 10, 100, 1e-1, 1e20, "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
-    Histogram("MuonsHittingDetectorPair_dimuonVertexD3D", "", True , True, NormalizationType.to_lumi, 2, 9e-8, 1e3 , 1e-1, 1e11, "d^{#mu#mu}_{3D} [m]", "Entries", "_"+variant),
+    Histogram("MuonsHittingDetectorPair_dimuonVertexD3D", "", True , True, NormalizationType.to_lumi, 5, 9e-8, 1e3 , 1e-1, 1e11, "d^{#mu#mu}_{3D} [m]", "Entries", "_"+variant),
     Histogram("MuonsHittingDetectorPair_mass"           , "", False, True, NormalizationType.to_lumi, 15, 10  , 100 , 1e-1, 1e11, "m^{#mu#mu} [GeV]", "Entries", "_"+variant),
     
     # Histogram("GoodInitialMuons_pt", "", False, True, NormalizationType.to_lumi, 1,   0, 100, 10, 1e12, "p_{T}^{#mu} [GeV]", "Entries", "_"+variant),
