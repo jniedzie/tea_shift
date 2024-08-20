@@ -23,21 +23,21 @@ ctau = "1em1"
 # inputFilePath = f"{base_path}/pythiaCollider_qcd/initial/qcd_part-0.root"
 # inputFilePath = f"{base_path}/pythia_qcd/initial/qcd_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_dy/initial/dy_part-3.root"
-# inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
+inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
 # inputFilePath = "../mDarkPhoton-25.0_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
 # inputFilePath = f"{base_path}/pythia_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
 
-inputFilePath = "../utils/example_signal.root"
+# inputFilePath = "../utils/example_signal.root"
 
 # inputFilePath = f"{base_path}/pythia_mZprime-{mZprime}_mDH-{mDH}_mDQ-{mDQ}_ctau-{ctau}/initial/mZprime-{mZprime}GeV_mDH-{mDH}GeV_mDQ-{mDQ}GeV_ctau-1p00em01m_part-0.root"
 
 treeOutputFilePath = "../trees_signal.root"
 
 # histogramsOutputFilePath = "../histograms_signal.root"
-histogramsOutputFilePath = "../histograms_HV.root"
-# histogramsOutputFilePath = "../histograms_qcdCollider.root"
-# histogramsOutputFilePath = "../histograms_dyCollider.root"
+# histogramsOutputFilePath = "../histograms_HV.root"
+# histogramsOutputFilePath = "../histograms_qcd.root"
+histogramsOutputFilePath = "../histograms_dy.root"
 
 defaultHistParams = []
 
@@ -115,6 +115,20 @@ for prefix in ["InitialMuons", "GoodInitialMuons", "GoodPtInitialMuons", "MuonsH
   addPairHists(prefix)
   addPairHists(prefix+"SameVertex")  
 
+
+histParams2D = (
+  ("B_plus_theta_energy"    , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Ds_plus_theta_energy"   , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Eta_theta_energy"       , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Eta_prime_theta_energy" , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("J_psi_theta_energy"     , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("K_plus_theta_energy"    , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Omega_theta_energy"     , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Phi_theta_energy"       , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Pi_zero_theta_energy"   , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Rho_zero_theta_energy"  , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+  ("Photon_theta_energy"    , 1000  , 0 , 3.1415  , 1000 , 0 , 5000  ,   ""),
+)
 
 
 

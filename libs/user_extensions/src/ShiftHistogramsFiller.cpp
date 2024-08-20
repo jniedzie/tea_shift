@@ -16,8 +16,8 @@ ShiftHistogramsFiller::ShiftHistogramsFiller(shared_ptr<HistogramsHandler> histo
     info() << "Weights branch not specified -- will assume weight is 1 for all events" << endl;
   }
 
-  // Create an event processor
   eventProcessor = make_unique<EventProcessor>();
+  hepMCProcessor = make_unique<HepMCProcessor>();
 }
 
 ShiftHistogramsFiller::~ShiftHistogramsFiller() {}
@@ -211,11 +211,41 @@ void ShiftHistogramsFiller::FillMuonHistograms(const shared_ptr<Event> event, st
   }
 }
 
+void ShiftHistogramsFiller::Fill2Dhistograms(const shared_ptr<Event> event) {
+  
+  auto allParticles = event->GetCollection("Particle");
+
+  for (auto physicsObject : *allParticles) {
+    
+    auto hepMCParticle = asHepMCParticle(physicsObject);
+
+    if(!hepMCProcessor->IsLastCopy(hepMCParticle, allParticles)) continue;
+
+    auto fourVector = hepMCParticle->GetLorentzVector();
+    float energy = fourVector.E();
+    float theta = fourVector.Theta();
+    int pid = hepMCParticle->GetPid();
+
+    if(pid == 521) histogramsHandler->Fill("B_plus_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 431) histogramsHandler->Fill("Ds_plus_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 221) histogramsHandler->Fill("Eta_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 331) histogramsHandler->Fill("Eta_prime_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 443) histogramsHandler->Fill("J_psi_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 321) histogramsHandler->Fill("K_plus_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 223) histogramsHandler->Fill("Omega_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 333) histogramsHandler->Fill("Phi_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 111) histogramsHandler->Fill("Pi_zero_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 113) histogramsHandler->Fill("Rho_zero_theta_energy", theta, energy, GetWeight(event));
+    if(pid == 21) histogramsHandler->Fill("Photon_theta_energy", theta, energy, GetWeight(event));
+  }
+}
+
 void ShiftHistogramsFiller::Fill(const shared_ptr<Event> event, bool initial) {
   if (initial) {
     FillZprimeHistograms(event);
     FillDarkPhotonHistograms(event);
     FillDarkHadronsHistograms(event);
+    // Fill2Dhistograms(event);
     
     FillMuonHistograms(event, "goodMuons", "InitialMuons");
     FillMuonHistograms(event, "goodMuons", "GoodInitialMuons", 30, false);

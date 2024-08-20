@@ -6,6 +6,7 @@
 #include "Helpers.hpp"
 #include "HepMCParticle.hpp"
 #include "HistogramsHandler.hpp"
+#include "HepMCProcessor.hpp"
 
 class ShiftHistogramsFiller {
  public:
@@ -17,6 +18,7 @@ class ShiftHistogramsFiller {
  private:
   std::shared_ptr<HistogramsHandler> histogramsHandler;
   std::unique_ptr<EventProcessor> eventProcessor;
+  std::unique_ptr<HepMCProcessor> hepMCProcessor;
   std::string weightsBranchName;
 
   float GetWeight(const std::shared_ptr<Event> event);
@@ -30,6 +32,8 @@ class ShiftHistogramsFiller {
   void FillSingleMuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::string histName, double eventWeight);
   void FillDimuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::shared_ptr<HepMCParticle> hepMCParticle2,
                             std::string histName, double eventWeight);
+
+  void Fill2Dhistograms(const std::shared_ptr<Event> event);
 };
 
 #endif /* ShiftHistogramsFiller_hpp */
