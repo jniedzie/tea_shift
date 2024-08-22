@@ -64,6 +64,9 @@ def get_args():
     
     parser.add_argument("-pr", "--process", help="", default=-1, type=int)
     
+    parser.add_argument("-pt1", "--ptHat_min", help="Min pt-hat for QCD (GeV)", default=20, type=float)
+    parser.add_argument("-pt2", "--ptHat_max", help="Max pt-hat for QCD (GeV)", default=-1, type=float)
+    
     parser.add_argument("-z", "--m_z_prime", help="Z' mass (GeV)", default=-999, type=float)
     parser.add_argument("-d", "--m_dark_hadron", help="Dark pi/rho mass (GeV)", default=2, type=float)
     parser.add_argument("-q", "--m_dark_quark", help="Dark quark mass (GeV)", default=1, type=float)
@@ -154,6 +157,9 @@ def main():
         
         ("32:m0", "dummy_value"): m_dark_photon,
         ("32:tau0", "dummy_value"): lifetime * 1000,
+        
+        ("PhaseSpace:pTHatMin", "dummy_value"): args.ptHat_min,
+        ("PhaseSpace:pTHatMax", "dummy_value"): args.ptHat_max,
     }
 
     copy_and_update_config(args.base_pythia_card, new_pythia_card_path, to_change)

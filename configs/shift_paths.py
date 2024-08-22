@@ -148,9 +148,34 @@ processes = (
     # "pythia_mDarkPhoton-60_ctau-1e4",
     # "pythia_mDarkPhoton-70_ctau-1e4",
 
-    # "pythia_qcd",
-    "pythia_qcd_lowPtHat",
+    # old QCD
+    # "pythia_qcd_ptHat50GeV",
+    # "pythia_qcd", # ptHat > 20 GeV
+    # "pythia_qcd_ptHat10GeV",
+    # "pythia_qcd_ptHat5GeV",
+    # "pythia_qcd_ptHat1GeV",
+    # "pythia_qcd_ptHat0GeV",
+    
+    # new backgrounds
     # "pythia_dy",
+    
+    # for SHIFT
+    "pythia_qcd_ptHat0to1GeV",
+    "pythia_qcd_ptHat1to2GeV",
+    "pythia_qcd_ptHat2to5GeV",
+    # "pythia_qcd_ptHat5to10GeV",
+    "pythia_qcd_ptHat10to20GeV",
+    "pythia_qcd_ptHat20toInfGeV",
+    
+    # for CMS
+    # "pythia_qcd_ptHat0to1GeV",
+    # "pythia_qcd_ptHat1to2GeV",
+    # "pythia_qcd_ptHat2to5GeV",
+    # "pythia_qcd_ptHat5to10GeV",
+    # "pythia_qcd_ptHat10to20GeV",
+    # "pythia_qcd_ptHat20to50GeV",
+    # "pythia_qcd_ptHat50to100GeV",
+    # "pythia_qcd_ptHat100toInfGeV",
 )
 
 # base_lumi = 150 * 1e6  # fb^-1 -> nb^-1, Run 2
@@ -173,13 +198,29 @@ luminosity_err = luminosity * 0.015  # 1.5% uncertainty
 
 crossSections = {
     # Fixed target backgrounds
-    "pythia_qcd": 2.664e-06 * 1e6,  # mb -> nb
-    "pythia_qcd_lowPtHat": 7.296e-04 * 1e6,  # mb -> nb
     "pythia_dy": 2.985e-08 * 1e6, # mb -> nb
     
+    "pythia_qcd": 2.664e-06 * 1e6,  # mb -> nb (ptHat > 20 GeV)
+    "pythia_qcd_ptHat0to1GeV": 3.231e+01 * 1e6,  # mb -> nb
+    "pythia_qcd_ptHat1to2GeV": 2.870e+01 * 1e6,  # mb -> nb
+    "pythia_qcd_ptHat2to5GeV": 3.413e+00 * 1e6,  # mb -> nb
+    "pythia_qcd_ptHat5to10GeV": 4.162e-02 * 1e6,  # mb -> nb
+    "pythia_qcd_ptHat10to20GeV": 7.426e-04 * 1e6,  # mb -> nb
+    "pythia_qcd_ptHat20toInfGeV": 2.608e-06 * 1e6,  # mb -> nb
+    
+    
     # Collider backgrounds
-    "pythiaCollider_qcd": 6.247e-01 * 1e6,  # mb -> nb
     "pythiaCollider_dy": 6.911e-06 * 1e6, # mb -> nb
+    
+    "pythiaCollider_qcd": 6.247e-01 * 1e6,  # mb -> nb (ptHat > 20 GeV)
+    "pythiaCollider_qcd_ptHat0to1GeV": 2.108e+03 * 1e6,  # mb -> nb
+    "pythiaCollider_qcd_ptHat1to2GeV": 1.418e+03 * 1e6,  # mb -> nb
+    "pythiaCollider_qcd_ptHat2to5GeV": 5.795e+02 * 1e6,  # mb -> nb
+    "pythiaCollider_qcd_ptHat5to10GeV": 5.031e+01 * 1e6,  # mb -> nb
+    "pythiaCollider_qcd_ptHat10to20GeV": 6.007e+00 * 1e6,  # mb -> nb
+    "pythiaCollider_qcd_ptHat20to50GeV": 5.819e-01 * 1e6,  # mb -> nb
+    "pythiaCollider_qcd_ptHat50to100GeV": 1.868e-02 * 1e6,  # mb -> nb
+    "pythiaCollider_qcd_ptHat100toInfGeV": 1.164e-03 * 1e6,  # mb -> nb
     
     # DP: X/1e1
     "pythia_mDarkPhoton-5_ctau-1e1": reference_signal_cross_section*1e5,

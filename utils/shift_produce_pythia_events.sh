@@ -20,7 +20,7 @@ process_type=$3
 
 # depending on the process type, invoke the appropriate python script
 if [ $process_type == "qcd" ]; then
-    $python_path $user_base_path/shift_produce_pythia_events.py --part $1 --n_events $2 --process 1 --output_path $4 --base_pythia_card $5 --pythia_exec $pythia_exec_path
+    $python_path $user_base_path/shift_produce_pythia_events.py --part $1 --n_events $2 --process 1 --ptHat_min $4 --ptHat_max $5 --output_path $6 --base_pythia_card $7 --pythia_exec $pythia_exec_path
 elif [ $process_type == "dy" ]; then
     $python_path $user_base_path/shift_produce_pythia_events.py --part $1 --n_events $2 --process 2 --output_path $4 --base_pythia_card $5 --pythia_exec $pythia_exec_path
 elif [ $process_type == "hidden_valley" ]; then
