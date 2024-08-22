@@ -17,11 +17,7 @@ def format_number(number, significant_digits=1):
 
 def print_table(process_data):
     # sort processes by c#tau value taking anything that comes after "tau-"
-    print(f"{process_data=}")
-    
     processes = sorted(process_data.keys(), key=lambda x: float(x.split("ctau-")[1]) if "ctau-" in x else 0)
-    
-    
     
     # Get a list of unique selections and processes
     selections = set()
@@ -143,21 +139,17 @@ def get_scale(process, hist_dict):
 
     sigma = crossSections[key]
     n_initial = hist_dict["0_initial"]
-    n_initial_err = n_initial**0.5
-
+    
     scale = luminosity*sigma
     info(f"{luminosity=}")
     info(f"{sigma=}")
-    
     info(f"{scale=}")
     
     scale /= n_initial
     
-    scale_err = sigma/n_initial * (luminosity_err**2 + (luminosity*sigma*n_initial_err/n_initial)**2)**0.5
+    info(f"{scale=}")
     
-    info(f"{scale=} +/- {scale_err}")
-    
-    return scale, scale_err
+    return scale
 
 def main():
     ROOT.gROOT.SetBatch(True)
@@ -166,34 +158,43 @@ def main():
     scaled_cut_flow_per_process = {}
 
     for process in processes:
+        print("\n\n")
+        
         hist_dict = get_cut_flow_dict_from_file(process)
         if not hist_dict:
             continue
 
-        scale, scale_err = get_scale(process, hist_dict)
+        scale = get_scale(process, hist_dict)
         cut_flow_per_process[get_nice_name(process)] = hist_dict
         
         scaled_cut_flow_per_process[get_nice_name(process)] = {}
 
         print("CutFlow:")
         for key, value in hist_dict.items():
+            
+            n_initial = hist_dict["0_initial"]
+            
+            process_key = process
+            if process_key not in crossSections:
+                process_key = process_key.replace("Collider", "")
+            
+            sigma = crossSections[process_key]
+            
             n_raw = value
             n_raw_err = n_raw**0.5
             
             n_scaled = value*scale
-            
-            if n_raw != 0:
-                n_scaled_err = n_scaled * ((scale_err/scale)**2 + (n_raw_err/n_raw)**2)**0.5
-            else:
-                n_scaled_err = 0
+            n_scaled_err = sigma/n_initial * (luminosity**2*n_raw + n_raw**2*luminosity**2/n_initial + n_raw**2*luminosity_err**2)**0.5
             
             print(f"{key:30}: {n_raw:.2f} +/- {n_raw_err:.2f}\t\t{n_scaled:.2e} +/- {n_scaled_err:.2e}")
             
             scaled_cut_flow_per_process[get_nice_name(process)][key] = (n_scaled, n_scaled_err)
             
+        print("\n\n")
             
-
+    print("\n\n")
     print_table(cut_flow_per_process)
+    print("\n\n")
 
 
 if __name__ == "__main__":
