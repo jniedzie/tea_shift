@@ -31,9 +31,9 @@ variable = "ctau"
 
 # variable = "distance"
 
-suffix = "_"
+suffix = "_ptHat10"
 
-skip_combine = True
+skip_combine = False
 
 for part in processes[0].split("_"):
     if variable in part:
@@ -93,7 +93,7 @@ def run_command(command):
 
 def run_combine():
     cwd = os.getcwd()
-    base_command = f"cd {cmssw_path}; cmsenv; cd {cwd}/../datacards/;"
+    base_command = f"cd {cmssw_path}; cmssw-el7 --command-to-run \"cmsenv; cd {cwd}/../datacards/;"
     commands = []
     
     for variant in variants:
@@ -109,7 +109,7 @@ def run_combine():
             # if not os.path.exists(combine_work_dir):
             #     os.makedirs(combine_work_dir)
             
-            command = f"{base_command} combine -M AsymptoticLimits {datacard_path} > {combine_output_path}"
+            command = f"{base_command} combine -M AsymptoticLimits {datacard_path} > {combine_output_path} \""
             commands.append(command)
             
     run_commands_in_parallel(commands)

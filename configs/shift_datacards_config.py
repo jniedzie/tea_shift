@@ -15,10 +15,16 @@ signal_file_name = signal_name.replace("pythia_", "pythiaCollider_") if collider
 output_path = f"../datacards/{base_datacard_name.format(get_file_name(signal_name, variant_name))}"
 signal_key = signal_name if signal_name in crossSections else signal_name.replace("Collider", "")
 
+qcd_suffix = ""
+# qcd_suffix = "_ptHat10GeV"
+# qcd_suffix = "_ptHat5GeV"
+
+qcd_sample_name = f"pythia{'Collider' if colliderMode else ''}_qcd{qcd_suffix}"
+
 samples = [
     Sample(
-        name=f"pythia{'Collider' if colliderMode else ''}_qcd",
-        file_path=f"{base_path}/pythia{'Collider' if colliderMode else ''}_qcd/merged_{variant_name}_histograms.root",
+        name=qcd_sample_name,
+        file_path=f"{base_path}/{qcd_sample_name}/merged_{variant_name}_histograms.root",
         type=SampleType.background,
         cross_sections=crossSections,
     ),
@@ -43,12 +49,12 @@ histograms = [Histogram(name="dummy_value", norm_type=NormalizationType.to_lumi,
 # List nuisance parameters (they will only be added for processes for which they were listed) 
 nuisances = {
     "lumi": {
-        f"pythia{'Collider' if colliderMode else ''}_qcd": 1.015,
+        qcd_sample_name: 1.015,
         f"pythia{'Collider' if colliderMode else ''}_dy": 1.015,
         f"signal_{signal_name}": 1.015,
     },
     "other_systematics": {
-        f"pythia{'Collider' if colliderMode else ''}_qcd": 1.10,
+        qcd_sample_name: 1.10,
         f"pythia{'Collider' if colliderMode else ''}_dy": 1.10,
     }
 }
