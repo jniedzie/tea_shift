@@ -15,20 +15,19 @@ histogram_name = "MuonsHittingDetectorPair_mass"
 # histogram_name = "MuonsHittingDetectorPair_massCtauGt1cm"
 # histogram_name = "MuonsHittingDetectorSameVertexPair_mass"
 
-scenario = "HV"
-# scenario = "DP"
+# scenario = "HV"
+scenario = "DP"
 
-variable = "ctau"
+# variable = "ctau"
 # variable = "mDarkPhoton"
 
-# variable = "2d"
-# mode = "shift160"
-mode = "cms"
+variable = "2d"
+mode = "shift160"
+# mode = "cms"
 doTheoryOverLimit = True
+doOld = False
 
 # variable = "distance"
-
-
 # variable = "mZprime"
 # variable = "mDH"
 # variable = "mDQ"
@@ -106,8 +105,8 @@ elif variable == "mDarkPhoton":
     x_title = "m_{A'} [GeV]"
 elif variable == "2d":
     # ctau:
-    x_min = -2
-    x_max = 3
+    x_min = -5
+    x_max = 4
     
     # mass:
     y_min = 10
@@ -115,7 +114,7 @@ elif variable == "2d":
     
     # cross section:
     z_min = 1e-5 if doTheoryOverLimit else -6
-    z_max = 1e2 if doTheoryOverLimit else 1
+    z_max = 1e2 if doTheoryOverLimit else 3
     
     log_x = False
     log_y = False
@@ -172,14 +171,22 @@ if scenario == "HV":
     special_legend.AddEntry(dummy_graph_dashed, "Benchmark model", "L")
 
 elif scenario == "DP" and variable == "ctau":
+    # variants = {
+    #     # DP: 15/X
+    #     #                                              ms  ls band color
+    #     # "lhcb_pythia_mDarkPhoton-15_ctau-X"         : (-1, 1, True, ROOT.Green+1, lhcb_label),
+    #     "cms_pythiaCollider_mDarkPhoton-15_ctau-X"  : (-1, 1, True, ROOT.kGray      , cms_label),
+    #     "shift160m_pythia_mDarkPhoton-15_ctau-X"    : (-1, 1, True, ROOT.kMagenta+1 , shift_label),
+    # }
+    # top_title = "m_{A'} = 15 GeV"
+    
     variants = {
-        # DP: 15/X
+        # DP: 20/X
         #                                              ms  ls band color
-        # "lhcb_pythia_mDarkPhoton-15_ctau-X"         : (-1, 1, True, ROOT.Green+1, lhcb_label),
-        "cms_pythiaCollider_mDarkPhoton-15_ctau-X"  : (-1, 1, True, ROOT.kGray      , cms_label),
-        "shift160m_pythia_mDarkPhoton-15_ctau-X"    : (-1, 1, True, ROOT.kMagenta+1 , shift_label),
+        "cms_pythiaCollider_mDarkPhoton-20_ctau-X"  : (-1, 1, True, ROOT.kGray      , cms_label),
+        "shift160m_pythia_mDarkPhoton-20_ctau-X"    : (-1, 1, True, ROOT.kMagenta+1 , shift_label),
     }
-    top_title = "m_{A'} = 15 GeV"
+    top_title = "m_{A'} = 20 GeV"
     
     legend_pos = (0.2, 0.75, 0.45, 0.88)
     special_legend = ROOT.TLegend(0.2, 0.69, 0.45, 0.75)
@@ -226,11 +233,11 @@ elif scenario == "DP" and variable == "mDarkPhoton":
     
 elif scenario == "DP" and variable == "2d":
     if mode == "shift160":
-        variants = {"shift160m_2d": (-1, -1, -1, "")}
+        variants = {f"shift160m_2d{'_old' if doOld else ''}": (-1, -1, -1, "")}
         top_title = shift_label
         suffix = "_shift160"
     elif mode == "cms":
-        variants = {"cms_2d": (-1, -1, -1, "")}
+        variants = {f"cms_2d{'_old' if doOld else ''}": (-1, -1, -1, "")}
         top_title = cms_label
         suffix = "_cms"
 elif scenario == "DP" and variable == "distance":
@@ -361,10 +368,13 @@ def get_2d_graph(values, lumi_scale = 1.0, colliderMode=False):
         if doTheoryOverLimit:
             central_value = theory_cross_section/central_value
         else:
-            central_value = np.log10(central_value)
+            # central_value = np.log10(central_value)
+            central_value = central_value
         
         # if central_value > z_max:
         #     central_value = z_max if doTheoryOverLimit else z_max*10
+        
+        print(f"Setting point: {x_value}, {y_value}, {central_value}")
         
         graph.SetPoint(i, np.log10(x_value), y_value, central_value)
         hist.Fill(np.log10(x_value), y_value, central_value)
@@ -675,8 +685,10 @@ def main():
             limits = read_2d_limits(f"../datacards/limits_{histogram_name}_{variant}.txt")
             
             graph_2d, hist_2d = get_2d_graph(limits, lumi_scale, colliderMode)
+            print("Drawing 2D graph")
             draw_2d_graphs(graph_2d)
             # draw_2d_graphs(hist_2d)
+            print("done")
             continue
         
         marker_style, line_style, show_band, color, title = params
@@ -689,11 +701,17 @@ def main():
             colors = "#{:02x}{:02x}{:02x}".format(int(colors[0]*255), int(colors[1]*255), int(colors[2]*255))
             colors = create_shaded_colors(colors, 3, 0.3 if show_band else 1.0)
         
-        limits = read_limits(f"../datacards/limits_{histogram_name}_{variant}.txt")
+        limits_file_name = f"../datacards/limits_{histogram_name}_{variant}.txt"
+        print(f"Reading limits from: {limits_file_name}")
+        limits = read_limits(limits_file_name)
         
         if not limits:
             continue
-
+        
+        for key, values in limits.items():
+            print(f"ctau = {key[1]}: {values}")
+        
+        
         
 
         graphs[variant] = get_graph_set(limits, colors, show_band, marker_style, line_style, lumi_scale)
@@ -770,11 +788,11 @@ def main():
     output_path = f"../plots/limits_{histogram_name}/"
     ROOT.gSystem.Exec(f"mkdir -p {output_path}")
     
-    canvas.SaveAs(f"{output_path}/limits_{scenario}_{variable}{suffix}.pdf")
-    canvas_ratio.SaveAs(f"{output_path}/limitsRatio_{scenario}_{variable}{suffix}.pdf")
+    canvas.SaveAs(f"{output_path}/limits_{scenario}_{variable}{suffix}{'_old' if doOld else ''}.pdf")
+    canvas_ratio.SaveAs(f"{output_path}/limitsRatio_{scenario}_{variable}{suffix}{'_old' if doOld else ''}.pdf")
     
     if graph_2d:
-        graph_2d.SaveAs(f"{output_path}/limits_{scenario}_{variable}{suffix}.root")
+        graph_2d.SaveAs(f"{output_path}/limits_{scenario}_{variable}{suffix}{'_old' if doOld else ''}.root")
     
 if __name__ == "__main__":
     main()

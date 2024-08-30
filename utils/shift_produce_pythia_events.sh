@@ -3,6 +3,7 @@
 user_base_path="/afs/desy.de/user/j/jniedzie/tea_shift/bin/"
 python_path="/afs/desy.de/user/j/jniedzie/miniconda3/envs/tta/bin/python3"
 pythia_exec_path="/afs/desy.de/user/j/jniedzie/pythia_new/pythia8309/examples/main42"
+# pythia_exec_path="/afs/desy.de/user/j/jniedzie/pythia_new/pythia8309/examples/main42_biased"
 
 export PYTHIA8=/afs/desy.de/user/j/jniedzie/pythia_new/install
 export PYTHIA8DATA=$PYTHIA8/share/Pythia8/xmldoc

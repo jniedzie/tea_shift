@@ -1,7 +1,9 @@
 import ROOT
 
-cms_graph_path = "../plots/limits_MuonsHittingDetectorPair_mass/limits_DP_2d_cms.root"
-shift_graph_path = "../plots/limits_MuonsHittingDetectorPair_mass/limits_DP_2d_shift160.root"
+doOld = False
+
+cms_graph_path = f"../plots/limits_MuonsHittingDetectorPair_mass/limits_DP_2d_cms{'_old' if doOld else ''}.root"
+shift_graph_path = f"../plots/limits_MuonsHittingDetectorPair_mass/limits_DP_2d_shift160{'_old' if doOld else ''}.root"
 
 def main():
     cms_file = ROOT.TFile(cms_graph_path, "READ")
@@ -72,7 +74,7 @@ def main():
     ROOT.gPad.SetLogz()
     
     shift_graph_ratio.SetMinimum(1e-2)
-    shift_graph_ratio.SetMaximum(60)
+    shift_graph_ratio.SetMaximum(1e3)
     
     shift_graph_ratio.GetXaxis().SetTitle("log_{10}(c#tau [m])")
     shift_graph_ratio.GetYaxis().SetTitle("m_{A'} [GeV]")
@@ -100,7 +102,8 @@ def main():
     shift_graph_ratio.GetHistogram().GetYaxis().SetRangeUser(11, 70)
     
     canvas.Update()
-    canvas.SaveAs("../plots/limits_MuonsHittingDetectorPair_mass/limits_DP_2d_shiftOverCms.pdf")
+    canvas.SaveAs(f"../plots/limits_MuonsHittingDetectorPair_mass/limits_DP_2d_shiftOverCms{'_old' if doOld else ''}.pdf")
+    canvas.SaveAs(f"../plots/limits_MuonsHittingDetectorPair_mass/limits_DP_2d_shiftOverCms{'_old' if doOld else ''}.root")
 
 if __name__ == "__main__":
     main()
