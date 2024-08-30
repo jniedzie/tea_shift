@@ -85,6 +85,7 @@
         "numeric": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "MuonsHittingDetectorPair_mass_shift160m.C": "cpp"
     }
 }
