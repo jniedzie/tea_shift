@@ -678,17 +678,18 @@ def main():
     hist_2d = None
     
     for variant, params in variants.items():
-        colliderMode = "Collider" in variant
+        colliderMode = "cms" in variant
+        
+        print(f"\n\nUsing {'Collider Mode' if colliderMode else 'Fixed Target Mode'}\n\n")
         lumi_scale = collider_cross_section_scale if colliderMode else 1.0
+        
         
         if variable == "2d":
             limits = read_2d_limits(f"../datacards/limits_{histogram_name}_{variant}.txt")
             
             graph_2d, hist_2d = get_2d_graph(limits, lumi_scale, colliderMode)
-            print("Drawing 2D graph")
             draw_2d_graphs(graph_2d)
             # draw_2d_graphs(hist_2d)
-            print("done")
             continue
         
         marker_style, line_style, show_band, color, title = params

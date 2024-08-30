@@ -197,7 +197,7 @@ processes = (
     # "pythia_dy",
     
     # for SHIFT
-    "pythia_qcd_ptHat0to1GeV",
+    # "pythia_qcd_ptHat0to1GeV",
     # "pythia_qcd_ptHat1to2GeV",
     # # # "pythia_qcd_ptHat1to2GeV_biased",
     # "pythia_qcd_ptHat2to5GeV_old",
@@ -217,7 +217,7 @@ processes = (
 # base_lumi = 150 * 1e6  # fb^-1 -> nb^-1, Run 2
 base_lumi = 715 * 1e6  # fb^-1 -> nb^-1, Run 4
 reference_signal_cross_section = 1e-6  # nb
-collider_cross_section_scale = 1e3  # figure out why results seem to depend on this
+collider_cross_section_scale = 1e2
 
 if colliderMode:
     processes = [process.replace("pythia_", "pythiaCollider_") for process in processes]

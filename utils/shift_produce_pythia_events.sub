@@ -271,7 +271,7 @@ executable            = shift_produce_pythia_events.sh
 
 # arguments             = $(ProcId) 10000 qcd 0.0 1.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat0to1GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 1000000 qcd 1.0 2.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat1to2GeV/initial/ shift_qcd_pythia_card.cmnd
-arguments             = $(ProcId) 1000000 qcd 2.0 5.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat2to5GeV/initial/ shift_qcd_pythia_card.cmnd
+# arguments             = $(ProcId) 1000000 qcd 2.0 5.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat2to5GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 100000 qcd 5.0 10.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat5to10GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 10000 qcd 10.0 20.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat10to20GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 10000 qcd 20.0 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat20toInfGeV/initial/ shift_qcd_pythia_card.cmnd

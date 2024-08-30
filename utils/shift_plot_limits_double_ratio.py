@@ -73,8 +73,8 @@ def main():
     
     ROOT.gPad.SetLogz()
     
-    shift_graph_ratio.SetMinimum(1e-2)
-    shift_graph_ratio.SetMaximum(1e3)
+    shift_graph_ratio.SetMinimum(1e-4)
+    shift_graph_ratio.SetMaximum(1e2)
     
     shift_graph_ratio.GetXaxis().SetTitle("log_{10}(c#tau [m])")
     shift_graph_ratio.GetYaxis().SetTitle("m_{A'} [GeV]")
@@ -98,7 +98,7 @@ def main():
     ROOT.gPad.SetBottomMargin(0.15)
     
     shift_graph_ratio.SetTitle("")
-    shift_graph_ratio.GetHistogram().GetXaxis().SetRangeUser(-2, 3)
+    shift_graph_ratio.GetHistogram().GetXaxis().SetRangeUser(-5, 4)
     shift_graph_ratio.GetHistogram().GetYaxis().SetRangeUser(11, 70)
     
     canvas.Update()
