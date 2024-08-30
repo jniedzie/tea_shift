@@ -173,6 +173,8 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 1000 hidden_valley 100 90 10 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-90_mDQ-10_ctau-1e1/initial/ shift_hiddenValley_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 hidden_valley 100 40 20 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mZprime-100_mDH-40_mDQ-20_ctau-1e1/initial/ shift_hiddenValley_pythia_card.cmnd
 
+# grid scan:
+
 # DP: X/1em7
 # arguments             = $(ProcId) 1000 dark_photon 5 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-5_ctau-1em7/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 10 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1em7/initial/ shift_darkPhoton_pythia_card.cmnd
@@ -182,48 +184,78 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 1000 dark_photon 50 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1em7/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 70 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1em7/initial/ shift_darkPhoton_pythia_card.cmnd
 
-# DP: 30/X
+# DP: X/1em5
+# arguments             = $(ProcId) 1000 dark_photon 10 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-13_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 15 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 20 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 30 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1em3/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e-0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e5/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 40 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 50 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 70 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
 
-# DP: 15/X
+# DP: X/1em3
 # arguments             = $(ProcId) 1000 dark_photon 15 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1em3/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e1_smallCoupling/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1em3/initial/ shift_darkPhoton_pythia_card.cmnd
 
+# DP: X/1em1
+# arguments             = $(ProcId) 1000 dark_photon 10 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-13_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 15 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 20 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 40 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 50 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 60 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 70 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
+
+# DP: X/1e0
+# arguments             = $(ProcId) 1000 dark_photon 10 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-13_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 15 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 20 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 40 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 50 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 60 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 70 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
 
 # DP: X/1e1
 # arguments             = $(ProcId) 1000 dark_photon 5 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-5_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 10 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-13_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 15 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 20 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 40 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 50 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 60 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 70 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
 
-# grid scan:
-# DP: 70/X
-# arguments             = $(ProcId) 1000 dark_photon 70 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e-0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# DP: X/1e2
+# arguments             = $(ProcId) 1000 dark_photon 10 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-13_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 15 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 20 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 40 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 50 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 60 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 70 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
 
-# DP: 10/X
-# arguments             = $(ProcId) 1000 dark_photon 10 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 10 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 10 1e-0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 10 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
+# DP: X/1e3
 # arguments             = $(ProcId) 1000 dark_photon 10 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-13_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 15 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 20 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 40 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 50 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 60 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 70 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
 
 # DP: X/1e4
 # arguments             = $(ProcId) 1000 dark_photon 10 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e4/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 10000 dark_photon 13 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-13_ctau-1e4/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 15 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e4/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 20 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e4/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 40 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e4/initial/ shift_darkPhoton_pythia_card.cmnd
@@ -231,58 +263,22 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 1000 dark_photon 60 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e4/initial/ shift_darkPhoton_pythia_card.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 70 1e4 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e4/initial/ shift_darkPhoton_pythia_card.cmnd
 
-# DP: X/1e2
-# arguments             = $(ProcId) 1000 dark_photon 10 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 40 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 50 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
-
-# DP: X/1e3
-# arguments             = $(ProcId) 1000 dark_photon 10 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 50 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
-
-# DP: X/1e0
-# arguments             = $(ProcId) 1000 dark_photon 15 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 50 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-
-# DP: X/1em1
-# arguments             = $(ProcId) 1000 dark_photon 15 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 50 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-
-# DP: X/1em5
-# arguments             = $(ProcId) 1000 dark_photon 10 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-10_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-20_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 50 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-50_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-70_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-
-# DP: 40/X
-# arguments             = $(ProcId) 1000 dark_photon 40 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1em5/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 40 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 40 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 40 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-40_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
-
-# DP: 60/X
-# arguments             = $(ProcId) 1000 dark_photon 60 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1em1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 60 1e0 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e0/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 60 1e1 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e1/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 60 1e2 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e2/initial/ shift_darkPhoton_pythia_card.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 60 1e3 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-60_ctau-1e3/initial/ shift_darkPhoton_pythia_card.cmnd
+# DP: X/1e5
+# arguments             = $(ProcId) 1000 dark_photon 15 1e5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-15_ctau-1e5/initial/ shift_darkPhoton_pythia_card.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e5 /nfs/dust/cms/user/jniedzie/shift/pythia_mDarkPhoton-30_ctau-1e5/initial/ shift_darkPhoton_pythia_card.cmnd
 
 # backgrounds
 
 # arguments             = $(ProcId) 10000 qcd 0.0 1.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat0to1GeV/initial/ shift_qcd_pythia_card.cmnd
-# arguments             = $(ProcId) 10000 qcd 1.0 2.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat1to2GeV/initial/ shift_qcd_pythia_card.cmnd
-# arguments             = $(ProcId) 10000 qcd 2.0 5.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat2to5GeV/initial/ shift_qcd_pythia_card.cmnd
+# arguments             = $(ProcId) 1000000 qcd 1.0 2.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat1to2GeV/initial/ shift_qcd_pythia_card.cmnd
+arguments             = $(ProcId) 1000000 qcd 2.0 5.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat2to5GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 100000 qcd 5.0 10.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat5to10GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 10000 qcd 10.0 20.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat10to20GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 10000 qcd 20.0 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat20toInfGeV/initial/ shift_qcd_pythia_card.cmnd
+
+
+# arguments             = $(ProcId) 100000 qcd 1.0 2.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat1to2GeV_biased/initial/ shift_qcd_pythia_card.cmnd
+# arguments             = $(ProcId) 100000 qcd 2.0 5.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat2to5GeV_biased/initial/ shift_qcd_pythia_card.cmnd
 
 # arguments             = $(ProcId) 10000 dy /nfs/dust/cms/user/jniedzie/shift/pythia_dy/initial/ shift_dy_pythia_card.cmnd
 
@@ -441,6 +437,9 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 1000 hidden_valley 30 20 10 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-30_mDH-20_mDQ-10_ctau-1e1/initial/ shift_hiddenValley_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 hidden_valley 100 15 7 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mZprime-100_mDH-15_mDQ-7_ctau-1e1/initial/ shift_hiddenValley_pythia_card_collider.cmnd
 
+
+# grid scan:
+
 # DP: X/1em7
 # arguments             = $(ProcId) 1000 dark_photon 5 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-5_ctau-1em7/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 10 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1em7/initial/ shift_darkPhoton_pythia_card_collider.cmnd
@@ -450,45 +449,27 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 1000 dark_photon 50 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1em7/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 70 1e-7 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1em7/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 
-# DP: 30/X
-# arguments             = $(ProcId) 1000 dark_photon 30 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1em3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e-0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 30 1e5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-
-# DP: 15/X
-# arguments             = $(ProcId) 1000 dark_photon 15 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1em3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e1_smallCoupling/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-
-# DP: X/1e1
-# arguments             = $(ProcId) 1000 dark_photon 5 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-5_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 10 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 40 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 50 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-
-# grid scan:
 # DP: X/1em5
 # arguments             = $(ProcId) 1000 dark_photon 10 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-13_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 15 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 20 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 40 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 50 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 60 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 70 1e-5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1em5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 
+# DP: X/1em3
+# arguments             = $(ProcId) 1000 dark_photon 15 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1em3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e-3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1em3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+
 # DP: X/1em1
 # arguments             = $(ProcId) 1000 dark_photon 10 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-13_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 15 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 20 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 40 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 50 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 60 1e-1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-60_ctau-1em1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
@@ -496,17 +477,41 @@ executable            = shift_produce_pythia_events.sh
 
 # DP: X/1e0
 # arguments             = $(ProcId) 1000 dark_photon 10 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-13_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 15 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 20 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 40 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 50 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 60 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-60_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 70 1e0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1e0/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 
+# DP: X/1e1
+# arguments             = $(ProcId) 1000 dark_photon 5 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-5_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 10 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 13 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-13_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 15 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 20 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 40 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 50 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 70 1e1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1e1/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+
+# DP: X/1e2
+# arguments             = $(ProcId) 10000 dark_photon 10 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 dark_photon 13 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-13_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 15 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 dark_photon 20 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 40 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 50 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 70 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+
 # DP: X/1e3
-# arguments             = $(ProcId) 1000 dark_photon 10 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 15 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 dark_photon 10 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 dark_photon 13 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-13_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 dark_photon 15 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 dark_photon 20 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 40 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 50 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 60 1e3 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-60_ctau-1e3/initial/ shift_darkPhoton_pythia_card_collider.cmnd
@@ -514,6 +519,7 @@ executable            = shift_produce_pythia_events.sh
 
 # DP: X/1e4
 # arguments             = $(ProcId) 1000 dark_photon 10 1e4 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e4/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 100000 dark_photon 13 1e4 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-13_ctau-1e4/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 15 1e4 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e4/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 20 1e4 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e4/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 40 1e4 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1e4/initial/ shift_darkPhoton_pythia_card_collider.cmnd
@@ -521,21 +527,16 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 1000 dark_photon 60 1e4 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-60_ctau-1e4/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 dark_photon 70 1e4 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1e4/initial/ shift_darkPhoton_pythia_card_collider.cmnd
 
-# DP: X/1e2
-# arguments             = $(ProcId) 1000 dark_photon 10 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-10_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 20 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-20_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 40 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-40_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 50 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-50_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 dark_photon 70 1e2 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-70_ctau-1e2/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# DP: X/1e5
+# arguments             = $(ProcId) 1000 dark_photon 15 1e5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-15_ctau-1e5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 1000 dark_photon 30 1e5 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_mDarkPhoton-30_ctau-1e5/initial/ shift_darkPhoton_pythia_card_collider.cmnd
+
 
 # backgrounds
 
-# arguments             = $(ProcId) 1000 qcd 0.0 1.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat0to1GeV/initial/ shift_qcd_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 qcd 1.0 2.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat1to2GeV/initial/ shift_qcd_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 qcd 2.0 5.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat2to5GeV/initial/ shift_qcd_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 qcd 5.0 10.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat5to10GeV/initial/ shift_qcd_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 qcd 10.0 20.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat10to20GeV/initial/ shift_qcd_pythia_card_collider.cmnd
-# arguments             = $(ProcId) 1000 qcd 20.0 50.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat20to50GeV/initial/ shift_qcd_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 100000 qcd 10.0 20.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat10to20GeV/initial/ shift_qcd_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 qcd 20.0 30.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat20to30GeV/initial/ shift_qcd_pythia_card_collider.cmnd
+# arguments             = $(ProcId) 10000 qcd 30.0 50.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat30to50GeV/initial/ shift_qcd_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 qcd 50.0 100.0 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat50to100GeV/initial/ shift_qcd_pythia_card_collider.cmnd
 # arguments             = $(ProcId) 1000 qcd 100.0 -1 /nfs/dust/cms/user/jniedzie/shift/pythiaCollider_qcd_ptHat100toInfGeV/initial/ shift_qcd_pythia_card_collider.cmnd
 
@@ -557,6 +558,8 @@ error                 = /dev/null
 log                   = /dev/null
 
 # requirements 	      = (OpSysAndVer =?= "CentOS7")
+# request_memory = 2048
+
 environment           = "LD_LIBRARY_PATH=/cvmfs/sft.cern.ch/lcg/releases/gcc/8.3.0-cebb0/x86_64-centos7/lib64:$LD_LIBRARY_PATH"
 +JobFlavour           = "longlunch"
 
