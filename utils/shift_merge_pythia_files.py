@@ -9,6 +9,8 @@ def get_args():
     parser.add_argument("--trees", action="store_true")
     return parser.parse_args()
 
+suffix = ""
+# suffix = "_noMassCut"
 
 def main():
     args = get_args()
@@ -16,8 +18,8 @@ def main():
     for process in processes:
         info(f"\n\n Merging {process} histograms...")
         
-        input_path = f"{base_path}/{process}/{variant}/histograms/*.root"
-        output_path = f"{base_path}/{process}/merged_{variant}_histograms.root"
+        input_path = f"{base_path}/{process}/{variant}/histograms{suffix}/*.root"
+        output_path = f"{base_path}/{process}/merged_{variant}_histograms{suffix}.root"
 
         if args.trees:
             input_path = input_path.replace("histograms", "trees")

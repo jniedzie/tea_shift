@@ -25,15 +25,16 @@ histogram_name = "MuonsHittingDetectorPair_mass"
 # variable = "mZprime"
 # variable = "mDH"
 # variable = "mDQ"
-variable = "ctau"
+# variable = "ctau"
 # variable = "mDarkPhoton"
-# variable = "2d"
+variable = "2d"
 
 # variable = "distance"
 
-suffix = "_ptHat10"
+suffix = "_"
 
-skip_combine = False
+skip_combine = True
+doOld = False
 
 for part in processes[0].split("_"):
     if variable in part:
@@ -48,7 +49,7 @@ if suffix[-1] == "_":
     suffix = suffix[:-1]
 
 if variable == "2d":
-    suffix = "_2d"
+    suffix = f"_2d{'_old' if doOld else ''}"
     
 if variable == "distance":
     suffix += "_distance"
