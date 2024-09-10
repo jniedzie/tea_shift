@@ -276,10 +276,6 @@ executable            = shift_produce_pythia_events.sh
 # arguments             = $(ProcId) 10000 qcd 10.0 20.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat10to20GeV/initial/ shift_qcd_pythia_card.cmnd
 # arguments             = $(ProcId) 10000 qcd 20.0 -1 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat20toInfGeV/initial/ shift_qcd_pythia_card.cmnd
 
-
-# arguments             = $(ProcId) 100000 qcd 1.0 2.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat1to2GeV_biased/initial/ shift_qcd_pythia_card.cmnd
-# arguments             = $(ProcId) 100000 qcd 2.0 5.0 /nfs/dust/cms/user/jniedzie/shift/pythia_qcd_ptHat2to5GeV_biased/initial/ shift_qcd_pythia_card.cmnd
-
 # arguments             = $(ProcId) 10000 dy /nfs/dust/cms/user/jniedzie/shift/pythia_dy/initial/ shift_dy_pythia_card.cmnd
 
 #------------------------------------------------------------------------------------
@@ -558,7 +554,7 @@ error                 = /dev/null
 log                   = /dev/null
 
 # requirements 	      = (OpSysAndVer =?= "CentOS7")
-# request_memory = 2048
+request_memory = 4096
 
 environment           = "LD_LIBRARY_PATH=/cvmfs/sft.cern.ch/lcg/releases/gcc/8.3.0-cebb0/x86_64-centos7/lib64:$LD_LIBRARY_PATH"
 +JobFlavour           = "longlunch"

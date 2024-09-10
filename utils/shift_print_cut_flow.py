@@ -4,7 +4,7 @@ from decimal import Decimal, getcontext
 
 from Logger import info, error
 
-from shift_paths import luminosity, luminosity_err, crossSections, base_path, processes, variant
+from shift_paths import luminosity, luminosity_err, crossSections, base_path, processes, variant, noMassCut
 
 def format_number(number, significant_digits=1):
     if number == 0:
@@ -110,7 +110,8 @@ def get_nice_name(process):
     return process
     
 def get_cut_flow_dict_from_file(process):
-    input_path = f"{base_path}/{process}/merged_{variant}_histograms.root"
+    suffix = "_noMassCut" if noMassCut else ""
+    input_path = f"{base_path}/{process}/merged_{variant}_histograms{suffix}.root"
     print(f"Analyzing file: {input_path}")
 
     file = ROOT.TFile(input_path, "READ")

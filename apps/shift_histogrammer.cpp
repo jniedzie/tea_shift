@@ -1,3 +1,4 @@
+#include "ArgsManager.hpp"
 #include "ConfigManager.hpp"
 #include "CutFlowManager.hpp"
 #include "EventReader.hpp"
@@ -7,7 +8,6 @@
 #include "ShiftDetector.hpp"
 #include "ShiftHistogramsFiller.hpp"
 #include "ShiftObjectsManager.hpp"
-#include "ArgsManager.hpp"
 
 using namespace std;
 
@@ -32,8 +32,7 @@ int main(int argc, char **argv) {
   //   config.SetHistogramsOutputPath(argv[4]);
   // }
 
-  
-    auto args = make_unique<ArgsManager>(argc, argv);
+  auto args = make_unique<ArgsManager>(argc, argv);
 
   // check if optional value "config" is present
   if (!args->GetString("config").has_value()) {
@@ -55,8 +54,6 @@ int main(int argc, char **argv) {
   if (args->GetString("output_hists_path").has_value()) {
     config.SetHistogramsOutputPath(args->GetString("output_hists_path").value());
   }
-
-  
 
   auto eventReader = make_shared<EventReader>();
   auto eventWriter = make_shared<EventWriter>(eventReader);
@@ -124,12 +121,14 @@ int main(int argc, char **argv) {
       auto physicsObject = muons->at(i);
       auto hepMCParticle = asHepMCParticle(physicsObject);
       auto fourVector = hepMCParticle->GetLorentzVector();
+
       for (int j = i + 1; j < muons->size(); j++) {
         auto physicsObject2 = muons->at(j);
         auto hepMCParticle2 = asHepMCParticle(physicsObject2);
         auto fourVector2 = hepMCParticle2->GetLorentzVector();
+
         auto dimuon = fourVector + fourVector2;
-        if (dimuon.M() > 11.0) {
+        if (dimuon.M() > 11.0 && dimuon.M() < 60.0) {
           passesMassCut = true;
           break;
         }
@@ -137,6 +136,7 @@ int main(int argc, char **argv) {
       if (passesMassCut) break;
     }
     if (!passesMassCut) continue;
+
     cutFlowManager->UpdateCutFlow("massCut");
     shiftHistogramsFiller->Fill(event, false);
     eventWriter->AddCurrentEvent("Events");

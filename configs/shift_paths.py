@@ -4,8 +4,8 @@ base_datacard_name = "datacard_{}"
 skim = "initial"
 # skim = "skimmed_allSelections"
 
-# variant = "cms"
-variant = "shift160m" # good for all signals. Use when plotting limits
+variant = "cms"
+# variant = "shift160m" # good for all signals. Use when plotting limits
 
 # variant = "shift30m"
 # variant = "shift50m"
@@ -194,14 +194,12 @@ processes = (
     # "pythia_qcd_ptHat0GeV",
     
     # new backgrounds
-    # "pythia_dy",
+    "pythia_dy",
     
     # for SHIFT
     # "pythia_qcd_ptHat0to1GeV",
     # "pythia_qcd_ptHat1to2GeV",
-    # # # "pythia_qcd_ptHat1to2GeV_biased",
-    # "pythia_qcd_ptHat2to5GeV_old",
-    # # # "pythia_qcd_ptHat2to5GeV_biased",
+    # "pythia_qcd_ptHat2to5GeV",
     # "pythia_qcd_ptHat5to10GeV",
     # "pythia_qcd_ptHat10to20GeV",
     # "pythia_qcd_ptHat20toInfGeV",
@@ -246,6 +244,8 @@ crossSections = {
     
     "pythia_qcd_ptHat1to2GeV_biased": 16.655 * 1e6,  # mb -> nb
     "pythia_qcd_ptHat2to5GeV_biased": 1.873 * 1e6,  # mb -> nb
+    
+    "pythia_qcd_ptHat2to5GeV_mHat10toInfGeV": 8.639e-01 * 1e6,  # mb -> nb
     
     # Collider backgrounds
     "pythiaCollider_dy": 6.911e-06 * 1e6, # mb -> nb
