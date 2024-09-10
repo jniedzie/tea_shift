@@ -186,7 +186,7 @@ bool ShiftDetector::IsProductionVertexBeforeTheEnd(const shared_ptr<HepMCParticl
   return particleDistance < detectorDistance + maxDistanceInsideDetector;
 }
 
-bool ShiftDetector::DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &particle) {
+bool ShiftDetector::DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &particle, const std::shared_ptr<PhysicsObjects>& allParticles) {
   if(isLHCb){
     return true;
   }
@@ -204,10 +204,31 @@ bool ShiftDetector::DoesParticleGoThroughRock(const shared_ptr<HepMCParticle> &p
   float distanceToDetector = distanceToDetectorCenter - outer_radius;
 
   float particleEnergy = particle->GetLorentzVector().E();
-
   float criticalEnergy = 0.5 * distanceToDetector + 1;
 
-  return particleEnergy > criticalEnergy;
+  bool muonGoesThrough = particleEnergy > criticalEnergy;
+  if(!muonGoesThrough){
+    return false;
+  }
+
+  // check if the mother particle is stopped before it decays
+  auto mother = particle->GetMother(allParticles);
+  int motherPid = mother->GetPid();
+
+  // check if mother is a dark hadron or a dark photon
+  if (fabs(motherPid) == 4900111 || fabs(motherPid) == 4900113 || fabs(motherPid) == 32) {
+    // if so, it doesn't interact with the rock, so it's fine
+    return true;
+  }
+
+  // in all other cases, it's either prompt, or it's a hadron. We assume the same stopping power for all hadrons
+  double motherPathLength = sqrt(xProd * xProd + yProd * yProd + zProd * zProd);
+  
+  double distanceToRock = 10; // [m]
+  double maxDistanceInRock = 1; // [m]
+
+  // the mother can only survive if it decays before it reaches the rock or at most 1m inside the rock
+  return motherPathLength < distanceToRock + maxDistanceInRock;
 }
 
 bool ShiftDetector::IsWithinLHCbAcceptance(const std::shared_ptr<HepMCParticle> &particle) {

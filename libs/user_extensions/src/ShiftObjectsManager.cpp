@@ -124,6 +124,7 @@ void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event>
   auto goodMuons = event->GetCollection("goodMuons");
   auto detector = make_unique<ShiftDetector>(detectorParams, variant == "lhcb");
   auto passingMuons = make_shared<PhysicsObjects>();
+  auto allParticles = event->GetCollection("IndexedParticles");
 
   for (auto physicsObject : *goodMuons) {
     auto hepMCParticle = asHepMCParticle(physicsObject);
@@ -147,7 +148,7 @@ void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event>
     if (nMuons) nMuons->at("4_beforeDetector")++;
 
     // Check that the muon goes through the rock
-    if (!detector->DoesParticleGoThroughRock(hepMCParticle)) continue;
+    if (!detector->DoesParticleGoThroughRock(hepMCParticle, allParticles)) continue;
     if (nMuons) nMuons->at("5_throughRock")++;
 
     passingMuons->push_back(physicsObject);
