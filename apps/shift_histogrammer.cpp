@@ -21,20 +21,8 @@ void CheckArgs(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-  // CheckArgs(argc, argv);
-
-  // ConfigManager::Initialize(argv[1]);
-  // auto &config = ConfigManager::GetInstance();
-
-  // if (argc == 5) {
-  //   config.SetInputPath(argv[2]);
-  //   config.SetTreesOutputPath(argv[3]);
-  //   config.SetHistogramsOutputPath(argv[4]);
-  // }
-
   auto args = make_unique<ArgsManager>(argc, argv);
 
-  // check if optional value "config" is present
   if (!args->GetString("config").has_value()) {
     fatal() << "No config file provided" << endl;
     exit(1);
@@ -54,6 +42,10 @@ int main(int argc, char **argv) {
   if (args->GetString("output_hists_path").has_value()) {
     config.SetHistogramsOutputPath(args->GetString("output_hists_path").value());
   }
+
+  string inputFilePath;
+  config.GetValue("inputFilePath", inputFilePath);
+  info() << "Input file path: " << inputFilePath << endl;
 
   auto eventReader = make_shared<EventReader>();
   auto eventWriter = make_shared<EventWriter>(eventReader);
@@ -113,6 +105,8 @@ int main(int argc, char **argv) {
     }
     if (!passes) continue;
 
+    shiftHistogramsFiller->Fill(event, false);
+
     // check that at least one combination of muons passes the mass cut
     bool passesMassCut = false;
 
@@ -138,7 +132,7 @@ int main(int argc, char **argv) {
     if (!passesMassCut) continue;
 
     cutFlowManager->UpdateCutFlow("massCut");
-    shiftHistogramsFiller->Fill(event, false);
+    
     eventWriter->AddCurrentEvent("Events");
   }
 
