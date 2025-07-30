@@ -122,7 +122,7 @@ void ShiftHistogramsFiller::FillDimuonHistograms(shared_ptr<HepMCParticle> muon1
   auto fourVector = muon1->GetLorentzVector();
   auto fourVector2 = muon2->GetLorentzVector();
   auto dimuon = fourVector + fourVector2;
-  
+
   // mm -> m
   double x = muon1->GetX() / 1000.;
   double y = muon1->GetY() / 1000.;
@@ -155,7 +155,7 @@ void ShiftHistogramsFiller::FillDimuonHistograms(shared_ptr<HepMCParticle> muon1
   histogramsHandler->Fill(histName + "Pair_muonsDistance", muonsDistance);
   histogramsHandler->Fill(histName + "Pair_dimuonVertexD3D", dimuonVertexD3D);
 
-  if(dimuon.M() > 11.0 && dimuon.M() < 60.0 && histName == "MuonsHittingDetector") {
+  if (dimuon.M() > 11.0 && dimuon.M() < 60.0 && histName == "MuonsHittingDetector") {
     histogramsHandler->Fill(histName + "Mass11to60GeVPair_mass", dimuon.M());
     histogramsHandler->Fill(histName + "Mass11to60GeVPair_muonsDistance", muonsDistance);
     histogramsHandler->Fill(histName + "Mass11to60GeVPair_dimuonVertexD3D", dimuonVertexD3D);
@@ -239,6 +239,39 @@ void ShiftHistogramsFiller::Fill2Dhistograms(const shared_ptr<Event> event) {
   }
 }
 
+void ShiftHistogramsFiller::FillNeutrinoHistograms(const shared_ptr<Event> event, string collectionName, string histName) {
+  auto neutrinos = event->GetCollection(collectionName);
+  auto allParticles = event->GetCollection("Particle");
+
+  histogramsHandler->Fill("Event_n" + histName, neutrinos->size());
+
+  // Loop over the good neutrinos from dark hadrons
+  for (int i = 0; i < neutrinos->size(); i++) {
+    auto physicsObject = neutrinos->at(i);
+    auto hepMCParticle = asHepMCParticle(physicsObject);
+
+    auto fourVector = hepMCParticle->GetLorentzVector();
+
+    double x = hepMCParticle->GetX() / 1000.;
+    double y = hepMCParticle->GetY() / 1000.;
+    double z = hepMCParticle->GetZ() / 1000.;
+    double d3d = sqrt(x * x + y * y + z * z);
+    double boost = fourVector.BoostVector().Mag();
+
+    // single muon hists
+    histogramsHandler->Fill(histName + "_pt", fourVector.Pt());
+    histogramsHandler->Fill(histName + "_energy", fourVector.E());
+    histogramsHandler->Fill(histName + "_eta", fourVector.Eta());
+    histogramsHandler->Fill(histName + "_phi", fourVector.Phi());
+    histogramsHandler->Fill(histName + "_mass", hepMCParticle->GetMass());
+    histogramsHandler->Fill(histName + "_pid", hepMCParticle->GetPid());
+    histogramsHandler->Fill(histName + "_status", hepMCParticle->GetStatus());
+    histogramsHandler->Fill(histName + "_boost", boost);
+    histogramsHandler->Fill(histName + "_d3d", d3d);
+    histogramsHandler->Fill(histName + "_properCtau", d3d / boost);
+  }
+}
+
 void ShiftHistogramsFiller::Fill(const shared_ptr<Event> event, bool initial) {
   if (initial) {
     // FillZprimeHistograms(event);
@@ -246,10 +279,15 @@ void ShiftHistogramsFiller::Fill(const shared_ptr<Event> event, bool initial) {
     // FillDarkHadronsHistograms(event);
     // Fill2Dhistograms(event);
 
-    FillMuonHistograms(event, "goodMuons", "InitialMuons", 0);
-    FillMuonHistograms(event, "goodMuons", "GoodInitialMuons", 30);
+    // FillMuonHistograms(event, "goodMuons", "InitialMuons", 0);
+    // FillMuonHistograms(event, "goodMuons", "GoodInitialMuons", 30);
+
+    FillNeutrinoHistograms(event, "goodNeutrinos", "InitialNeutrinos");
+
   } else {
-    FillMuonHistograms(event, "muonsInDetector", "MuonsHittingDetector", 30);
+    // FillMuonHistograms(event, "muonsInDetector", "MuonsHittingDetector", 30);
+
+    FillNeutrinoHistograms(event, "neutrinosInDetector", "NeutrinosHittingDetector");
 
     // auto muons = event->GetCollection("muonsInDetector");
     // if (muons->size() >= 2) {

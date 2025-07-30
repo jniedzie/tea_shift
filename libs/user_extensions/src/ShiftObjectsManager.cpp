@@ -2,8 +2,8 @@
 
 #include "ConfigManager.hpp"
 #include "Logger.hpp"
-#include "ShiftDetector.hpp"
 #include "Profiler.hpp"
+#include "ShiftDetector.hpp"
 
 using namespace std;
 
@@ -11,7 +11,6 @@ ShiftObjectsManager::ShiftObjectsManager() {
   auto &config = ConfigManager::GetInstance();
 
   hepMCProcessor = make_unique<HepMCProcessor>();
-  
 }
 
 void ShiftObjectsManager::InsertIndexedParticles(shared_ptr<Event> event) {
@@ -57,6 +56,12 @@ bool ShiftObjectsManager::IsGoodMuon(const shared_ptr<HepMCParticle> particle, c
   return true;
 }
 
+bool ShiftObjectsManager::IsGoodNeutrino(const shared_ptr<HepMCParticle> particle, const shared_ptr<PhysicsObjects> &allParticles) {
+  if (fabs(particle->GetPid()) != 12 && fabs(particle->GetPid()) != 14 && fabs(particle->GetPid()) != 16) return false;
+  if (!hepMCProcessor->IsLastCopy(particle, allParticles)) return false;
+  return true;
+}
+
 void ShiftObjectsManager::InsertGoodZprimesCollection(shared_ptr<Event> event) {
   auto particles = event->GetCollection("IndexedParticles");
 
@@ -83,7 +88,7 @@ void ShiftObjectsManager::InsertGoodDarkPhotonsCollection(shared_ptr<Event> even
     if (!IsGoodDarkPhoton(hepMCParticle, particles)) {
       continue;
     }
-    
+
     goodDarkPhotons->push_back(physicsObject);
   }
   event->AddCollection("goodDarkPhotons", goodDarkPhotons);
@@ -119,8 +124,23 @@ void ShiftObjectsManager::InsertGoodMuonsCollection(shared_ptr<Event> event) {
   event->AddCollection("goodMuons", goodMuons);
 }
 
-void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event> event, const map<string, float> &detectorParams, string variant,
-                                                               shared_ptr<map<string, int>> nMuons) {
+void ShiftObjectsManager::InsertNeutrinosCollection(shared_ptr<Event> event) {
+  auto particles = event->GetCollection("IndexedParticles");
+
+  auto neutrinos = make_shared<PhysicsObjects>();
+
+  for (int particleIndex = 0; particleIndex < particles->size(); particleIndex++) {
+    auto physicsObject = particles->at(particleIndex);
+    auto hepMCParticle = asHepMCParticle(physicsObject);
+    if (!IsGoodNeutrino(hepMCParticle, particles)) continue;
+
+    neutrinos->push_back(physicsObject);
+  }
+  event->AddCollection("goodNeutrinos", neutrinos);
+}
+
+void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event> event, const map<string, float> &detectorParams,
+                                                               string variant, shared_ptr<map<string, int>> nMuons) {
   auto goodMuons = event->GetCollection("goodMuons");
   auto detector = make_unique<ShiftDetector>(detectorParams, variant == "lhcb");
   auto passingMuons = make_shared<PhysicsObjects>();
@@ -131,7 +151,7 @@ void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event>
     if (nMuons) nMuons->at("1_hasMuons")++;
 
     float recoVariable = hepMCParticle->GetLorentzVector().E();
-    if(variant == "cmsPT"){
+    if (variant == "cmsPT") {
       recoVariable = hepMCParticle->GetLorentzVector().Pt();
     }
 
@@ -155,4 +175,29 @@ void ShiftObjectsManager::InsertMuonsHittingDetectorCollection(shared_ptr<Event>
   }
 
   event->AddCollection("muonsInDetector", passingMuons);
+}
+
+void ShiftObjectsManager::InsertNeutrinosHittingDetectorCollection(shared_ptr<Event> event, const map<string, float> &detectorParams,
+                                                                  string variant, shared_ptr<map<string, int>> nNeutrinos) {
+  auto goodNeutrinos = event->GetCollection("goodNeutrinos");
+  auto detector = make_unique<ShiftDetector>(detectorParams, variant == "lhcb");
+  auto passingNeutrinos = make_shared<PhysicsObjects>();
+  auto allParticles = event->GetCollection("IndexedParticles");
+
+  for (auto physicsObject : *goodNeutrinos) {
+    auto hepMCParticle = asHepMCParticle(physicsObject);
+    if (nNeutrinos) nNeutrinos->at("1_hasNeutrinos")++;
+
+    // Check that they intersect with the detector
+    if (!detector->DoesParticleGoThrough(hepMCParticle)) continue;
+    if (nNeutrinos) nNeutrinos->at("2_intersectingDetector")++;
+
+    // Check that the production vertex is before the detector
+    if (!detector->IsProductionVertexBeforeTheEnd(hepMCParticle, 2.0)) continue;
+    if (nNeutrinos) nNeutrinos->at("3_beforeDetector")++;
+
+    passingNeutrinos->push_back(physicsObject);
+  }
+
+  event->AddCollection("neutrinosInDetector", passingNeutrinos);
 }

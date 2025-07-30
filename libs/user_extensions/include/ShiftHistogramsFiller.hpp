@@ -31,6 +31,8 @@ class ShiftHistogramsFiller {
   void FillSingleMuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::string histName);
   void FillDimuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::shared_ptr<HepMCParticle> hepMCParticle2, std::string histName);
 
+  void FillNeutrinoHistograms(const std::shared_ptr<Event> event, std::string collectionName, std::string histName);
+
   void Fill2Dhistograms(const std::shared_ptr<Event> event);
 };
 
