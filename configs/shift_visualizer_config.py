@@ -12,8 +12,6 @@ startingEvent = 54 # close to CMS, quite symetic, none makes it through
 # off the ring:
 # startingEvent = 0  # nice example ()
 
-printEveryNevents = 100
-
 magField = 2.0
 
 showAxes = True

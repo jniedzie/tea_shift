@@ -10,7 +10,7 @@ def get_predicted_histogram(input_file):
   hist_final = input_file.Get("MuonsHittingDetectorPair_mass")
 
   if hist_initial is None or type(hist_initial) is ROOT.TObject:
-    print(f"Failed to open histogram GoodInitialMuonsPair_mass")
+    error("Failed to open histogram GoodInitialMuonsPair_mass")
     return
 
   hist_total_efficiency = hist_final.Clone("hist_total_efficiency")

@@ -11,15 +11,6 @@
 
 using namespace std;
 
-void CheckArgs(int argc, char **argv) {
-  if (argc != 2 && argc != 5) {
-    fatal() << "Usage: " << argv[0] << " config_path" << endl;
-    fatal() << "or" << endl;
-    fatal() << argv[0] << " config_path input_path trees_output_path histograms_output_path" << endl;
-    exit(1);
-  }
-}
-
 int main(int argc, char **argv) {
   auto args = make_unique<ArgsManager>(argc, argv);
 
@@ -132,7 +123,7 @@ int main(int argc, char **argv) {
     if (!passesMassCut) continue;
 
     cutFlowManager->UpdateCutFlow("massCut");
-    
+
     eventWriter->AddCurrentEvent("Events");
   }
 

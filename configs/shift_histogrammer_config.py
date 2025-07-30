@@ -8,7 +8,6 @@ import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
 
-
 # specify how many events to run on (and how often to print current event number)
 nEvents = -1
 
@@ -31,51 +30,49 @@ inputFilePath = f"{base_path}/pythia_qcd/initial/qcd_part-0.root"
 
 # inputFilePath = f"{base_path}/pythia_mZprime-{mZprime}_mDH-{mDH}_mDQ-{mDQ}_ctau-{ctau}/initial/mZprime-{mZprime}GeV_mDH-{mDH}GeV_mDQ-{mDQ}GeV_ctau-1p00em01m_part-0.root"
 
-treeOutputFilePath = "../trees_signal.root"
+treeOutputFilePath = "../trees_neutrinos.root"
 
 # histogramsOutputFilePath = "../histograms_signal.root"
 # histogramsOutputFilePath = "../histograms_HV.root"
 # histogramsOutputFilePath = "../histograms_qcd.root"
-histogramsOutputFilePath = "../histograms_dy.root"
+histogramsOutputFilePath = "../histograms_neutrinos.root"
 
 defaultHistParams = []
 
 histParams = [
-    #    name                 bins  xmin    xmax    dir
-    ("Zprime", "pt",      100,  0,      1000,     ""),
-    ("Zprime", "eta",      100,  -10,    20,     ""),
-    ("Zprime", "phi",      100,  -4,     4,     ""),
-    ("Zprime", "mass",      100,  0,      500,     ""),
-    ("Zprime", "pid",     100,  0,      10000000,     ""),
-    ("Zprime", "status",    100,  0,      100,     ""),
-
-    ("DarkPhoton", "pt",      100,  0,      1000,     ""),
-    ("DarkPhoton", "eta",      100,  -10,    20,     ""),
-    ("DarkPhoton", "phi",      100,  -4,     4,     ""),
-    ("DarkPhoton", "mass",      100,  0,      100,     ""),
-    ("DarkPhoton", "pid",     100,  0,      10000000,     ""),
-    ("DarkPhoton", "status",    100,  0,      100,     ""),
-
-    ("DarkHadron", "pt",      200,  0,      200,     ""),
-    ("DarkHadron", "eta",      100,  -10,    20,     ""),
-    ("DarkHadron", "phi",      100,  -4,     4,     ""),
-    ("DarkHadron", "mass",      100,  0,      10,     ""),
-    ("DarkHadron", "pid",     100,  0,      10000000,     ""),
-    ("DarkHadron", "status",    100,  0,      100,     ""),
-
-    ("InitialMuonsFromDarkPhoton", "pt",    1000,  0,      1000,     ""),
-    ("InitialMuonsFromDarkPhoton", "energy",    100,  0,      10000,     ""),
-    ("InitialMuonsFromDarkPhoton", "eta",    100,  -10,    20,     ""),
-
-    ("Event", "nZprimes",    10,  0,      10,     ""),
-    ("Event", "nDarkPhotons",    10,  0,      10,     ""),
-    ("Event", "nDarkHadrons",    10,  0,      10,     ""),
-    ("Event", "nInitialMuons",    20,  0,      20,     ""),
-    ("Event", "nGoodInitialMuons",    20,  0,      20,     ""),
-    ("Event", "nGoodPtInitialMuons",    20,  0,      20,     ""),
-    ("Event", "nMuonsHittingDetector",    20,  0,      20,     ""),
-    ("Event", "nPtMuonsHittingDetector",    20,  0,      20,     ""),
-    ("Event", "count",    1,  0,      1,     ""),
+  #    name                 bins  xmin    xmax    dir
+  ("Zprime", "pt", 100, 0, 1000, ""),
+  ("Zprime", "eta", 100, -10, 20, ""),
+  ("Zprime", "phi", 100, -4, 4, ""),
+  ("Zprime", "mass", 100, 0, 500, ""),
+  ("Zprime", "pid", 100, 0, 10000000, ""),
+  ("Zprime", "status", 100, 0, 100, ""),
+  ("DarkPhoton", "pt", 100, 0, 1000, ""),
+  ("DarkPhoton", "eta", 100, -10, 20, ""),
+  ("DarkPhoton", "phi", 100, -4, 4, ""),
+  ("DarkPhoton", "mass", 100, 0, 100, ""),
+  ("DarkPhoton", "pid", 100, 0, 10000000, ""),
+  ("DarkPhoton", "status", 100, 0, 100, ""),
+  ("DarkHadron", "pt", 200, 0, 200, ""),
+  ("DarkHadron", "eta", 100, -10, 20, ""),
+  ("DarkHadron", "phi", 100, -4, 4, ""),
+  ("DarkHadron", "mass", 100, 0, 10, ""),
+  ("DarkHadron", "pid", 100, 0, 10000000, ""),
+  ("DarkHadron", "status", 100, 0, 100, ""),
+  ("InitialMuonsFromDarkPhoton", "pt", 1000, 0, 1000, ""),
+  ("InitialMuonsFromDarkPhoton", "energy", 100, 0, 10000, ""),
+  ("InitialMuonsFromDarkPhoton", "eta", 100, -10, 20, ""),
+  ("Event", "nZprimes", 10, 0, 10, ""),
+  ("Event", "nDarkPhotons", 10, 0, 10, ""),
+  ("Event", "nDarkHadrons", 10, 0, 10, ""),
+  ("Event", "nInitialMuons", 20, 0, 20, ""),
+  ("Event", "nGoodInitialMuons", 20, 0, 20, ""),
+  ("Event", "nGoodPtInitialMuons", 20, 0, 20, ""),
+  ("Event", "nMuonsHittingDetector", 20, 0, 20, ""),
+  ("Event", "nInitialNeutrinos", 100, 0, 100, ""),
+  ("Event", "nNeutrinosHittingDetector", 100, 0, 100, ""),
+  ("Event", "nPtMuonsHittingDetector", 20, 0, 20, ""),
+  ("Event", "count", 1, 0, 1, ""),
 ]
 
 log_bins_10 = list(np.logspace(-7, 7, 150, base=10))
@@ -85,57 +82,69 @@ irregularHistParams = []
 
 
 def addSingleHists(prefix):
-    histParams.append((prefix, "pt",    1000,  0, 1000,     ""))
-    histParams.append((prefix, "energy",    200,  0, 2000,     ""))
-    histParams.append((prefix, "eta",    100,  -10, 20,     ""))
-    histParams.append((prefix, "phi",    100,  -4, 4,     ""))
-    histParams.append((prefix, "mass",    100,  0, 10,     ""))
-    histParams.append((prefix, "pid",    100,  0, 10000000,     ""))
-    histParams.append((prefix, "status",    100,  0, 100,     ""))
-    histParams.append((prefix, "boost",    100,  0, 1,     ""))
+  histParams.append((prefix, "pt", 1000, 0, 1000, ""))
+  histParams.append((prefix, "energy", 200, 0, 2000, ""))
+  histParams.append((prefix, "eta", 100, -10, 20, ""))
+  histParams.append((prefix, "phi", 100, -4, 4, ""))
+  histParams.append((prefix, "mass", 100, 0, 10, ""))
+  histParams.append((prefix, "pid", 100, 0, 10000000, ""))
+  histParams.append((prefix, "status", 100, 0, 100, ""))
+  histParams.append((prefix, "boost", 100, 0, 1, ""))
 
-    irregularHistParams.append((prefix, "d3d",    log_bins_10,     ""))
-    irregularHistParams.append((prefix, "properCtau",    log_bins_10,     ""))
+  irregularHistParams.append((prefix, "d3d", log_bins_10, ""))
+  irregularHistParams.append((prefix, "properCtau", log_bins_10, ""))
 
 
 def addPairHists(prefix):
-    histParams.append((prefix+"Pair", "deltaR",   100,  0,      10,     ""))
-    histParams.append((prefix+"Pair", "deltaEta", 200,  -10,      10,     ""))
-    histParams.append((prefix+"Pair", "deltaPhi", 100,  0,      4,     ""))
-    histParams.append((prefix+"Pair", "mass",    1000,  0,      100,     ""))
-    histParams.append((prefix+"Pair", "pt",      1000,  0,      100,     ""))
-    histParams.append((prefix+"Pair", "ptZoom",  1000,  0,      10,     ""))
+  histParams.append((prefix + "Pair", "deltaR", 100, 0, 10, ""))
+  histParams.append((prefix + "Pair", "deltaEta", 200, -10, 10, ""))
+  histParams.append((prefix + "Pair", "deltaPhi", 100, 0, 4, ""))
+  histParams.append((prefix + "Pair", "mass", 1000, 0, 100, ""))
+  histParams.append((prefix + "Pair", "pt", 1000, 0, 100, ""))
+  histParams.append((prefix + "Pair", "ptZoom", 1000, 0, 10, ""))
 
-    irregularHistParams.append((prefix+"Pair", "muonsDistance",    log_bins_10,     ""))
-    irregularHistParams.append((prefix+"Pair", "dimuonVertexD3D",    log_bins_10_extended,     ""))
+  irregularHistParams.append(
+    (prefix + "Pair", "muonsDistance", log_bins_10, "")
+  )
+  irregularHistParams.append(
+    (prefix + "Pair", "dimuonVertexD3D", log_bins_10_extended, "")
+  )
 
 
-for prefix in ["InitialMuons", "GoodInitialMuons", "MuonsHittingDetector", "MuonsHittingDetectorMass11to60GeV"]:
-    addSingleHists(prefix)
-    addPairHists(prefix)
-    addPairHists(prefix+"SameVertex")
+for prefix in [
+  "InitialMuons",
+  "GoodInitialMuons",
+  "MuonsHittingDetector",
+  "MuonsHittingDetectorMass11to60GeV",
+  "InitialNeutrinos",
+  "NeutrinosHittingDetector",
+]:
+  addSingleHists(prefix)
+  addPairHists(prefix)
+  addPairHists(prefix + "SameVertex")
 
 histParams2D = (
-    ("B_plus_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Ds_plus_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Eta_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Eta_prime_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("J_psi_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("K_plus_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Omega_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Phi_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Pi_zero_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Rho_zero_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
-    ("Photon_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000,   ""),
+  ("B_plus_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Ds_plus_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Eta_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Eta_prime_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("J_psi_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("K_plus_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Omega_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Phi_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Pi_zero_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Rho_zero_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
+  ("Photon_theta_energy", 1000, 0, 3.1415, 1000, 0, 5000, ""),
 )
-
 
 # specify name of the branch containing event weights
 weightsBranchName = ""
 
-eventsTreeNames = ["Events",]
+eventsTreeNames = [
+  "Events",
+]
 specialBranchSizes = {
-    "Particle": "Event_numberP",
+  "Particle": "Event_numberP",
 }
 
 branchesToKeep = ["*"]
