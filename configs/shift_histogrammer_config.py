@@ -11,7 +11,6 @@ sys.path.append(current_dir)
 
 # specify how many events to run on (and how often to print current event number)
 nEvents = -1
-printEveryNevents = 100
 
 mZprime = 60
 mDH = 5
@@ -21,9 +20,9 @@ ctau = "1em1"
 # inputFilePath = f"{base_path}/pythia_mZprime-100_mDH-20_mDQ-1_tau-1em7/initial/mZprime-100GeV_mDarkHadron-20GeV_mDarkQuark-1GeV_lifetime-1p00em07m_nEvents-1000_part-0.root"
 # inputFilePath = f"{base_path}/pythia_mZprime-{mZprime}_mDH-{mDH}_mDQ-{mDQ}_ctau-{ctau}/initial/mZprime-{mZprime}GeV_mDH-{mDH}GeV_mDQ-{mDQ}GeV_ctau-1p00em01m_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_qcd/initial/qcd_part-0.root"
-# inputFilePath = f"{base_path}/pythia_qcd/initial/qcd_part-0.root"
+inputFilePath = f"{base_path}/pythia_qcd/initial/qcd_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_dy/initial/dy_part-3.root"
-inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
+# inputFilePath = f"{base_path}/pythia_dy/initial/dy_part-0.root"
 # inputFilePath = "../mDarkPhoton-25.0_part-0.root"
 # inputFilePath = f"{base_path}/pythiaCollider_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
 # inputFilePath = f"{base_path}/pythia_mDarkPhoton-30_ctau-1e1/initial/mDarkPhoton-30.0_ctau-1p00e01m_part-0.root"
@@ -104,6 +103,8 @@ def addPairHists(prefix):
     histParams.append((prefix+"Pair", "deltaEta", 200,  -10,      10,     ""))
     histParams.append((prefix+"Pair", "deltaPhi", 100,  0,      4,     ""))
     histParams.append((prefix+"Pair", "mass",    1000,  0,      100,     ""))
+    histParams.append((prefix+"Pair", "pt",      1000,  0,      100,     ""))
+    histParams.append((prefix+"Pair", "ptZoom",  1000,  0,      10,     ""))
 
     irregularHistParams.append((prefix+"Pair", "muonsDistance",    log_bins_10,     ""))
     irregularHistParams.append((prefix+"Pair", "dimuonVertexD3D",    log_bins_10_extended,     ""))
