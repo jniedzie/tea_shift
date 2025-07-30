@@ -28,9 +28,8 @@ class ShiftHistogramsFiller {
   void FillDarkHadronsHistograms(const std::shared_ptr<Event> event);
   void FillMuonHistograms(const std::shared_ptr<Event> event, std::string collectionName, std::string histName, double minEnergy = 0.0);
   
-  void FillSingleMuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::string histName, double eventWeight);
-  void FillDimuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::shared_ptr<HepMCParticle> hepMCParticle2,
-                            std::string histName, double eventWeight);
+  void FillSingleMuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::string histName);
+  void FillDimuonHistograms(std::shared_ptr<HepMCParticle> hepMCParticle, std::shared_ptr<HepMCParticle> hepMCParticle2, std::string histName);
 
   void Fill2Dhistograms(const std::shared_ptr<Event> event);
 };
