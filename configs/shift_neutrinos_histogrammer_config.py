@@ -31,14 +31,14 @@ log_bins_10_extended = list(np.logspace(-50, 10, 610, base=10))
 
 irregularHistParams = []
 
-for prefix in ["InitialNeutrinos", "NeutrinosHittingDetector"]:
-  histParams.append((prefix, "pt", 1000, 0, 1000, ""))
-  histParams.append((prefix, "energy", 200, 0, 2000, ""))
-  histParams.append((prefix, "eta", 100, -10, 20, ""))
+for prefix in ["InitialNeutrinos", "NeutrinosHittingDetector", "nuElectron", "nuMuon", "nuTau"]:
+  histParams.append((prefix, "pt", 1000, 0, 100, ""))
+  histParams.append((prefix, "logPt", 1000, -4, 2, ""))
+  histParams.append((prefix, "energy", 1000, 0, 10000, ""))
+  histParams.append((prefix, "logEnergy", 1000, -2, 4, ""))
+  histParams.append((prefix, "eta", 1000, -10, 20, ""))
   histParams.append((prefix, "phi", 100, -4, 4, ""))
-  histParams.append((prefix, "mass", 100, 0, 10, ""))
-  histParams.append((prefix, "pid", 100, 0, 10000000, ""))
-  histParams.append((prefix, "status", 100, 0, 100, ""))
+  histParams.append((prefix, "pid", 40, -20, 20, ""))
   histParams.append((prefix, "boost", 100, 0, 1, ""))
   irregularHistParams.append((prefix, "d3d", log_bins_10, ""))
   irregularHistParams.append((prefix, "properCtau", log_bins_10, ""))
