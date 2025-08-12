@@ -13,7 +13,6 @@ ShiftHistogramsFiller::ShiftHistogramsFiller(shared_ptr<HistogramsHandler> histo
   try {
     config.GetValue("weightsBranchName", weightsBranchName);
   } catch (const Exception &e) {
-    info() << "Weights branch not specified -- will assume weight is 1 for all events" << endl;
   }
 
   eventProcessor = make_unique<EventProcessor>();
@@ -245,7 +244,6 @@ void ShiftHistogramsFiller::FillNeutrinoHistograms(const shared_ptr<Event> event
 
   histogramsHandler->Fill("Event_n" + histName, neutrinos->size());
 
-  // Loop over the good neutrinos from dark hadrons
   for (int i = 0; i < neutrinos->size(); i++) {
     auto physicsObject = neutrinos->at(i);
     auto hepMCParticle = asHepMCParticle(physicsObject);
@@ -258,17 +256,35 @@ void ShiftHistogramsFiller::FillNeutrinoHistograms(const shared_ptr<Event> event
     double d3d = sqrt(x * x + y * y + z * z);
     double boost = fourVector.BoostVector().Mag();
 
-    // single muon hists
     histogramsHandler->Fill(histName + "_pt", fourVector.Pt());
+    histogramsHandler->Fill(histName + "_logPt", TMath::Log10(fourVector.Pt()));
     histogramsHandler->Fill(histName + "_energy", fourVector.E());
+    histogramsHandler->Fill(histName + "_logEnergy", TMath::Log10(fourVector.E()));
     histogramsHandler->Fill(histName + "_eta", fourVector.Eta());
     histogramsHandler->Fill(histName + "_phi", fourVector.Phi());
-    histogramsHandler->Fill(histName + "_mass", hepMCParticle->GetMass());
     histogramsHandler->Fill(histName + "_pid", hepMCParticle->GetPid());
-    histogramsHandler->Fill(histName + "_status", hepMCParticle->GetStatus());
     histogramsHandler->Fill(histName + "_boost", boost);
     histogramsHandler->Fill(histName + "_d3d", d3d);
     histogramsHandler->Fill(histName + "_properCtau", d3d / boost);
+
+    if (histName == "InitialNeutrinos") continue;
+
+    int pid = hepMCParticle->GetPid();
+    string nuType;
+    if (abs(pid) == 12) nuType = "nuElectron";
+    else if (abs(pid) == 14) nuType = "nuMuon";
+    else if (abs(pid) == 16) nuType = "nuTau";
+    
+    histogramsHandler->Fill(nuType + "_pt", fourVector.Pt());
+    histogramsHandler->Fill(nuType + "_energy", fourVector.E());
+    histogramsHandler->Fill(nuType + "_logPt", TMath::Log10(fourVector.Pt()));
+    histogramsHandler->Fill(nuType + "_logEnergy", TMath::Log10(fourVector.E()));
+    histogramsHandler->Fill(nuType + "_eta", fourVector.Eta());
+    histogramsHandler->Fill(nuType + "_phi", fourVector.Phi());
+    histogramsHandler->Fill(nuType + "_pid", hepMCParticle->GetPid());
+    histogramsHandler->Fill(nuType + "_boost", boost);
+    histogramsHandler->Fill(nuType + "_d3d", d3d);
+    histogramsHandler->Fill(nuType + "_properCtau", d3d / boost);
   }
 }
 
