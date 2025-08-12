@@ -12,17 +12,18 @@ isLHCb(isLHCb_){
     maxDistance = minLength + (maxLength - minLength)/2;
   }
   else{
+    outer_radius = params.at("radius");
+    total_length = params.at("length");
     x = params.at("x");
     y = params.at("y");
     z = params.at("z");
-    outer_radius = params.at("radius");
-    total_length = params.at("length");
+    
     double maxEta = params.at("maxEta");
-
-    double theta_inner = 2 * std::atan(std::exp(-2.4));
+    double theta_inner = 2 * std::atan(std::exp(-maxEta));
     inner_radius = total_length / 2.0 * tan(theta_inner);
 
     float lhc_radius = 4300;  // [m]
+    rotation.SetToIdentity();
 
     if (y < 0) {
       forcedLHCring = true;
@@ -30,14 +31,15 @@ isLHCb(isLHCb_){
       float y_1 = sqrt(pow(lhc_radius, 2) - pow(x, 2)) + lhc_radius;
       float y_2 = -sqrt(pow(lhc_radius, 2) - pow(x, 2)) + lhc_radius;
       y = min(y_1, y_2);
+
+      double theta = TMath::Pi() + TMath::ATan2(-x, y-lhc_radius);
+      info() << "Theta: " << theta << endl;
+      rotation.RotateZ(theta);
     }
 
     // old implementation with a bug
     // double theta = TMath::ATan2(y, x);
     // rotation.RotateY(theta);
-
-    double theta = TMath::Pi() + TMath::ATan2(-x, y-lhc_radius);
-    rotation.RotateZ(theta);
 
     TVector3 detectorCenter(x, y, z);
 
@@ -50,25 +52,43 @@ isLHCb(isLHCb_){
 
 void ShiftDetector::Print() {
   if(isLHCb){
-    info() << "\n\n--------------------------------------------------" << endl;
-    info() << "Detector at LHCb" << endl;
-    info() << "Length: " << minLength << " < L < " << maxLength << endl;
-    info() << "Eta: " << minEta << " < eta < " << maxEta << endl;
-    info() << "--------------------------------------------------\n\n" << endl;
+    info() << "\n\033[1;36m"
+           << "╔════════════════════════════════════════════╗\n"
+           << "║              LHCb Detector Info           ║\n"
+           << "╠══════════════════════════╤════════════════╣\n"
+           << "║ Parameter                │ Value          ║\n"
+           << "╠══════════════════════════╪════════════════╣\n"
+           << "║ minLength                │ " << setw(14) << minLength << " ║\n"
+           << "║ maxLength                │ " << setw(14) << maxLength << " ║\n"
+           << "║ minEta                   │ " << setw(14) << minEta << " ║\n"
+           << "║ maxEta                   │ " << setw(14) << maxEta << " ║\n"
+           << "╚══════════════════════════╧════════════════╝\033[0m\n\n";
     return;
   }
 
-  info() << "\n\n--------------------------------------------------" << endl;
-  info() << "Detector at: (" << x << ", " << y << ", " << z << ") " << endl;
-  info() << "Total distance: " << sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2)) << endl;
-  info() << "Outer radius: " << outer_radius << "\tinner radius: " <<inner_radius << "\tlength: " << total_length << endl;
-  // calculate the fraction of the solid angle the detector covers
   float distance = sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
   float fullArea = 4 * TMath::Pi() * distance * distance;
   float detectorArea = TMath::Pi() * outer_radius * outer_radius;
-  info() << "Angular coverage: " << detectorArea / fullArea << endl;
-  info() << "Forced to be on the LHC ring: " << (forcedLHCring ? "yes" : "no") << endl;
-  info() << "--------------------------------------------------\n\n" << endl;
+  float angularCoverage = detectorArea / fullArea;
+
+  info() << "\n\033[1;36m"
+         << "╔════════════════════════════════════════════╗\n"
+         << "║            Detector Information            ║\n"
+         << "╠══════════════════════════╤═════════════════╣\n"
+         << "║ Parameter                │ Value           ║\n"
+         << "╠══════════════════════════╪═════════════════╣\n"
+         << "║ Position (x, y, z) [m]   │ " << setw(4) << "(" << translation.X() << ", "
+         << translation.Y() << ", " << translation.Z() << ")" << setw(4) << " ║\n"
+         << "║ Rotation (angle) [rad]   │ " << setw(14) << rotation.ThetaZ() << " ║\n"
+         
+         << "║ Total distance [m]       │ " << setw(14) << distance << "  ║\n"
+         << "║ Outer radius [m]         │ " << setw(14) << outer_radius << "  ║\n"
+         << "║ Inner radius [m]         │ " << setw(14) << inner_radius << "  ║\n"
+         << "║ Total length [m]         │ " << setw(14) << total_length << "  ║\n"
+         
+         << "║ Angular coverage         │ " << setw(14) << angularCoverage << "  ║\n"
+         << "║ On LHC ring              │ " << setw(14) << (forcedLHCring ? "yes" : "no") << "  ║\n"
+         << "╚══════════════════════════╧═════════════════╝\033[0m\n\n";
 }
 
 bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &particle) {
@@ -77,19 +97,20 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
   }
 
   // convert mm to m. x is our y, y is our z, z is our x
-  TVector3 origin(particle->GetZ() / 1e3, particle->GetX() / 1e3, particle->GetY() / 1e3);
+  TVector3 particleOrigin(particle->GetZ() / 1e3, particle->GetX() / 1e3, particle->GetY() / 1e3);
 
   auto fourVector = particle->GetLorentzVector();
   float eta = fourVector.Eta();
   float phi = fourVector.Phi();
   TVector3 direction(std::sinh(eta), std::cos(phi), std::sin(phi));
 
-  // Move and rotate the origin and direction to the detector's frame (x: along the beam, y: along LHC's radius)
-  origin *= rotation;
-  origin += translation;
+  // Move and rotate the particleOrigin and direction to the detector's frame (x: along the beam, y: along LHC's radius)
+  particleOrigin *= rotation;
+  particleOrigin += translation;
   direction *= rotation;
 
   if (direction.Mag() == 0) {
+    error() << "Particle direction is zero, cannot determine if it goes through the detector." << endl;
     return false;
   }
 
@@ -97,23 +118,24 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
 
   // If the particle is produced outside the detector, check if it's moving towards the detector:
 
-  // In the transverse plane
-  TVector3 radialOrigin(origin.Y(), origin.Z(), 0);
-  TVector3 radialDirection(unitDirection.Y(), unitDirection.Z(), 0);
-  if (radialOrigin.Mag() > outer_radius) {
-    if (radialOrigin.Dot(radialDirection) > 0) {
+  // In the radial direction from the cylinder axis (assume axis along X)
+  TVector3 axisDir(1, 0, 0);  // Assuming cylinder axis is along X
+  TVector3 radialVector = particleOrigin - axisDir * (particleOrigin * axisDir);
+  TVector3 radialDir = unitDirection - axisDir * (unitDirection * axisDir);
+  if (radialVector.Mag() > outer_radius) {
+    if (radialVector.Dot(radialDir) > 0) {
       return false;  // Moving away from the cylinder radially
     }
   }
 
   // In the z-direction
-  if ((origin.X() > total_length / 2 && unitDirection.X() > 0) || (origin.X() < -total_length / 2 && unitDirection.X() < 0)) {
+  if ((particleOrigin.X() > total_length / 2 && unitDirection.X() > 0) || (particleOrigin.X() < -total_length / 2 && unitDirection.X() < 0)) {
     return false;  // Moving away from the cylinder along the z-axis
   }
 
   // Endcap intersection checks
-  double x1 = -total_length / 2 - origin.X();
-  double x2 = total_length / 2 - origin.X();
+  double x1 = -total_length / 2 - particleOrigin.X();
+  double x2 = total_length / 2 - particleOrigin.X();
   double t1 = x1 / unitDirection.X();
   double t2 = x2 / unitDirection.X();
 
@@ -121,7 +143,7 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
     if (t < 0) {  // Only consider t >= 0 for valid intersection direction
       continue;
     }
-    TVector3 intersectionPoint = origin + t * unitDirection;
+    TVector3 intersectionPoint = particleOrigin + t * unitDirection;
     double radialDistance = TMath::Sqrt(intersectionPoint.Y() * intersectionPoint.Y() + intersectionPoint.Z() * intersectionPoint.Z());
     if (radialDistance >= inner_radius && radialDistance <= outer_radius) {
       return true;
@@ -130,8 +152,8 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
 
   // Outer cylinder intersection check
   double a = unitDirection.Y() * unitDirection.Y() + unitDirection.Z() * unitDirection.Z();
-  double b = 2 * (origin.Y() * unitDirection.Y() + origin.Z() * unitDirection.Z());
-  double c = origin.Y() * origin.Y() + origin.Z() * origin.Z() - outer_radius * outer_radius;
+  double b = 2 * (particleOrigin.Y() * unitDirection.Y() + particleOrigin.Z() * unitDirection.Z());
+  double c = particleOrigin.Y() * particleOrigin.Y() + particleOrigin.Z() * particleOrigin.Z() - outer_radius * outer_radius;
   double discriminant = b * b - 4 * a * c;
 
   if (discriminant >= 0) {
@@ -142,7 +164,7 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
       if (t < 0) {
         continue;
       }
-      TVector3 intersectionPoint = origin + t * unitDirection;
+      TVector3 intersectionPoint = particleOrigin + t * unitDirection;
       if (intersectionPoint.X() >= -total_length / 2 && intersectionPoint.X() <= total_length / 2) {
         return true;
       }
@@ -150,7 +172,7 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
   }
 
   // Inner cylinder intersection check
-  c = origin.Y() * origin.Y() + origin.Z() * origin.Z() - inner_radius * inner_radius;
+  c = particleOrigin.Y() * particleOrigin.Y() + particleOrigin.Z() * particleOrigin.Z() - inner_radius * inner_radius;
   discriminant = b * b - 4 * a * c;
 
   if (discriminant >= 0) {
@@ -161,7 +183,7 @@ bool ShiftDetector::DoesParticleGoThrough(const shared_ptr<HepMCParticle> &parti
       if (t < 0) {
         continue;
       }
-      TVector3 intersectionPoint = origin + t * unitDirection;
+      TVector3 intersectionPoint = particleOrigin + t * unitDirection;
       if (intersectionPoint.X() >= -total_length / 2 && intersectionPoint.X() <= total_length / 2) {
         return true;
       }
