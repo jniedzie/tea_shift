@@ -43,7 +43,6 @@ int main(int argc, char **argv) {
   auto histogramsHandler = make_shared<HistogramsHandler>();
   auto histogramsFiller = make_unique<HistogramsFiller>(histogramsHandler);
   auto shiftHistogramsFiller = make_unique<ShiftHistogramsFiller>(histogramsHandler);
-  auto shiftObjectsManager = make_unique<ShiftObjectsManager>();
   auto cutFlowManager = make_shared<CutFlowManager>(eventReader, eventWriter);
 
   map<string, float> detectorParams;
@@ -51,6 +50,8 @@ int main(int argc, char **argv) {
 
   string variant;
   config.GetValue("variant", variant);
+
+  auto shiftObjectsManager = make_unique<ShiftObjectsManager>(detectorParams, variant);
 
   cutFlowManager->RegisterCut("initial");
   cutFlowManager->RegisterCut("hasMuons");
@@ -79,7 +80,7 @@ int main(int argc, char **argv) {
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
     shiftObjectsManager->InsertGoodMuonsCollection(event);
-    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, detectorParams, variant, nMuons);
+    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, variant, nMuons);
     shiftObjectsManager->InsertGoodDarkPhotonsCollection(event);
 
     shiftHistogramsFiller->Fill(event, true);

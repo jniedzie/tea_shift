@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
   auto histogramsHandler = make_shared<HistogramsHandler>();
   auto histogramsFiller = make_unique<HistogramsFiller>(histogramsHandler);
   auto shiftHistogramsFiller = make_unique<ShiftHistogramsFiller>(histogramsHandler);
-  auto shiftObjectsManager = make_unique<ShiftObjectsManager>();
+
   auto cutFlowManager = make_shared<CutFlowManager>(eventReader, eventWriter);
 
   map<string, float> detectorParams;
@@ -51,6 +51,8 @@ int main(int argc, char **argv) {
 
   string variant;
   config.GetValue("variant", variant);
+
+  auto shiftObjectsManager = make_unique<ShiftObjectsManager>(detectorParams, variant);
 
   cutFlowManager->RegisterCut("initial");
   cutFlowManager->RegisterCut("hasNeutrinos");
@@ -71,7 +73,7 @@ int main(int argc, char **argv) {
 
     shiftObjectsManager->InsertIndexedParticles(event);
     shiftObjectsManager->InsertNeutrinosCollection(event);
-    shiftObjectsManager->InsertNeutrinosHittingDetectorCollection(event, detectorParams, variant, nNeutrinos);
+    shiftObjectsManager->InsertNeutrinosHittingDetectorCollection(event, nNeutrinos);
 
     shiftHistogramsFiller->Fill(event, true);
 
@@ -111,6 +113,49 @@ int main(int argc, char **argv) {
   }
 
   histogramsFiller->FillCutFlow(cutFlowManager);
+
+  // auto hist = histogramsHandler->GetHistogram1D({"NeutrinosHittingDetector_phi", ""});
+  // hist->Rebin(3);
+  // hist->SaveAs("../hist.root");
+
+  // double mean = 0;
+  // int nNonZeroBins = 0;
+
+  // // First, compute the average bin content (excluding underflow/overflow)
+  // for (int i = 1; i <= hist->GetNbinsX(); ++i) {
+  //   if (hist->GetBinContent(i) <= 0) continue; // skip bins with zero content
+  //   if(fabs(hist->GetBinCenter(i)) > 2.9) continue; // skip bins outside the range of interest
+  //   mean += hist->GetBinContent(i);
+  //   ++nNonZeroBins;
+  // }
+  // mean /= nNonZeroBins;
+
+  // // Now compute chi2
+  // double chi2_flat = 0;
+  // for (int i = 1; i <= hist->GetNbinsX(); ++i) {
+  //   if (hist->GetBinContent(i) <= 0) continue; // skip bins with zero content
+  //   if(fabs(hist->GetBinCenter(i)) > 2.9) continue; // skip bins outside the range of interest
+  //   double content = hist->GetBinContent(i);
+  //   double error = hist->GetBinError(i);
+
+  //   // skip bins with zero error to avoid division by zero
+  //   if (error <= 0) continue;
+
+  //   double delta = content - mean;
+  //   chi2_flat += (delta * delta) / (error * error);
+  // }
+
+  // double chi2_per_ndf = chi2_flat / nNonZeroBins;
+
+  // std::cout << "Flatness chi2/NDF: " << chi2_per_ndf << std::endl;
+
+  // double valueAtZero = hist->GetBinContent(hist->FindFixBin(0.0));
+  // double valueAtThree = hist->GetBinContent(hist->FindFixBin(2.9));
+  // double sigma = hist->GetBinError(hist->FindBin(0.0));
+  // double distanceInSigmas = (valueAtZero - valueAtThree) / sigma;
+  // info() << "Distance in sigmas between value at 0.0 and value at 3.0: " << distanceInSigmas << endl;
+  // info() << "Value at 0.0: " << valueAtZero << ", Value at 3.0: " << valueAtThree << endl;
+
   histogramsHandler->SaveHistograms();
 
   cutFlowManager->SaveCutFlow();

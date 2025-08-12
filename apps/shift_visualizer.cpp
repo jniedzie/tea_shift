@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
   }
 
   auto eventReader = make_shared<EventReader>();
-  auto shiftObjectsManager = make_unique<ShiftObjectsManager>();
+  
   
   map<string, float> detectorParams;
   config.GetMap("detectorParams", detectorParams);
@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
   int startingEvent;
   config.GetValue("startingEvent", startingEvent);
 
+  auto shiftObjectsManager = make_unique<ShiftObjectsManager>(detectorParams, variant);
   auto detector = make_shared<ShiftDetector>(detectorParams, variant == "lhcb");
   detector->Print();
 
@@ -66,7 +67,7 @@ int main(int argc, char **argv) {
     shiftObjectsManager->InsertGoodZprimesCollection(event);
     shiftObjectsManager->InsertGoodDarkHadronsCollection(event);
     shiftObjectsManager->InsertGoodMuonsCollection(event);
-    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, detectorParams, variant, nMuons);
+    shiftObjectsManager->InsertMuonsHittingDetectorCollection(event, variant, nMuons);
     shiftObjectsManager->InsertGoodDarkPhotonsCollection(event);
 
     bool passes = true;
