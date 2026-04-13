@@ -11,29 +11,13 @@
 
 using namespace std;
 
-int main(int argc, char **argv) {
-  auto args = make_unique<ArgsManager>(argc, argv);
+int main(int argc, char** argv) {
+  vector<string> requiredArgs = {"config"};
+  vector<string> optionalArgs = {"input_path", "output_hists_path", "output_trees_path"};
+  auto args = make_unique<ArgsManager>(argc, argv, requiredArgs, optionalArgs);
+  ConfigManager::Initialize(args);
 
-  if (!args->GetString("config").has_value()) {
-    fatal() << "No config file provided" << endl;
-    exit(1);
-  }
-
-  ConfigManager::Initialize(args->GetString("config").value());
-  auto &config = ConfigManager::GetInstance();
-
-  if (args->GetString("input_path").has_value()) {
-    config.SetInputPath(args->GetString("input_path").value());
-  }
-
-  if (args->GetString("output_trees_path").has_value()) {
-    config.SetTreesOutputPath(args->GetString("output_trees_path").value());
-  }
-
-  if (args->GetString("output_hists_path").has_value()) {
-    config.SetHistogramsOutputPath(args->GetString("output_hists_path").value());
-  }
-
+  auto& config = ConfigManager::GetInstance();
   string inputFilePath;
   config.GetValue("inputFilePath", inputFilePath);
   info() << "Input file path: " << inputFilePath << endl;
@@ -78,7 +62,7 @@ int main(int argc, char **argv) {
     shiftHistogramsFiller->Fill(event, true);
 
     bool passes = true;
-    for (auto &[key, value] : *nNeutrinos) {
+    for (auto& [key, value] : *nNeutrinos) {
       if (value < 1) {
         passes = false;
         break;
@@ -163,7 +147,7 @@ int main(int argc, char **argv) {
 
   eventWriter->Save();
 
-  auto &logger = Logger::GetInstance();
+  auto& logger = Logger::GetInstance();
   logger.Print();
 
   return 0;
