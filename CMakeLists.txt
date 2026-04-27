@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 project(user_analysis)
 
+set(CMAKE_CXX_STANDARD 17)
+
 # setup variables for macOS builds
 set(CMAKE_OSX_ARCHITECTURES "arm64")
 SET(CMAKE_OSX_DEPLOYMENT_TARGET 13.2)
@@ -9,42 +11,110 @@ SET(CMAKE_OSX_DEPLOYMENT_TARGET 13.2)
 set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/bin")
 
 # setup ROOT-specific variables
-list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-find_package(ROOT REQUIRED COMPONENTS Minuit Eve Geom RGL)
+find_program(ROOT_CONFIG_EXECUTABLE root-config)
+if(ROOT_CONFIG_EXECUTABLE)
+    execute_process(COMMAND ${ROOT_CONFIG_EXECUTABLE} --prefix OUTPUT_VARIABLE ROOT_CONFIG_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${ROOT_CONFIG_EXECUTABLE} --incdir OUTPUT_VARIABLE ROOT_CONFIG_INCDIR OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${ROOT_CONFIG_EXECUTABLE} --libdir OUTPUT_VARIABLE ROOT_CONFIG_LIBDIR OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${ROOT_CONFIG_EXECUTABLE} --cxxstandard OUTPUT_VARIABLE ROOT_CONFIG_CXXSTANDARD OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
+
+    if(ROOT_CONFIG_CXXSTANDARD MATCHES "^[0-9]+$")
+        set(CMAKE_CXX_STANDARD "${ROOT_CONFIG_CXXSTANDARD}")
+    endif()
+
+    set(CMAKE_PREFIX_PATH "${ROOT_CONFIG_PREFIX};${ROOT_CONFIG_PREFIX}/cmake;${ROOT_CONFIG_LIBDIR}/cmake/ROOT;${CMAKE_PREFIX_PATH}")
+    set(CMAKE_INCLUDE_PATH "${ROOT_CONFIG_INCDIR};${CMAKE_INCLUDE_PATH}")
+    set(CMAKE_LIBRARY_PATH "${ROOT_CONFIG_LIBDIR};${CMAKE_LIBRARY_PATH}")
+
+    if(EXISTS "${ROOT_CONFIG_PREFIX}/cmake/ROOTConfig.cmake")
+        set(ROOT_DIR "${ROOT_CONFIG_PREFIX}/cmake" CACHE PATH "ROOT CMake package directory" FORCE)
+    elseif(EXISTS "${ROOT_CONFIG_LIBDIR}/cmake/ROOT/ROOTConfig.cmake")
+        set(ROOT_DIR "${ROOT_CONFIG_LIBDIR}/cmake/ROOT" CACHE PATH "ROOT CMake package directory" FORCE)
+    endif()
+endif()
+if(DEFINED ENV{ROOTSYS} AND NOT "$ENV{ROOTSYS}" STREQUAL "")
+    set(CMAKE_PREFIX_PATH "$ENV{ROOTSYS};${CMAKE_PREFIX_PATH}")
+endif()
+set(TEA_ROOT_COMPONENTS Core RIO Tree Hist Graf Gpad Matrix Physics MathCore)
+find_package(ROOT REQUIRED COMPONENTS ${TEA_ROOT_COMPONENTS})
 include(${ROOT_USE_FILE})
+include_directories(${ROOT_INCLUDE_DIRS} ${ROOT_CONFIG_INCDIR})
+set(TEA_ROOT_INCLUDE_DIRS ${ROOT_INCLUDE_DIRS} ${ROOT_CONFIG_INCDIR})
+set(TEA_HAVE_ROOT_EVE FALSE)
+set(TEA_HAVE_ROOT_GEOM FALSE)
+set(TEA_HAVE_ROOT_LORENTZ_VECTOR FALSE)
+foreach(ROOT_INCLUDE_DIR ${TEA_ROOT_INCLUDE_DIRS})
+    if(EXISTS "${ROOT_INCLUDE_DIR}/TEveManager.h")
+        set(TEA_HAVE_ROOT_EVE TRUE)
+    endif()
+    if(EXISTS "${ROOT_INCLUDE_DIR}/TGeoTube.h")
+        set(TEA_HAVE_ROOT_GEOM TRUE)
+    endif()
+    if(EXISTS "${ROOT_INCLUDE_DIR}/TLorentzVector.h" AND EXISTS "${ROOT_INCLUDE_DIR}/Math/Vector4D.h")
+        set(TEA_HAVE_ROOT_LORENTZ_VECTOR TRUE)
+    endif()
+endforeach()
+if(NOT TEA_HAVE_ROOT_LORENTZ_VECTOR)
+    message(FATAL_ERROR "The selected ROOT installation is missing headers needed by TLorentzVector. Source a complete ROOT/LCG environment before running build.sh.")
+endif()
+if(NOT TEA_HAVE_ROOT_EVE OR NOT TEA_HAVE_ROOT_GEOM)
+    message(STATUS "ROOT Eve/Geom headers not available; skipping SHIFT visualizer build")
+endif()
+set(TEA_ROOT_LIBRARIES ${ROOT_LIBRARIES})
+if(ROOT_CONFIG_EXECUTABLE)
+    if(TEA_HAVE_ROOT_EVE AND TEA_HAVE_ROOT_GEOM)
+        execute_process(
+            COMMAND ${ROOT_CONFIG_EXECUTABLE} --evelibs
+            RESULT_VARIABLE ROOT_CONFIG_LIBS_RESULT
+            OUTPUT_VARIABLE ROOT_CONFIG_LIBS
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+        )
+    elseif(TEA_HAVE_ROOT_GEOM)
+        execute_process(
+            COMMAND ${ROOT_CONFIG_EXECUTABLE} --libs
+            RESULT_VARIABLE ROOT_CONFIG_LIBS_RESULT
+            OUTPUT_VARIABLE ROOT_CONFIG_LIBS
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_QUIET
+        )
+        set(ROOT_CONFIG_LIBS "${ROOT_CONFIG_LIBS} -lGeom")
+    endif()
+
+    if(ROOT_CONFIG_LIBS_RESULT EQUAL 0 AND NOT ROOT_CONFIG_LIBS STREQUAL "")
+        separate_arguments(ROOT_CONFIG_LIBS_LIST UNIX_COMMAND "${ROOT_CONFIG_LIBS}")
+        set(TEA_ROOT_LIBRARIES ${ROOT_CONFIG_LIBS_LIST})
+    endif()
+endif()
 SET(CMAKE_SKIP_BUILD_RPATH FALSE)
 SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE) 
-SET(CMAKE_INSTALL_RPATH "/cvmfs/sft.cern.ch/lcg/releases/vdt/0.4.3-992df/x86_64-centos7-gcc8-opt/lib:/cvmfs/sft.cern.ch/lcg/releases/tbb/2019_U7-ba3eb/x86_64-centos7-gcc8-opt/lib:/cvmfs/sft.cern.ch/lcg/releases/Davix/0.7.3-d94fa/x86_64-centos7-gcc8-opt/lib64/:/cvmfs/sft.cern.ch/lcg/releases/png/1.6.37-9c2fe/x86_64-centos7-gcc8-opt/lib/:/cvmfs/sft.cern.ch/lcg/releases/GSL/2.5-32fc5/x86_64-centos7-gcc8-opt/lib/")
+if(APPLE)
+    SET(CMAKE_INSTALL_RPATH "@loader_path")
+else()
+    SET(CMAKE_INSTALL_RPATH "$ORIGIN")
+endif()
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-# # find Python
-set(CONDA_PREFIX_PATH $ENV{CONDA_PREFIX})
-set(Python3_EXECUTABLE "${CONDA_PREFIX_PATH}/bin/python3")
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
-
-if(Python3_FOUND)
-    # Set Python version variables manually if not set automatically
-    if(NOT DEFINED Python3_VERSION_MAJOR)
-        execute_process(COMMAND ${Python3_EXECUTABLE} -c "import sys; print(sys.version_info.major)"
-                        OUTPUT_VARIABLE Python3_VERSION_MAJOR
-                        OUTPUT_STRIP_TRAILING_WHITESPACE)
-    endif()
-    if(NOT DEFINED Python3_VERSION_MINOR)
-        execute_process(COMMAND ${Python3_EXECUTABLE} -c "import sys; print(sys.version_info.minor)"
-                        OUTPUT_VARIABLE Python3_VERSION_MINOR
-                        OUTPUT_STRIP_TRAILING_WHITESPACE)
-    endif()
-
-    # Set the Python include directory and library
-    message(STATUS "Deduced python version: ${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
-    set(Python3_INCLUDE_DIR "${CONDA_PREFIX_PATH}/include/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
-    set(Python3_LIBRARY "${CONDA_PREFIX_PATH}/lib/libpython${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}.${PYTHON_LIBRARY_EXTENSION}")
-
-    message(STATUS "Python3 library: ${Python3_LIBRARY}")
-    include_directories(${Python3_INCLUDE_DIR})
-else()
-    message(FATAL_ERROR "Python3 not found in Conda environment")
+# find Python
+if(DEFINED ENV{CONDA_PREFIX} AND EXISTS "$ENV{CONDA_PREFIX}/bin/python3")
+    set(Python3_EXECUTABLE "$ENV{CONDA_PREFIX}/bin/python3" CACHE FILEPATH "Python interpreter")
 endif()
+
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+if(NOT Python3_INCLUDE_DIRS OR NOT EXISTS "${Python3_INCLUDE_DIRS}/Python.h")
+    execute_process(
+        COMMAND "${Python3_EXECUTABLE}" -c "import sysconfig; print(sysconfig.get_path('include') or '')"
+        OUTPUT_VARIABLE Python3_INCLUDE_DIRS
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+endif()
+if(NOT Python3_INCLUDE_DIRS OR NOT EXISTS "${Python3_INCLUDE_DIRS}/Python.h")
+    message(FATAL_ERROR "Python3 headers not found for ${Python3_EXECUTABLE}. Expected Python.h under ${Python3_INCLUDE_DIRS}.")
+endif()
+message(STATUS "Using Python3 executable: ${Python3_EXECUTABLE}")
+message(STATUS "Using Python3 version: ${Python3_VERSION}")
+message(STATUS "Using Python3 include dirs: ${Python3_INCLUDE_DIRS}")
+include_directories(${Python3_INCLUDE_DIRS})
 
 # setup tea as a subproject
 add_subdirectory(tea)
@@ -71,26 +141,35 @@ include_directories(${CORRECTIONLIB_INCLUDE_DIRS})
 
 # add user-defined libraries
 file(GLOB_RECURSE USER_LIBS_SRC "${CMAKE_CURRENT_SOURCE_DIR}/libs/*/*.cpp") # Assuming the source files are in .cpp format
+if(NOT TEA_HAVE_ROOT_EVE OR NOT TEA_HAVE_ROOT_GEOM)
+    list(FILTER USER_LIBS_SRC EXCLUDE REGEX ".*/ShiftVisualizationManager\\.cpp$")
+endif()
 message(STATUS "Found user libs: ${USER_LIBS_SRC}")
 if(USER_LIBS_SRC)
     add_library(user_libs ${USER_LIBS_SRC})
+    target_link_libraries(user_libs PUBLIC ${TEA_ROOT_LIBRARIES})
 endif()
 
 # add user-defined apps
 file(GLOB_RECURSE USER_APPS_SRC "apps/*.cpp")
 foreach(APP_SRC ${USER_APPS_SRC})
+    if((NOT TEA_HAVE_ROOT_EVE OR NOT TEA_HAVE_ROOT_GEOM) AND APP_SRC MATCHES ".*/shift_visualizer\\.cpp$")
+        message(STATUS "Skipping shift_visualizer because ROOT Eve/Geom headers are not available")
+        continue()
+    endif()
+
     get_filename_component(APP_NAME ${APP_SRC} NAME_WE) # Get the name without extension
     
     add_executable(${APP_NAME} ${APP_SRC})
     if(USER_LIBS_SRC)
         message(STATUS "Linking with user, tea, ROOT, and Python libs")
-        target_link_libraries(${APP_NAME} PUBLIC user_libs core extensions histogramming ${ROOT_LIBRARIES} ${PYTHON_LIBRARIES})
+        target_link_libraries(${APP_NAME} PUBLIC user_libs core extensions histogramming ${TEA_ROOT_LIBRARIES} Python3::Python)
     else()
         message(STATUS "Linking with tea, ROOT, and Python libs")
-        target_link_libraries(${APP_NAME} PUBLIC core extensions histogramming ${ROOT_LIBRARIES} ${PYTHON_LIBRARIES})
+        target_link_libraries(${APP_NAME} PUBLIC core extensions histogramming ${TEA_ROOT_LIBRARIES} Python3::Python)
     endif()
 
-    set_property(TARGET ${APP_NAME} PROPERTY CXX_STANDARD 17)
+    set_property(TARGET ${APP_NAME} PROPERTY CXX_STANDARD ${CMAKE_CXX_STANDARD})
     set_target_properties(${APP_NAME} PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}")
     install(TARGETS ${APP_NAME} DESTINATION .)
 endforeach()

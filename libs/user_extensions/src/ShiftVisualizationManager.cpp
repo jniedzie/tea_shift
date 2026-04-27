@@ -2,6 +2,17 @@
 
 #include "ConfigManager.hpp"
 
+#include "TEveGeoNode.h"
+#include "TEveLine.h"
+#include "TEveManager.h"
+#include "TEvePointSet.h"
+#include "TEveViewer.h"
+#include "TGLViewer.h"
+#include "TGeoBBox.h"
+#include "TGeoMatrix.h"
+#include "TGeoTorus.h"
+#include "TGeoTube.h"
+
 using namespace std;
 
 ShiftVisualizationManager::ShiftVisualizationManager(shared_ptr<ShiftDetector> detector_, double magField_)

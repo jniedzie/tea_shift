@@ -1,6 +1,16 @@
 #include "ShiftDetector.hpp"
 
+#if __has_include("TGeoTube.h")
+#include "TGeoTube.h"
+#endif
+
 using namespace std;
+
+#if __has_include("TGeoTube.h")
+TGeoTube *ShiftDetector::GetGeoTube() { return new TGeoTube(inner_radius, outer_radius, total_length / 2); }
+#else
+TGeoTube *ShiftDetector::GetGeoTube() { return nullptr; }
+#endif
 
 ShiftDetector::ShiftDetector(const std::map<std::string, float> &params, bool isLHCb_) :
 isLHCb(isLHCb_){

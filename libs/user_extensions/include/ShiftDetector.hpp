@@ -4,6 +4,8 @@
 #include "HepMCParticle.hpp"
 #include "Logger.hpp"
 
+class TGeoTube;
+
 class ShiftDetector {
   // Class to describe a spherical detector located at (x,y,z) coordinates with a given radius
  public:
@@ -16,7 +18,7 @@ class ShiftDetector {
   bool IsProductionVertexBeforeTheEnd(const std::shared_ptr<HepMCParticle> &particle, float maxDistanceInsideDetector = 0.0);
   bool DoesParticleGoThroughRock(const std::shared_ptr<HepMCParticle> &particle, const std::shared_ptr<PhysicsObjects>& allParticles);
 
-  TGeoTube *GetGeoTube() { return new TGeoTube(inner_radius, outer_radius, total_length / 2); }
+  TGeoTube *GetGeoTube();
   TVector3 GetOrigin() { return TVector3(x, y, z); }
 
   TRotation GetRotation() { return rotation; }

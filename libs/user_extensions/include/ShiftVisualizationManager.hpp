@@ -6,6 +6,13 @@
 #include "Helpers.hpp"
 #include "ShiftDetector.hpp"
 
+#include "TGeoManager.h"
+#include "TGeoMaterial.h"
+#include "TGeoMedium.h"
+#include "TGeoVolume.h"
+#include "TRotation.h"
+#include "TVector3.h"
+
 class ShiftVisualizationManager {
  public:
   ShiftVisualizationManager(std::shared_ptr<ShiftDetector> detector_, double magField_);

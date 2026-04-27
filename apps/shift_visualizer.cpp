@@ -5,6 +5,8 @@
 #include "ShiftObjectsManager.hpp"
 #include "ShiftVisualizationManager.hpp"
 
+#include "TApplication.h"
+
 using namespace std;
 
 void CheckArgs(int argc, char **argv) {
