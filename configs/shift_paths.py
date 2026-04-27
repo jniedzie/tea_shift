@@ -1,4 +1,6 @@
-base_path = "/data/dust/user/jniedzie/shift/"
+# base_path = "/data/dust/user/jniedzie/shift/"  # NAF
+base_path = "/pnfs/iihe/cms/store/user/jniedzie/shift/"  # VUB T2
+
 base_datacard_name = "datacard_{}"
 
 # optimize the distance again
@@ -210,10 +212,10 @@ processes = (
   # "pythia_qcd_ptHat0GeV",
 
   # new backgrounds
-  "pythia_dy",
+  # "pythia_dy",
 
   # # # for SHIFT
-  # "pythia_qcd_ptHat0to1GeV",
+  "pythia_qcd_ptHat0to1GeV",
   # "pythia_qcd_ptHat1to2GeV",
   # "pythia_qcd_ptHat2to5GeV",
   # "pythia_qcd_ptHat5to10GeV",
