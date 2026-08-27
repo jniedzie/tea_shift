@@ -1,4 +1,5 @@
-base_path = "/data/dust/user/jniedzie/shift/"
+# base_path = "/data/dust/user/jniedzie/shift/"  # NAF
+base_path = "/pnfs/iihe/cms/store/user/jniedzie/shift/"  # VUB T2
 
 skim = "initial"
 # skim = "skimmed_allSelections"
