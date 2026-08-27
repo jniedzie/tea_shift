@@ -4,8 +4,6 @@ project(user_analysis)
 set(CMAKE_CXX_STANDARD 17)
 
 # setup variables for macOS builds
-set(CMAKE_OSX_ARCHITECTURES "arm64")
-SET(CMAKE_OSX_DEPLOYMENT_TARGET 13.2)
 
 # setup install directory to "bin"
 set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/bin")
